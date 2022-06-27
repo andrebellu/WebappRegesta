@@ -5,7 +5,7 @@ sap.ui.define(
     function(BaseController) {
       "use strict";
   
-      return BaseController.extend("regesta.regestarapportini.controller.controller.App", {
+      return BaseController.extend("regesta.regestarapportini.controller.App", {
         onInit() {
         }
       });

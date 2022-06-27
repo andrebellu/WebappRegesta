@@ -1,5 +1,4 @@
-
-
+/* ! Lista Rapportini */
 .tabBar {
     position: sticky;
 }
@@ -81,4 +80,45 @@ span::before {
 .sapMSLIWithDescription .sapMSLIDescription {
     padding-top: 0.5rem;
     justify-content: space-between;
+}
+
+/* ! Login Screen */
+
+.noScroll{
+    overflow: hidden;
+}
+
+.regestaLogo{
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+}
+
+.loginHeader{
+    text-align: center;
+    font-size: 25px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.flexCenter{
+    align-items: center;
+    justify-content: center;
+    transform: scale(1.3);
+}
+
+.roundedInput div{
+    border-radius: 100px !important;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+input:focus textarea{
+    outline: none !important;
+}
+
+.roundedButton span{
+    border-radius: 50px !important;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
 }

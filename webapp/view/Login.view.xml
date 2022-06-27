@@ -1,0 +1,44 @@
+<mvc:View
+	controllerName="regesta.regestarapportini.controller.Login"
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true">
+    <Shell class="noScroll">
+        <FlexBox
+            height="90vh"
+            class="flexCenter">
+
+            <l:VerticalLayout class="sapUiContentPadding" width="100%">
+            <Label text="Regesta" class="regestaLogo" />
+            <Label text="Login" class="loginHeader" />
+            <Label text="Utente" labelFor="nameInput" />
+            <Input
+                id="nameInput"
+                class="roundedInput"
+                placeholder="Inserisci il nome utente"
+                valueStateText="La casella non deve essere vuota. Massimo 10 caratteri."
+                value="{
+                    path : '/name',
+                    type : 'sap.ui.model.type.String',
+                    constraints : {
+                        minLength: 1,
+                        maxLength: 50
+                    }
+                }"
+                change= ".onNameChange" />
+
+            <Label text="Password" labelFor="passwordInput" />
+            <Input
+                id="passwordInput"
+                class="roundedInput"
+                type="Password"
+                placeholder="Enter password" />
+            <Button 
+                class="roundedButton"
+                text="Submit"
+                press=".onSubmit" />
+        </l:VerticalLayout>
+        </FlexBox>
+    </Shell>
+</mvc:View>

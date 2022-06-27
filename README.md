@@ -11,7 +11,7 @@
 |**Module Name**<br>regesta-rapportini|
 |**Application Title**<br>Gestione Rapportini|
 |**Namespace**<br>regesta|
-|**UI5 Theme**<br>sap_fiori_3|
+|**UI5 Theme**<br>sap_fiori_3_dark|
 |**UI5 Version**<br>1.102.1|
 |**Enable Code Assist Libraries**<br>False|
 |**Add Eslint configuration**<br>False|

@@ -1,7 +1,7 @@
 <mvc:View controllerName="regesta.regestarapportini.controller.Home"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
     xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    <Page showHeader="false">
         <content>
             <Label text="Rapportini" class="titleRP"/>
             <!-- 
@@ -15,7 +15,7 @@
 					</l:VerticalLayout>
 				</FlexBox>
 			-->
-            <Button class="btnDP" ariaHasPopup="Dialog" text="{i18n>currentDate}" press="openDatePicker" />
+            <Button id="btn" class="btnDP" ariaHasPopup="Dialog" text=" " press="openDatePicker" />
 
             <DatePicker id="HiddenDP" hideInput="true" change=".changeDateHandler" showCurrentDateButton="true"/>
 

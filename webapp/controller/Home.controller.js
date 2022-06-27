@@ -32,9 +32,6 @@ sap.ui.define(
                     // set explored app's demo model on this sample
                     var oModel = new JSONModel("model/data.json");
 
-                    var today = new Date().toLocaleDateString();
-                    console.log(today);
-
                     this.getView().setModel(oModel);
                     this.oFormatYyyymmdd = DateFormat.getInstance({
                         pattern: "dd-MM-yyyy",
@@ -98,7 +95,7 @@ sap.ui.define(
                     var sRecipient = evt.getParameter("value");
                     console.log(sRecipient);
                     var sMsg = oBundle.getText("currentDate", [sRecipient]);
-                    msgT.show(sMsg);
+                    document.getElementById("container-regesta.regestarapportini---Home--btn-BDI-content").innerHTML = sMsg;
                 },
 
                 handleDuplicate: function (evt) {
