@@ -62,10 +62,10 @@ sap.ui.define(
         this.getView().setModel(i18nModel, "i18n");
       },
 
-      handleSwipe: function (evt) {
+      handleSwipe: function (oEvent) {
         // register swipe event
-        var oSwipeContent = evt.getParameter("swipeContent"), // get swiped content from event
-          oSwipeDirection = evt.getParameter("swipeDirection"); // get swiped direction from event
+        var oSwipeContent = oEvent.getParameter("swipeContent"), // get swiped content from event
+          oSwipeDirection = oEvent.getParameter("swipeDirection"); // get swiped direction from event
         var msg = "";
 
         if (oSwipeDirection === "BeginToEnd") {
@@ -82,8 +82,8 @@ sap.ui.define(
         msgT.show(msg);
       },
 
-      handleMore: function (evt) {
-        var oButton = evt.getSource();
+      handleMore: function (oEvent) {
+        var oButton = oEvent.getSource();
         this.byId("actionSheet").openBy(oButton);
       },
 
@@ -725,20 +725,20 @@ sap.ui.define(
         dialog.open();
       },
 
-      handleSelectToday: function (evt) {
+      handleSelectToday: function (oEvent) {
         var oCalendar = this.byId("calendar");
         oCalendar.removeAllSelectedDates();
         oCalendar.addSelectedDate(new DateRange({ startDate: new Date() }));
         this._updateText(oCalendar);
       },
 
-      openDatePicker: function (evt) {
-        this.getView().byId("HiddenDP").openBy(evt.getSource().getDomRef());
+      openDatePicker: function (oEvent) {
+        this.getView().byId("HiddenDP").openBy(oEvent.getSource().getDomRef());
       },
 
-      changeDateHandler: function (evt) {
+      changeDateHandler: function (oEvent) {
         var oBundle = this.getView().getModel("i18n").getResourceBundle();
-        var sRecipient = evt.getParameter("value");
+        var sRecipient = oEvent.getParameter("value");
         console.log(sRecipient);
         var sMsg = oBundle.getText("currentDate", [sRecipient]);
         document.getElementById(
@@ -746,15 +746,15 @@ sap.ui.define(
         ).innerHTML = sMsg;
       },
 
-      handleDuplicate: function (evt) {
+      handleDuplicate: function (oEvent) {
         msgT.show("Duplicate");
       },
 
-      handleEdit: function (evt) {
+      handleEdit: function (oEvent) {
         msgT.show("Edit");
       },
 
-      handleDelete: function (evt) {
+      handleDelete: function (oEvent) {
         msgT.show("Delete");
       },
     });
