@@ -1,8 +1,8 @@
 <ActionSheet id="actionSheet"
     xmlns="sap.m"
-    xmlns:core="sap.ui.core" core:require="{ MessageToast: 'sap/m/MessageToast' }" title="Choose Your Action" showCancelButton="true" placement="Bottom"
+    xmlns:core="sap.ui.core" core:require="{ MessageToast: 'sap/m/MessageToast' }" title="{i18n>actionSheetTitle}" showCancelButton="true" placement="Bottom"
     controllerName="regesta.regestarapportini.controller.Home">
-    <Button text="Duplicate" icon="sap-icon://duplicate" press="handleDuplicate" />
-    <Button text="Edit" icon="sap-icon://edit" press="onShowPopup" />
-    <Button text="Delete" icon="sap-icon://delete" press="handleDelete" />
+    <Button text="{i18n>actionSheetButton_1}" icon="sap-icon://copy" press="handleDuplicate" />
+    <Button text="{i18n>actionSheetButton_2}" icon="sap-icon://edit" press="onShowPopup" />
+    <Button text="{i18n>actionSheetButton_3}" icon="sap-icon://delete" press="handleDelete" />
 </ActionSheet>
