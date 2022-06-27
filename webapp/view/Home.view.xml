@@ -1,32 +1,25 @@
 <mvc:View controllerName="regesta.regestarapportini.controller.Home"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
+    xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:u="sap.ui.unified">
     <Page showHeader="false">
         <content>
             <Label text="Rapportini" class="titleRP"/>
-            <!-- 
-				<FlexBox class="fl">
-					<l:VerticalLayout>
-						<u:Calendar class="calendar" select="handleCalendarSelect" minDate="{path: '/minDate'}" maxDate="{path: '/maxDate'}" disabledDates="{path: '/disabled'}" showCurrentDateButton="true">
-							<u:disabledDates>
-								<u:DateRange startDate="{start}" endDate="{end}"/>
-							</u:disabledDates>
-						</u:Calendar> 
-					</l:VerticalLayout>
-				</FlexBox>
-			-->
+            
             <Button id="btn" class="btnDP" ariaHasPopup="Dialog" text=" " press="openDatePicker" />
 
             <DatePicker id="HiddenDP" hideInput="true" change=".changeDateHandler" showCurrentDateButton="true"/>
 
             <List noDataText="No element to display" items="{/items}" id="list">
                 <items>
-                    <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press=".clicked"/>
+                    <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press="onShowPopup"/>
                 </items>
                 <swipeContent>
                     <Button press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu">
                         <dependents>
-                            <!--<core:Fragment fragmentName="regesta.regestarapportini.view.ActionSheet" type="XML" />-->
+                            <core:Fragment fragmentName="regesta.regestarapportini.fragments.ActionSheet" type="XML" />
                         </dependents>
                     </Button>
                 </swipeContent>
