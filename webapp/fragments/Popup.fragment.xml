@@ -1,3 +1,6 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core" >
 <Dialog 
     controllerName="regesta.regestarapportini.controller.Home"
     xmlns="sap.m"
@@ -402,3 +405,4 @@
         enabled="true"/>
     </FlexBox>
 </Dialog>
+</core:FragmentDefinition>
