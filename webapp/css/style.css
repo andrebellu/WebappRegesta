@@ -1,0 +1,166 @@
+::-webkit-scrollbar{
+    width: 0px;
+    height: 0px;
+}
+
+sapMScrollContV sapMScrollCont sapUiScrollDelegate{
+    padding-bottom: 8rem;
+}
+
+/* ! Lista Rapportini */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.tabBar {
+    position: sticky;
+}
+
+#__container1{
+    padding-bottom: 8rem;
+}
+
+/* .titleRP {
+    display: flex;
+    font-family: "Poppins", sans-serif;
+    font-size: 30px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid lightslategray;
+} */
+
+.fl {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnDP {
+    width: 100%;
+    border-radius: 5px;
+    color: #fff;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.btnDP span {
+    height: 100%;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnDP:focus span {
+    outline: none !important;
+}
+
+.calendar {
+    width: 100vw !important;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.item {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease-in-out;
+    font-family: "Poppins", sans-serif;
+}
+
+.item:hover {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.item:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.item:focus div,
+span::before {
+    color: white;
+}
+
+.sapMSLIInfo.sapMSLIInfoNone {
+    min-width: none;
+    max-width: fit-content;
+    margin-right: 20px;
+    color: #91c8f6;
+    font-weight: bold;
+}
+
+.sapMSLIDescriptionText {
+    max-width: 70%;
+}
+
+.sapMSLIWithDescription .sapMSLIDescription {
+    padding-top: 0.5rem;
+    justify-content: space-between;
+}
+
+/* ! Popup fragment */
+.dialogStyle{
+    width: 100%
+}
+
+.labelMargin{
+    margin-left: 9px;
+}
+
+.checkStyle{
+    align-items: center;
+    justify-content: center;
+}
+
+.closeDialog{
+    justify-content: flex-end;
+}
+
+/* ! Login Screen */
+
+.noScroll {
+    overflow: hidden;
+}
+
+.regestaLogo {
+    text-align: center;
+    font-size: 50px;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+}
+
+.loginHeader {
+    text-align: center;
+    font-size: 25px;
+    font-family: "Poppins", sans-serif;
+}
+
+.flexCenter {
+    align-items: center;
+    justify-content: center;
+    transform: scale(1.3);
+}
+
+.roundedInput div {
+    border-radius: 100px !important;
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+}
+
+input:focus textarea {
+    outline: none !important;
+}
+
+.roundedButton span {
+    border-radius: 50px !important;
+    font-size: 12px;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ! Footbar */
+.sapMPageFooter{
+    position: fixed;
+}

@@ -1,0 +1,19 @@
+<mvc:View controllerName="regesta.regestarapportini.controller.Tickets"
+    xmlns:l="sap.ui.layout"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:u="sap.ui.unified">
+    <Page showHeader="false" enableScrolling="false">
+        <mvc:XMLView viewName="regesta.regestarapportini.view.Navbar" />
+        <ScrollContainer height="100%" width="100%" vertical="true" horizontal="false" focusable="true">
+                <List noDataText="No element to display" items="{/items}" id="list">
+                    <items>
+                        <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://receipt" class="item" id="element" press="testPopup"/>
+                    </items>
+                </List>
+            </ScrollContainer>
+        <mvc:XMLView viewName="regesta.regestarapportini.view.Footer" />
+    </Page>
+</mvc:View>

@@ -1,0 +1,17 @@
+{
+	"items": 
+	[
+		{
+			"src": "sap-icon://home",
+			"title": "Cambia account"
+		},
+		{
+			"src": "sap-icon://business-objects-experience",
+			"title": "Sito web"
+		},
+		{
+			"src": "sap-icon://contacts",
+			"title": "Log cambiamenti"		
+		}
+	]
+}
