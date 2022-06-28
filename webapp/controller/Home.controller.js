@@ -104,8 +104,11 @@ sap.ui.define(
 
       changeDateHandler: function (oEvent) {
         var oBundle = this.getView().getModel("i18n").getResourceBundle();
+
         var sRecipient = oEvent.getParameter("value");
-        console.log(sRecipient);
+        var sDate = sRecipient.split("/");
+        sRecipient = sDate[1] + "/" + sDate[0] + "/" + sDate[2];
+
         var sMsg = oBundle.getText("currentDate", [sRecipient]);
         document.getElementById(
           "container-regesta.regestarapportini---Home--btn-BDI-content"

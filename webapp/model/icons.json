@@ -2,16 +2,22 @@
 	"items": 
 	[
 		{
-			"src": "sap-icon://home",
-			"title": "Cambia account"
+			"src": "sap-icon://visits",
+			"title": "Cambia account",
+			"subTitle": "Clicca per tornare alla schermata di accesso",
+			"function": "changeAccount"
 		},
 		{
-			"src": "sap-icon://business-objects-experience",
-			"title": "Sito web"
+			"src": "sap-icon://internet-browser",
+			"title": "Sito web",
+			"subTitle": "Visita il sito Regesta",
+			"function": "goToWebsite"
 		},
 		{
 			"src": "sap-icon://contacts",
-			"title": "Log cambiamenti"		
+			"title": "Log cambiamenti",
+			"subTitle": "Visualizza i cambiamenti della webapp",
+			"function": "logChanges"	
 		}
 	]
 }
