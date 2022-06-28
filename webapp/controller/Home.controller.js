@@ -91,7 +91,7 @@ sap.ui.define(
         msgT.show("Rapportino clicked");
       },
 
-      testPopup: function () {
+      showPopup: function () {
         if (!this.pDialog) {
           this.pDialog = this.loadFragment({
             name: "regesta.regestarapportini.fragments.Popup",
@@ -109,30 +109,6 @@ sap.ui.define(
       onCancel: function (oEvent) {
         this.byId("popup").close();
       },
-
-      endButton: new sap.m.Button({
-        //       type: ButtonType.Emphasized,
-        //       text: "Salva",
-        //       press: function () {
-        //         var sText = sap.ui.getCore().byId("event").getValue();
-        //         var event = {
-        //           eventName: sText,
-        //         };
-        //         dialog.close();
-        //       },
-        //     }),
-  
-        //     beginButton: new sap.m.Button({
-        //       text: "Annulla",
-        //       press: function () {
-        //         dialog.close();
-        //       },
-        //     }),
-  
-        //     afterClose: function () {
-        //       dialog.destroy();
-        //     },
-        //   });
 
       handleSelectToday: function (oEvent) {
         var oCalendar = this.byId("calendar");
@@ -168,4 +144,3 @@ sap.ui.define(
       },
       })
     });
-  });
