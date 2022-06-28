@@ -46,7 +46,7 @@ sap.ui.define(
     return Controller.extend("regesta.regestarapportini.controller.Home", {
       oFormatYyyymmdd: null,
 
-      onInit: function () {        
+      onInit: function () {
         var oModel = new JSONModel("model/data.json");
 
         this.getView().setModel(oModel);
@@ -91,25 +91,6 @@ sap.ui.define(
         msgT.show("Rapportino clicked");
       },
 
-      showPopup: function () {
-        if (!this.pDialog) {
-          this.pDialog = this.loadFragment({
-            name: "regesta.regestarapportini.fragments.Popup",
-          });
-        }
-        this.pDialog.then(function (oDialog) {
-          oDialog.open();
-        });
-      },
-
-      onSave: function (oEvent) {
-        this.byId("popup").close();
-      },
-
-      onCancel: function (oEvent) {
-        this.byId("popup").close();
-      },
-
       handleSelectToday: function (oEvent) {
         var oCalendar = this.byId("calendar");
         oCalendar.removeAllSelectedDates();
@@ -142,5 +123,25 @@ sap.ui.define(
       handleDelete: function (oEvent) {
         msgT.show("Delete");
       },
-      })
+
+      showPopup: function () {
+        if (!this.pDialog) {
+          this.pDialog = this.loadFragment({
+            name: "regesta.regestarapportini.fragments.Popup",
+          });
+        }
+        this.pDialog.then(function (oDialog) {
+          oDialog.open();
+        });
+      },
+
+      onSave: function (oEvent) {
+        this.byId("popup").close();
+      },
+
+      onCancel: function (oEvent) {
+        this.byId("popup").close();
+      },
     });
+  }
+);
