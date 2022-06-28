@@ -105,10 +105,10 @@
         <!-- Checkboxes in flexbox -->
         <FlexBox direction="Row" class="checkStyle">
             <!--! Checkbox plus -->
-            <CheckBox text="Plus" change= ".onPlusChange" id="plus" class="checkboxMargin" width="100%" enabled="true" selected="false" align="Center"/>
+            <CheckBox text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="true" selected="false"/>
 
             <!--! Checkbox fatturabile -->
-            <CheckBox text="Fatturabile" change= ".onFatturabileChange" id="fatturabile" class="checkboxMargin" width="100%" enabled="true" selected="true"/>
+            <CheckBox text="Fatturabile" id="fatturabile" class="checkboxMargin" width="100%" enabled="true" selected="true"/>
         </FlexBox>
 
         <!--! Expandable panel with inputs -->
