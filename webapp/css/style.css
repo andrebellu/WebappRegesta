@@ -1,5 +1,13 @@
-/* ! Lista Rapportini */
+::-webkit-scrollbar{
+    width: 0px;
+    height: 0px;
+}
 
+sapMScrollContV sapMScrollCont sapUiScrollDelegate{
+    padding-bottom: 8rem;
+}
+
+/* ! Lista Rapportini */
 * {
     margin: 0;
     padding: 0;
@@ -9,13 +17,17 @@
     position: sticky;
 }
 
-.titleRP {
+#__container1{
+    padding-bottom: 8rem;
+}
+
+/* .titleRP {
     display: flex;
     font-family: "Poppins", sans-serif;
-    font-size: 40px;
+    font-size: 30px;
     margin-bottom: 10px;
     border-bottom: 1px solid lightslategray;
-}
+} */
 
 .fl {
     width: 100%;
@@ -27,7 +39,8 @@
     width: 100%;
     border-radius: 5px;
     color: #fff;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 .btnDP span {
@@ -145,4 +158,9 @@ input:focus textarea {
     border-radius: 50px !important;
     font-size: 12px;
     font-family: "Poppins", sans-serif;
+}
+
+/* ! Footbar */
+.sapMPageFooter{
+    position: fixed;
 }

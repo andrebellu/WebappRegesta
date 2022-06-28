@@ -1,0 +1,10 @@
+<mvc:View controllerName="regesta.regestarapportini.controller.NavbarFooter"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:f="sap.f">
+
+	<f:ShellBar homeIcon="images/regestaLogo.svg" productSwitcherPressed="fnOpen" showProductSwitcher="true">
+	</f:ShellBar>
+
+</mvc:View>
