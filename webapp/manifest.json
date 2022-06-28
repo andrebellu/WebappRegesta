@@ -107,6 +107,14 @@
             "TargetLogin"
           ]
         }
+        ,
+        {
+          "name": "RouteN",
+          "pattern": "nav",
+          "target": [
+            "TargetNav"
+          ]
+        }
       ],
       "targets": {
         "TargetHome": {
@@ -122,6 +130,13 @@
           "clearControlAggregation": false,
           "viewId": "Login",
           "viewName": "Login"
+        },
+        "TargetNav": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Nav",
+          "viewName": "NavbarFooter"
         }
       }
     },

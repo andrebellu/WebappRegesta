@@ -1,0 +1,32 @@
+<mvc:View
+	controllerName="regesta.regestarapportini.controller.NavbarFooter"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	height="100%">
+	<Page 
+		class="sapUiResponsivePadding--footer"
+		showHeader="false"
+		showSubHeader="false">
+		<f:ShellBar
+			homeIcon="images/regestaLogo.svg"
+			productSwitcherPressed="fnOpen"
+			showProductSwitcher="true">
+		</f:ShellBar>
+
+		<footer class="footer">
+			<Toolbar>
+				<ToolbarSpacer/>
+					<Button icon="sap-icon://activities"/>
+				<ToolbarSpacer/>
+				<ToolbarSpacer/>
+					<Button icon="sap-icon://add" press="test"/>
+				<ToolbarSpacer/>
+				<ToolbarSpacer/>
+					<Button icon="sap-icon://receipt"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>

@@ -1,12 +1,11 @@
 <mvc:View controllerName="regesta.regestarapportini.controller.Home"
     xmlns:l="sap.ui.layout"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
     xmlns:f="sap.f"
-	xmlns:u="sap.ui.unified">
-    
-    <Page showHeader="false" enableScrolling="false" >
+    xmlns:u="sap.ui.unified">
+    <Page showHeader="false" enableScrolling="false">
         <content>
             <Label text="Rapportini" class="titleRP"/>
 
