@@ -5,28 +5,34 @@
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:u="sap.ui.unified">
-    <Page showHeader="false">
-
+    <Page showHeader="false" enableScrolling="false">
         <content>
             <Label text="Rapportini" class="titleRP"/>
 
             <Button id="btn" class="btnDP" ariaHasPopup="Dialog" text=" " press="openDatePicker" />
 
             <DatePicker id="HiddenDP" hideInput="true" change=".changeDateHandler" showCurrentDateButton="true"/>
-
-            <List noDataText="No element to display" items="{/items}" id="list">
-                <items>
-
-                    <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press="onShowDetails"/>
-                </items>
-                <swipeContent>
-                    <Button press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu">
-                        <dependents>
-                            <core:Fragment fragmentName="regesta.regestarapportini.fragments.ActionSheet" type="XML" />
-                        </dependents>
-                    </Button>
-                </swipeContent>
-            </List>
+            
+            <ScrollContainer
+            height="90%"
+            width="100%"
+            vertical="true"
+            horizontal="false"
+            focusable="true">
+                <List noDataText="No element to display" items="{/items}" id="list">
+                    <items>
+    
+                        <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press="onShowDetails"/>
+                    </items>
+                    <swipeContent>
+                        <Button press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu">
+                            <dependents>
+                                <core:Fragment fragmentName="regesta.regestarapportini.fragments.ActionSheet" type="XML" />
+                            </dependents>
+                        </Button>
+                    </swipeContent>
+                </List>
+            </ScrollContainer>
         </content>
     </Page>
 </mvc:View>
