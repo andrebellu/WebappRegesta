@@ -22,7 +22,7 @@
                 <List noDataText="No element to display" items="{/items}" id="list">
                     <items>
     
-                        <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press="onShowDetails"/>
+                        <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press="testPopup"/>
                     </items>
                     <swipeContent>
                         <Button press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu">
