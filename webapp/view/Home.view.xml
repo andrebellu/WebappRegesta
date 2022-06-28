@@ -1,17 +1,21 @@
 <mvc:View controllerName="regesta.regestarapportini.controller.Home"
     xmlns:l="sap.ui.layout"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:core="sap.ui.core"
-	xmlns="sap.m"
-	xmlns:u="sap.ui.unified">
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:u="sap.ui.unified">
     <Page showHeader="false">
+
+        <f:ShellBar homeIcon="regestaLogo.svg" productSwitcherPressed="fnOpen" showProductSwitcher="true"/>
+
         <content>
             <Label text="Rapportini" class="titleRP"/>
 
             <Button id="btn" class="btnDP" ariaHasPopup="Dialog" text=" " press="openDatePicker" />
 
             <DatePicker id="HiddenDP" hideInput="true" change=".changeDateHandler" showCurrentDateButton="true"/>
-            
+
             <List noDataText="No element to display" items="{/items}" id="list">
                 <items>
 
@@ -26,5 +30,19 @@
                 </swipeContent>
             </List>
         </content>
+
+        <footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+					<Button icon="sap-icon://table-view"/>
+				<ToolbarSpacer/>
+				<ToolbarSpacer/>
+					<Button icon="sap-icon://table-view"/>
+				<ToolbarSpacer/>
+				<ToolbarSpacer/>
+					<Button icon="sap-icon://table-view"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</footer>
     </Page>
 </mvc:View>
