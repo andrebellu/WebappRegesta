@@ -1,0 +1,25 @@
+<mvc:View controllerName="regesta.regestarapportini.controller.NavbarFooter"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:f="sap.f">
+
+
+	<Page>
+		<footer class="footer">
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://activities"/>
+				<ToolbarSpacer/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://add" press="test"/>
+				<ToolbarSpacer/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://receipt"/>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</footer>
+	</Page>
+
+
+</mvc:View>

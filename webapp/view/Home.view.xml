@@ -5,23 +5,24 @@
     xmlns="sap.m"
     xmlns:f="sap.f"
     xmlns:u="sap.ui.unified">
+
+
+
     <Page showHeader="false" enableScrolling="false">
+
+        <mvc:XMLView viewName="regesta.regestarapportini.view.Navbar" />
+
         <content>
-            <Label text="Rapportini" class="titleRP"/>
+
+            <!-- <Label text="Rapportini" class="titleRP"/> -->
 
             <Button id="btn" class="btnDP" ariaHasPopup="Dialog" text=" " press="openDatePicker" />
 
             <DatePicker id="HiddenDP" hideInput="true" change=".changeDateHandler" showCurrentDateButton="true"/>
-            
-            <ScrollContainer
-            height="90%"
-            width="100%"
-            vertical="true"
-            horizontal="false"
-            focusable="true">
+
+            <ScrollContainer height="100%" width="100%" vertical="true" horizontal="false" focusable="true">
                 <List noDataText="No element to display" items="{/items}" id="list">
                     <items>
-    
                         <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press="onShowDetails"/>
                     </items>
                     <swipeContent>
@@ -33,6 +34,11 @@
                     </swipeContent>
                 </List>
             </ScrollContainer>
+
+
         </content>
+
+        <mvc:XMLView viewName="regesta.regestarapportini.view.Footer" />
+
     </Page>
 </mvc:View>
