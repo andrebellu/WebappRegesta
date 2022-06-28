@@ -101,6 +101,24 @@ span::before {
     justify-content: space-between;
 }
 
+/* ! Popup fragment */
+.dialogStyle{
+    width: 100%
+}
+
+.labelMargin{
+    margin-left: 9px;
+}
+
+.checkStyle{
+    align-items: center;
+    justify-content: center;
+}
+
+.closeDialog{
+    justify-content: flex-end;
+}
+
 /* ! Login Screen */
 
 .noScroll {
