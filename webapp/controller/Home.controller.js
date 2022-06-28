@@ -43,7 +43,6 @@ sap.ui.define(
     // shortcut for sap.m.DialogType
     var DialogType = mLibrary.DialogType;
 
-
     return Controller.extend("regesta.regestarapportini.controller.Home", {
       oFormatYyyymmdd: null,
 
