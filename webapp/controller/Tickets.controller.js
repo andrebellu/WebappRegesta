@@ -44,7 +44,7 @@ sap.ui.define(
       return Controller.extend("regesta.regestarapportini.controller.Tickets", {
   
         onInit: function () {        
-          var oModel = new JSONModel("model/data.json");
+          var oModel = new JSONModel("model/dataT.json");
   
           this.getView().setModel(oModel);
           // set i18n model on view

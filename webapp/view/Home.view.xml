@@ -24,7 +24,7 @@
                 <List noDataText="No element to display" items="{/items}" id="list">
                     <items>
     
-                        <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press="testPopup"/>
+                        <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press="showPopup"/>
 
                     </items>
                     <swipeContent>

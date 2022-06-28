@@ -10,7 +10,7 @@
         <ScrollContainer height="100%" width="100%" vertical="true" horizontal="false" focusable="true">
                 <List noDataText="No element to display" items="{/items}" id="list">
                     <items>
-                        <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://receipt" class="item" id="element" press="testPopup"/>
+                        <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" class="item" id="element" press="testPopup"/>
                     </items>
                 </List>
             </ScrollContainer>
