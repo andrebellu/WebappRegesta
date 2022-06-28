@@ -7,8 +7,6 @@
     xmlns:u="sap.ui.unified">
     <Page showHeader="false">
 
-        <f:ShellBar homeIcon="regestaLogo.svg" productSwitcherPressed="fnOpen" showProductSwitcher="true"/>
-
         <content>
             <Label text="Rapportini" class="titleRP"/>
 
@@ -30,19 +28,5 @@
                 </swipeContent>
             </List>
         </content>
-
-        <footer>
-			<Toolbar>
-				<ToolbarSpacer/>
-					<Button icon="sap-icon://table-view"/>
-				<ToolbarSpacer/>
-				<ToolbarSpacer/>
-					<Button icon="sap-icon://table-view"/>
-				<ToolbarSpacer/>
-				<ToolbarSpacer/>
-					<Button icon="sap-icon://table-view"/>
-				<ToolbarSpacer/>
-			</Toolbar>
-		</footer>
     </Page>
 </mvc:View>
