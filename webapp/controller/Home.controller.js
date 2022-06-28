@@ -46,8 +46,7 @@ sap.ui.define(
     return Controller.extend("regesta.regestarapportini.controller.Home", {
       oFormatYyyymmdd: null,
 
-      onInit: function () {
-        // set explored app's demo model on this sample
+      onInit: function () {        
         var oModel = new JSONModel("model/data.json");
 
         this.getView().setModel(oModel);

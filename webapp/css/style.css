@@ -1,4 +1,10 @@
 /* ! Lista Rapportini */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 .tabBar {
     position: sticky;
 }
@@ -73,7 +79,7 @@ span::before {
     font-weight: bold;
 }
 
-.sapMSLIDescriptionText{
+.sapMSLIDescriptionText {
     max-width: 70%;
 }
 
@@ -84,41 +90,41 @@ span::before {
 
 /* ! Login Screen */
 
-.noScroll{
+.noScroll {
     overflow: hidden;
 }
 
-.regestaLogo{
+.regestaLogo {
     text-align: center;
     font-size: 50px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-weight: bold;
 }
 
-.loginHeader{
+.loginHeader {
     text-align: center;
     font-size: 25px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
-.flexCenter{
+.flexCenter {
     align-items: center;
     justify-content: center;
     transform: scale(1.3);
 }
 
-.roundedInput div{
+.roundedInput div {
     border-radius: 100px !important;
     font-size: 16px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
-input:focus textarea{
+input:focus textarea {
     outline: none !important;
 }
 
-.roundedButton span{
+.roundedButton span {
     border-radius: 50px !important;
     font-size: 12px;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
