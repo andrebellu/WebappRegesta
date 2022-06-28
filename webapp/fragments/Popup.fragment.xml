@@ -396,13 +396,15 @@
         <!--! Cancel button -->
         <Button text="Annulla"
         press= ".onCancel"
-        enabled="true"/>
+        enabled="true"
+        class="dialogButton"/>
 
         <!--! Save button -->
         <Button text="Salva"
         type="Emphasized"
         press= ".onSave"
-        enabled="true"/>
+        enabled="true"
+        class="dialogButton"/>
     </FlexBox>
 </Dialog>
 </core:FragmentDefinition>
