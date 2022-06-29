@@ -3,8 +3,6 @@ sap.ui.define(
       "sap/ui/core/mvc/Controller",
       "sap/m/MessageToast",
       "sap/ui/model/json/JSONModel",
-      "sap/ui/unified/DateRange",
-      "sap/ui/core/format/DateFormat",
       "sap/ui/core/library",
       "sap/ui/core/Fragment",
       "sap/ui/model/resource/ResourceModel",
@@ -20,8 +18,6 @@ sap.ui.define(
       Controller,
       msgT,
       JSONModel,
-      DateRange,
-      DateFormat,
       coreLibrary,
       Fragment,
       ResourceModel,
@@ -76,6 +72,24 @@ sap.ui.define(
   
         clicked: function () {
           msgT.show("Rapportino clicked");
+        },
+        showPopup: function () {
+          if (!this.pDialog) {
+            this.pDialog = this.loadFragment({
+              name: "regesta.regestarapportini.fragments.Popup",
+            });
+          }
+          this.pDialog.then(function (oDialog) {
+            oDialog.open();
+            
+          });
+        },
+        onSave: function (oEvent) {
+          this.byId("popup").close();
+        },
+  
+        onCancel: function (oEvent) {
+          this.byId("popup").close();
         },
       });
     });
