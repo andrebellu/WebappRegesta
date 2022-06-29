@@ -8,12 +8,19 @@
     <Page showHeader="false" enableScrolling="false">
         <mvc:XMLView viewName="regesta.regestarapportini.view.Navbar" />
         <ScrollContainer height="100%" width="100%" vertical="true" horizontal="false" focusable="true">
-                <List noDataText="No element to display" items="{/items}" id="list">
-                    <items>
-                        <StandardListItem type="Navigation" title="ID Ticket: {id} - {cliente}" description="{descrizione}" icon="sap-icon://receipt" class="item" id="element" press="showPopup"/>
-                    </items>
-                </List>
-            </ScrollContainer>
+            <List noDataText="No element to display" items="{/items}" id="list">
+                <items>
+                    <StandardListItem type="Navigation" title="ID Ticket: {id} - {cliente}" description="{descrizione}" icon="sap-icon://receipt" class="item" id="element" press="showPopup"/>
+                </items>
+                <swipeContent>
+                    <Button press="Timer" icon="sap-icon://lateness">
+                        <dependents>
+                            <core:Fragment fragmentName="regesta.regestarapportini.fragments.ActionSheet" type="XML" />
+                        </dependents>
+                    </Button>
+                </swipeContent>
+            </List>
+        </ScrollContainer>
         <mvc:XMLView viewName="regesta.regestarapportini.view.Footer" />
     </Page>
 </mvc:View>
