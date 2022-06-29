@@ -114,6 +114,11 @@
           "target": [
             "TargetNav"
           ]
+        },
+        {
+          "name" :"RouteTickets",
+          "pattern": "tickets",
+          "target": ["TargetTickets"]
         }
       ],
       "targets": {
@@ -130,6 +135,13 @@
           "clearControlAggregation": false,
           "viewId": "Login",
           "viewName": "Login"
+        },
+        "TargetTickets" :{
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "Tickets",
+          "viewName": "Tickets"
         }
       }
     },

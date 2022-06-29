@@ -8,14 +8,14 @@
 	<Page>
 		<footer class="footer">
 			<Toolbar>
-				<ToolbarSpacer/>
-				<Button icon="sap-icon://activities"/>
-				<ToolbarSpacer/>
-				<ToolbarSpacer/>
-				<Button icon="sap-icon://add" press="test"/>
+				<ToolbarSpacer/> 
+				<Button icon="sap-icon://activities" press="tickets" />
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://receipt"/>
+				<Button icon="sap-icon://add" press="showPopup"/>
+				<ToolbarSpacer/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://receipt" press="rapportini"/>
 				<ToolbarSpacer/>
 			</Toolbar>
 		</footer>
