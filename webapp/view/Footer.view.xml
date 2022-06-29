@@ -7,15 +7,28 @@
 
 	<Page>
 		<footer class="footer">
+			<Label text="KFBOEBFOLEFHOFNEAOLFNLOAEN" />
 			<Toolbar>
+<<<<<<< HEAD
 				<ToolbarSpacer/> 
 				<Button icon="sap-icon://activities" press="rapportini" />
+=======
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://activities" press="goToTickets" />
+				<ToolbarSpacer/>
+				<ToolbarSpacer/>
+				<Button icon="sap-icon://fob-watch" press="checkHours" />
+>>>>>>> 8fc4dae591fe963a668422549655157a2021d9d1
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
 				<Button icon="sap-icon://add" press="showPopup"/>
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
+<<<<<<< HEAD
 				<Button icon="sap-icon://receipt" press="tickets"/>
+=======
+				<Button icon="sap-icon://receipt" press="goToRapportini"/>
+>>>>>>> 8fc4dae591fe963a668422549655157a2021d9d1
 				<ToolbarSpacer/>
 			</Toolbar>
 		</footer>
