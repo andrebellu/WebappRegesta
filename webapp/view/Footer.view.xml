@@ -9,13 +9,13 @@
 		<footer class="footer">
 			<Toolbar>
 				<ToolbarSpacer/> 
-				<Button icon="sap-icon://receipt" press="rapportini" />
+				<Button icon="sap-icon://activities" press="rapportini" />
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
 				<Button icon="sap-icon://add" press="showPopup"/>
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://activities" press="tickets"/>
+				<Button icon="sap-icon://receipt" press="tickets"/>
 				<ToolbarSpacer/>
 			</Toolbar>
 		</footer>
