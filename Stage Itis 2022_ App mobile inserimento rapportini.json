@@ -1,0 +1,112 @@
+﻿//* Stage Itis 2022: App mobile inserimento rapportini
+
+//! API su endpoint https://asstest.regestaitalia.it/
+
+// !POST /api_v2/login?username=...&password=...
+//* restituisce una stringa col token autorizzativo
+
+
+//! POST /api_v2/rapportini?token=...
+//* restituisce un Json con un array di oggetti contente l’elenco dei rapportini del mese dell’utente
+{
+        "IDRapportino": 595443,
+        "IDUtente": null,
+        "Utente": "leonardo.pellegrini",
+        "IDCliente": 53,
+        "IDCommessa": 1969,
+        "IDClienteSede": null,
+        "IDProgetto": null,
+        "IDProgettoAttivita": null,
+        "IDTodoList": 25329,
+        "Codice": null,
+        "Descrizione": "Coordinamento",
+        "Attivita": null,
+        "Sede": "UF",
+        "Destinazione": null,
+        "Giorno": "/Date(1656021600000)/",
+        "Ore": 4.0,
+        "OreLavorate": null,
+        "Km": null,
+        "KmEuro": null,
+        "Pedaggio": null,
+        "Forfait": null,
+        "Vitto": null,
+        "Alloggio": null,
+        "Noleggio": null,
+        "Trasporti": null,
+        "Varie": null,
+        "Plus": false,
+        "Fatturabile": false,
+        "Bloccato": null,
+        "SpeseVarie": null,
+        "Docente": null
+    },
+    {
+…
+   }....
+
+
+
+
+//! POST /api_v2/clienti?token=...&idCliente=0
+//* restituisce un Json con un array di oggetti contente l’elenco dei clienti; se idCliente=0 tutti i cliente, altrimenti di uno specifico IDCliente
+
+
+ {
+        "IDCliente": 1155,
+        "Codice": "ZANA",
+        "Descrizione": "Zanardi Fonderie"
+    },
+      {
+…
+   }....
+
+
+//! POST /api_v2/commesse?token=...&idCommessa=0&idCliente=0
+//* restituisce un Json con un array di oggetti contente l’elenco delle commesse; se idCommessa=0 tutte altrimenti una particolare; se idCliente diverso da 0 solo le commesse di quel cliente
+ {
+        "IDCommessa": 1965,
+        "IDCliente": 1220,
+        "Codice": "YARD",
+        "Descrizione": "Supporto Qlik View"
+    },
+      {
+…
+   }....
+
+
+//! POST /api_v2/nuovorapportino?token=... 
+//* nel body della chiamata deve esserci il Json dell’oggetto rapportino
+{
+        "IDRapportino": 595443,
+        "IDUtente": null,
+        "Utente": "leonardo.pellegrini",
+        "IDCliente": 53,
+        "IDCommessa": 1969,
+        "IDClienteSede": null,
+        "IDProgetto": null,
+        "IDProgettoAttivita": null,
+        "IDTodoList": 25329,
+        "Codice": null,
+        "Descrizione": "Coordinamento",
+        "Attivita": null,
+        "Sede": "UF",
+        "Destinazione": null,
+        "Giorno": "2022-06-27T00:00:00",
+        "Ore": 4.0,
+        "OreLavorate": null,
+        "Km": null,
+        "KmEuro": null,
+        "Pedaggio": null,
+        "Forfait": null,
+        "Vitto": null,
+        "Alloggio": null,
+        "Noleggio": null,
+        "Trasporti": null,
+        "Varie": null,
+        "Plus": false,
+        "Fatturabile": false,
+        "Bloccato": null,
+        "SpeseVarie": null,
+        "Docente": null
+    }
