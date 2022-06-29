@@ -42,6 +42,7 @@ sap.ui.define(
         // Check inputs and token
         if (username != "" || password != "") {
           this.sendRequest(username, password);
+          var token = sessionStorage.getItem("token");
         } else {
           MessageBox.error("L'utente o la password non sono stati inseriti");
         }
