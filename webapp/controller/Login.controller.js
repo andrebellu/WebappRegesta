@@ -79,7 +79,6 @@ sap.ui.define(
 
       handleResult: function(result) {
         var token = result;
-        console.log(token);
         if (token.includes("<html>") || token === "" || token === null) {
           MessageBox.error("Credenziali non valide. Riprova");
           return false;
