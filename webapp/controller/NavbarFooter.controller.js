@@ -30,15 +30,6 @@ sap.ui.define([
 				}.bind(this));
 			}
 		},
-		fnChange: function(oEvent)
-		{
-			MessageToast.show("Change event was fired from " + oEvent.getParameter("itemPressed").getId()
-				+ ". It has targetSrc: "
-				+ oEvent.getParameter("itemPressed").getTargetSrc()
-				+ " and target: "
-				+ oEvent.getParameter("itemPressed").getTarget()
-				+ ".");
-		},
 		fnOpen: function(oEvent) 
 		{
 			var oButton = oEvent.getParameter("button");
@@ -54,10 +45,6 @@ sap.ui.define([
 				oPopover.close();
 			});
 		},
-        test: function()
-        {
-            MessageToast.show("Test");
-        },
 		tickets: function(oEvent){
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			oRouter.navTo("RouteTickets");

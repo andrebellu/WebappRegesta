@@ -69,10 +69,6 @@ sap.ui.define(
           }
           msgT.show(msg);
         },
-  
-        clicked: function () {
-          msgT.show("Rapportino clicked");
-        },
         showPopup: function () {
           if (!this.pDialog) {
             this.pDialog = this.loadFragment({
