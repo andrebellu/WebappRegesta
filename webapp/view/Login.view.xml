@@ -17,13 +17,13 @@
                 id="nameInput"
                 class="roundedInput"
                 placeholder="Inserisci il nome utente"
-                valueStateText="La casella non deve essere vuota. Massimo 10 caratteri"
+                valueStateText="La casella non deve essere vuota. Massimo 50 caratteri"
                 value="{
                     path : '/name',
                     type : 'sap.ui.model.type.String',
                     constraints : {
                         minLength: 1,
-                        maxLength: 50
+                        maxLength: 2
                     }
                 }"
                 change= ".onNameChange" />

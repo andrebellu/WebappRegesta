@@ -29,28 +29,6 @@ sap.ui.define(
         oMM.registerObject(oView.byId("passwordInput"), true);
       },
 
-      _validateInput: function (oInput) {
-        var sValueState = "None";
-        var bValidationError = false;
-        var oBinding = oInput.getBinding("value");
-
-        try {
-          oBinding.getType().validateValue(oInput.getValue());
-        } catch (oException) {
-          sValueState = "Error";
-          bValidationError = true;
-        }
-
-        oInput.setValueState(sValueState);
-
-        return bValidationError;
-      },
-
-      onNameChange: function (oEvent) {
-        var oInput = oEvent.getSource();
-        this._validateInput(oInput);
-      },
-
       onSubmit: function () {
         // collect input controls
         var oView = this.getView();
@@ -61,15 +39,16 @@ sap.ui.define(
         // Store password input value in variable
         var password = oView.byId("passwordInput").getValue();
 
-        // Validation does not happen during data binding as this is only triggered by user actions.
-        // Check if the inputs are empty
-        if (username === "" || password === "") {
-            MessageBox.error(
-                "L'utente o la password sono errati, inseriscili di nuovo"
-              );
+        // Check inputs and token
+        if (username != "" || password != "") {
+          this.sendRequest(username, password);
+        } else {
+          MessageBox.error("L'utente o la password non sono stati inseriti");
         }
+      },
 
-        //* API Requests
+      sendRequest: function(username, password) {
+        //! API Requests
         // Define headers
         var myHeaders = new Headers();
         myHeaders.append(
@@ -82,36 +61,36 @@ sap.ui.define(
           method: "POST",
           headers: myHeaders,
           redirect: "follow",
-          mode: "cors",
         };
 
         // Send POST request and print result
         fetch(
-          "https://asstest.regestaitalia.it/api_v2/login?username=" + username + "&password=" + password,
+          "https://asstest.regestaitalia.it/api_v2/login?username=" +
+            username +
+            "&password=" +
+            password,
           requestOptions
         )
           .then((response) => response.text())
-          .then((result) => {
-            // save result in local storage
-            localStorage.setItem("token", result);
-          })
+          .then((result) => this.handleResult(result))
           .catch((error) => console.log("error", error));
-        
-          var token = localStorage.getItem("token");
-          // Check if the login is correct by checking if the token is not a html page
-          if (token.indexOf("<html>") > -1) {
-            MessageBox.error(
-                "L'utente o la password sono errati, inseriscili di nuovo"
-              );
-          } else {
-            // Save token in local storage
-            localStorage.setItem("token", token);
-            // Navigate to the home page
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.navTo("RouteHome");
-          }
-
       },
+
+      handleResult: function(result) {
+        var token = result;
+        console.log(token);
+        if (token.includes("<html>") || token === "" || token === null) {
+          MessageBox.error("Credenziali non valide. Riprova");
+          return false;
+        } else {
+          // Store token in local storage
+          sessionStorage.setItem("token", token);
+          // Redirect to home page
+          var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+          oRouter.navTo("RouteHome");
+          return true;
+        }
+      }
     });
   }
 );
