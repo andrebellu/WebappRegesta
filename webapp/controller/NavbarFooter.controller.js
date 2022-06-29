@@ -41,7 +41,6 @@ sap.ui.define(
                     }
                 },
                 fnChange: function (oEvent) {
-
                     if (
                         oEvent.getParameter("itemPressed").getId() ===
                         "__item0-__switch0-0"
@@ -52,57 +51,56 @@ sap.ui.define(
                     } else if (
                         oEvent.getParameter("itemPressed").getId() ===
                         "__item0-__switch0-1"
-                    ){
-						window.open("https://www.regestaitalia.eu/", "_blank");
-					}else{
-						window.open("https://github.com/andrebellu/WebappRegesta", "_blank");
-					}
-         },
+                    ) {
+                        window.open("https://www.regestaitalia.eu/", "_blank");
+                    } else {
+                        window.open(
+                            "https://github.com/andrebellu/WebappRegesta",
+                            "_blank"
+                        );
+                    }
+                },
 
-		fnOpen: function(oEvent) 
-		{
-			var oButton = oEvent.getParameter("button");
-			this._pPopover.then(function(oPopover)
-			{
-				oPopover.openBy(oButton);
-			});
-		},
-		fnClose: function() 
-		{
-			this._pPopover.then(function(oPopover)
-			{
-				oPopover.close();
-			});
-		},
-        test: function()
-        {
-            MessageToast.show("Test");
-        },
-		tickets: function(oEvent){
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("RouteTickets");
-		},
-		rapportini: function(oEvent){
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			oRouter.navTo("RouteHome");
-		},
-		showPopup: function () {
-			if (!this.pDialog) {
-			  this.pDialog = this.loadFragment({
-				name: "regesta.regestarapportini.fragments.Popup",
-			  });
-			}
-			this.pDialog.then(function (oDialog) {
-			  oDialog.open();
-			  
-			});
-		  },
-		  onSave: function (oEvent) {
-			this.byId("popup").close();
-		  },
-	
-		  onCancel: function (oEvent) {
-			this.byId("popup").close();
-		  },
-	});
-});
+                fnOpen: function (oEvent) {
+                    var oButton = oEvent.getParameter("button");
+                    this._pPopover.then(function (oPopover) {
+                        oPopover.openBy(oButton);
+                    });
+                },
+                fnClose: function () {
+                    this._pPopover.then(function (oPopover) {
+                        oPopover.close();
+                    });
+                },
+                test: function () {
+                    MessageToast.show("Test");
+                },
+                goToTickets: function (oEvent) {
+                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                    oRouter.navTo("RouteHome");
+                },
+                goToRapportini: function (oEvent) {
+                    var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                    oRouter.navTo("RouteTickets");
+                },
+                showPopup: function () {
+                    if (!this.pDialog) {
+                        this.pDialog = this.loadFragment({
+                            name: "regesta.regestarapportini.fragments.Popup",
+                        });
+                    }
+                    this.pDialog.then(function (oDialog) {
+                        oDialog.open();
+                    });
+                },
+                onSave: function (oEvent) {
+                    this.byId("popup").close();
+                },
+
+                onCancel: function (oEvent) {
+                    this.byId("popup").close();
+                },
+            }
+        );
+    }
+);
