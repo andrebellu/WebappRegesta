@@ -2,11 +2,11 @@
 
 //! API su endpoint https://asstest.regestaitalia.it/
 
-// !POST /api_v2/login?username=...&password=...
+// !POST https://asstest.regestaitalia.it/api_v2/login?username=...&password=...
 //* restituisce una stringa col token autorizzativo
 
 
-//! POST /api_v2/rapportini?token=...
+//! POST https://asstest.regestaitalia.it/api_v2/rapportini?token=...
 //* restituisce un Json con un array di oggetti contente l’elenco dei rapportini del mese dell’utente
 {
         "IDRapportino": 595443,
@@ -48,7 +48,7 @@
 
 
 
-//! POST /api_v2/clienti?token=...&idCliente=0
+//! POST https://asstest.regestaitalia.it/api_v2/clienti?token=...&idCliente=0
 //* restituisce un Json con un array di oggetti contente l’elenco dei clienti; se idCliente=0 tutti i cliente, altrimenti di uno specifico IDCliente
 
 
@@ -62,7 +62,7 @@
    }....
 
 
-//! POST /api_v2/commesse?token=...&idCommessa=0&idCliente=0
+//! POST https://asstest.regestaitalia.it/api_v2/commesse?token=...&idCommessa=0&idCliente=0
 //* restituisce un Json con un array di oggetti contente l’elenco delle commesse; se idCommessa=0 tutte altrimenti una particolare; se idCliente diverso da 0 solo le commesse di quel cliente
  {
         "IDCommessa": 1965,
@@ -75,7 +75,7 @@
    }....
 
 
-//! POST /api_v2/nuovorapportino?token=... 
+//! POST https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=... 
 //* nel body della chiamata deve esserci il Json dell’oggetto rapportino
 {
         "IDRapportino": 595443,
