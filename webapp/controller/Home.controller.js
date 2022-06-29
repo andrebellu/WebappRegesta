@@ -127,6 +127,7 @@ sap.ui.define(
         msgT.show("Delete");
       },
 
+      //! Dialog box
       showPopup: function () {
         if (!this.pDialog) {
           this.pDialog = this.loadFragment({
