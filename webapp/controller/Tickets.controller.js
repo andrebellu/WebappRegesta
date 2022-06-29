@@ -72,7 +72,7 @@ sap.ui.define(
         showPopup: function () {
           if (!this.pDialog) {
             this.pDialog = this.loadFragment({
-              name: "regesta.regestarapportini.fragments.Popup",
+              name: "regesta.regestarapportini.fragments.Details",
             });
           }
           this.pDialog.then(function (oDialog) {
