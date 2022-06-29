@@ -24,7 +24,7 @@
             minLength: 1,
             maxLength: 16
         }
-    }" id="date" class="roundedInput" placeholder="Giorno" width="100%" valueStateText="La casella non deve essere vuota." showCurrentDateButton="true" enabled="true"/>
+    }" id="date" class="roundedInput" displayFormat="dd/MM/yyyy" placeholder="Giorno" width="100%" valueStateText="La casella non deve essere vuota." showCurrentDateButton="true" enabled="true"/>
 
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true"/>
