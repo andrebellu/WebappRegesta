@@ -7,7 +7,6 @@
 
 	<Page>
 		<footer class="footer">
-			<Label text="KFBOEBFOLEFHOFNEAOLFNLOAEN" />
 			<Toolbar>
 				<ToolbarSpacer/>
 				<Button icon="sap-icon://activities" press="goToTickets" />

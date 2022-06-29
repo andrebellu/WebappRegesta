@@ -13,7 +13,30 @@ sap.ui.define(
         return Controller.extend(
             "regesta.regestarapportini.controller.NavbarFooter",
             {
-                onInit: function () {
+                onInit: function () {},
+
+                fnChange: function (oEvent) {
+                    if (
+                        oEvent.getParameter("itemPressed").getId() ===
+                        "__item0-__switch0-0"
+                    ) {
+                        var oRouter =
+                            sap.ui.core.UIComponent.getRouterFor(this);
+                        oRouter.navTo("RouteLogin");
+                    } else if (
+                        oEvent.getParameter("itemPressed").getId() ===
+                        "__item0-__switch0-1"
+                    ) {
+                        window.open("https://www.regestaitalia.eu/", "_blank");
+                    } else {
+                        window.open(
+                            "https://github.com/andrebellu/WebappRegesta",
+                            "_blank"
+                        );
+                    }
+                },
+
+                fnOpen: function (oEvent) {
                     var oModel = new JSONModel("model/icons.json"),
                         oView = this.getView();
                     this.getView().setModel(oModel);
@@ -39,42 +62,19 @@ sap.ui.define(
                             }.bind(this)
                         );
                     }
-                },
-                fnChange: function (oEvent) {
-                    if (
-                        oEvent.getParameter("itemPressed").getId() ===
-                        "__item0-__switch0-0"
-                    ) {
-                        var oRouter =
-                            sap.ui.core.UIComponent.getRouterFor(this);
-                        oRouter.navTo("RouteLogin");
-                    } else if (
-                        oEvent.getParameter("itemPressed").getId() ===
-                        "__item0-__switch0-1"
-                    ) {
-                        window.open("https://www.regestaitalia.eu/", "_blank");
-                    } else {
-                        window.open(
-                            "https://github.com/andrebellu/WebappRegesta",
-                            "_blank"
-                        );
-                    }
-                },
 
-                fnOpen: function (oEvent) {
                     var oButton = oEvent.getParameter("button");
                     this._pPopover.then(function (oPopover) {
                         oPopover.openBy(oButton);
                     });
                 },
+
                 fnClose: function () {
                     this._pPopover.then(function (oPopover) {
                         oPopover.close();
                     });
                 },
-                test: function () {
-                    MessageToast.show("Test");
-                },
+
                 goToTickets: function (oEvent) {
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                     oRouter.navTo("RouteHome");
@@ -83,6 +83,7 @@ sap.ui.define(
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                     oRouter.navTo("RouteTickets");
                 },
+
                 showPopup: function () {
                     if (!this.pDialog) {
                         this.pDialog = this.loadFragment({
@@ -93,12 +94,33 @@ sap.ui.define(
                         oDialog.open();
                     });
                 },
+
                 onSave: function (oEvent) {
                     this.byId("popup").close();
                 },
 
                 onCancel: function (oEvent) {
                     this.byId("popup").close();
+                },
+
+                checkHours: function (oEvent) {
+                    var oButton = oEvent.getSource(),
+                        oView = this.getView();
+
+                    // create popover
+                    if (!this._pPopover) {
+                        this._pPopover = Fragment.load({
+                            id: oView.getId(),
+                            name: "regesta.regestarapportini.fragments.ShowHours",
+                            controller: this,
+                        }).then(function (oPopover) {
+                            oView.addDependent(oPopover);
+                            return oPopover;
+                        });
+                    }
+                    this._pPopover.then(function (oPopover) {
+                        oPopover.openBy(oButton);
+                    });
                 },
             }
         );
