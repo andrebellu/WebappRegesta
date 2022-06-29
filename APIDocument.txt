@@ -110,3 +110,6 @@
         "SpeseVarie": null,
         "Docente": null
     }
+
+//! POST https://asstest.regestaitalia.it/api_v2/sedi?token=...&idCliente= 
+//* Elenco delle sedi
