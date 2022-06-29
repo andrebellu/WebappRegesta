@@ -12,7 +12,7 @@
 				<Button icon="sap-icon://activities" press="tickets" />
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://add" press="test"/>
+				<Button icon="sap-icon://add" press="showPopup"/>
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
 				<Button icon="sap-icon://receipt" press="rapportini"/>

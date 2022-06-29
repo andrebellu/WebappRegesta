@@ -65,6 +65,24 @@ sap.ui.define([
 		rapportini: function(oEvent){
 			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
 			oRouter.navTo("RouteHome");
-		}
+		},
+		showPopup: function () {
+			if (!this.pDialog) {
+			  this.pDialog = this.loadFragment({
+				name: "regesta.regestarapportini.fragments.Popup",
+			  });
+			}
+			this.pDialog.then(function (oDialog) {
+			  oDialog.open();
+			  
+			});
+		  },
+		  onSave: function (oEvent) {
+			this.byId("popup").close();
+		  },
+	
+		  onCancel: function (oEvent) {
+			this.byId("popup").close();
+		  },
 	});
 });
