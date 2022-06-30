@@ -186,7 +186,7 @@ sap.ui.define(
           }
 
           if (
-            gg == Number(date.getDate()) - 7 ||
+            
             date.getDay() < h ||
             Math.abs(date.getDate() - gg) > 7 ||
             date.getMonth() + 1 != month ||

@@ -17,6 +17,7 @@ sap.ui.define([
              * @override
              */
             init: function () {
+                sap.ui.getCore().getConfiguration().setFormatLocale("it-IT");
                 // call the base component's init function
                 UIComponent.prototype.init.apply(this, arguments);
 
