@@ -1,0 +1,75 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog 
+        xmlns="sap.m" title="Ticket" type="Message" id="popup" class="dialogStyle">
+
+        <Label text="Utente" class="labelMargin" />
+        <Input value="{
+        value : 'studente@notanemail.com',
+        type : 'sap.ui.model.type.String',
+        constraints : {
+            minLength: 1,
+            maxLength: 50
+        }
+    }" type="Text" change= ".onNameChange" width= "100%" enabled= "false" id="user" class="roundedInput"/>
+
+        <Label text=" Data di inserimento" class="labelMargin"/>
+        <DatePicker value="{
+        value : '20/07/2022',   
+        path : '/date',
+        type : 'sap.ui.model.type.String',
+        constraints : {
+            minLength: 1,
+            maxLength: 16
+        }
+    }" id="date" class="roundedInput" width="100%" enabled="false"/>
+
+        <Label text="Titolo" class="labelMargin"/>
+        <Input value="{
+        value : 'Maronne kick',
+        type : 'sap.ui.model.type.String',
+        constraints : {
+            minLength: 1,
+            maxLength: 3
+        }
+    }" class="roundedInput" textAlign="Left" width="100%" enabled="false"/>
+
+        <Label text="ID Ticket" class="labelMargin"/>
+        <Input value="{
+        value: '123456',    
+        type : 'sap.ui.model.type.String',
+        constraints : {
+             minLength: 1
+        }
+    }" class="roundedInput" width="100%" enabled="false"/>
+    
+        <Label text="Cliente" class="labelMargin"/>
+        <Input value="{
+        value : 'ClienteTicket',
+        path : '/client',
+        type : 'sap.ui.model.type.String'
+    }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
+
+        <Label text="ID Commessa" class="labelMargin"/>
+        <Input value="{
+        value : '17680',
+        type : 'sap.ui.model.type.String'
+    }" type="Text" width= "100%" enabled= "false" class="roundedInput"/>
+
+        <Label text="Data consegna richiesta" class="labelMargin"/>
+         <Input value="{
+        value : '08/07/2022',
+        type : 'sap.ui.model.type.String'
+    }" type="Text" width= "100%" enabled= "false" class="roundedInput"/>
+
+        <Label text="Stato" class="labelMargin"/>
+        <Input value="{
+        value : 'Attivo',
+        type : 'sap.ui.model.type.String'
+    }" type="Text" width= "100%" enabled= "false" class="roundedInput"/>
+
+        <FlexBox class="closeDialog">
+            <Button text="Chiudi" press= ".onCancel" enabled="true" class="dialogButton"/>
+        </FlexBox>
+    </Dialog>
+</core:FragmentDefinition>

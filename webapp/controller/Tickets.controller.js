@@ -72,18 +72,17 @@ sap.ui.define(
         showPopup: function () {
           if (!this.pDialog) {
             this.pDialog = this.loadFragment({
-              name: "regesta.regestarapportini.fragments.Details",
-            });
+              name: "regesta.regestarapportini.fragments.PopupTicket",
+            })
+            var oModel = new JSONModel("model/dataT.json");
+            this.getView.addDependent(this.pDialog)
+            this.pDialog.ResourceModel(oModel);
           }
           this.pDialog.then(function (oDialog) {
             oDialog.open();
             
           });
         },
-        onSave: function (oEvent) {
-          this.byId("popup").close();
-        },
-  
         onCancel: function (oEvent) {
           this.byId("popup").close();
         },
