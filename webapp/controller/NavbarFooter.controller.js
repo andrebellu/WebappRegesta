@@ -10,6 +10,8 @@ sap.ui.define(
     function (Device, Controller, JSONModel, Button, MessageToast, Fragment) {
         "use strict";
 
+        var token = sessionStorage.getItem("token");
+
         return Controller.extend(
             "regesta.regestarapportini.controller.NavbarFooter",
             {
@@ -80,11 +82,11 @@ sap.ui.define(
 
                 goToTickets: function (oEvent) {
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                    oRouter.navTo("RouteHome");
+                    oRouter.navTo("RouteHome", { token: token });
                 },
                 goToRapportini: function (oEvent) {
                     var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-                    oRouter.navTo("RouteTickets");
+                    oRouter.navTo("RouteTickets", { token: token });
                 },
 
                 showPopup: function () {
