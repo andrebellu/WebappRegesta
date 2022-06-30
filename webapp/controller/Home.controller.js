@@ -159,16 +159,14 @@ sap.ui.define(
             },
 
             //! Dialog box
-            // source = oEvent.getSource()
-            // source.getBindingContext()
-            // source.getBindingContext().getObject()
-            _getData: function (oEvent) {
-                var source = oEvent.getSource();
-                source.getBindingContext()
-                source.getBindingContext().getObject()
-            },
 
             showPopup: function (oEvent) {
+                var source = oEvent.getSource();
+                var index = source.getBindingContext().getPath();
+                this.getView().getModel().setProperty("/index", index);
+                var path = this.getView().getModel().getProperty("/index");
+                this.getView().getModel().setProperty("/path", path);
+
                 if (!this.pDialog) {
                     this.pDialog = this.loadFragment({
                         name: "regesta.regestarapportini.fragments.Details",
