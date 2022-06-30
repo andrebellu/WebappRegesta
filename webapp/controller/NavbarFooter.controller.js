@@ -95,7 +95,7 @@ sap.ui.define(
           oRouter.navTo("RouteTickets", { token: token });
         },
 
-        showPopup: function () {
+        showPopup: function (oEvent) {
           if (!this.pDialog) {
             this.pDialog = this.loadFragment({
               name: "regesta.regestarapportini.fragments.Popup",
