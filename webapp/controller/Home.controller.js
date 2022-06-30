@@ -36,26 +36,39 @@ sap.ui.define(
         "use strict";
 
         var CalendarType = coreLibrary.CalendarType;
+        var today;
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
             oFormatYyyymmdd: null,
 
             onInit: function () {
                 var oModel = new JSONModel("model/data.json");
+                var i18nModel = new ResourceModel({
+                    bundleName: "regesta.regestarapportini.i18n.i18n",
+                });
 
                 this.getView().setModel(oModel);
+                this.getView().setModel(i18nModel, "i18n");
 
                 this.oFormatYyyymmdd = DateFormat.getInstance({
                     pattern: "dd-MM-yyyy",
                     calendarType: CalendarType.Gregorian,
                 });
-                // set i18n model on view
-                var i18nModel = new ResourceModel({
-                    bundleName: "regesta.regestarapportini.i18n.i18n",
-                });
-                this.getView().setModel(i18nModel, "i18n");
 
                 this.APICall();
+                this.getCurrentDate();
+            },
+
+            getCurrentDate: function () {
+                today = new Date();
+                var yyyy = today.getFullYear();
+                var mm = today.getMonth() + 1;
+                var dd = today.getDate();
+
+                if (dd < 10) dd = "0" + +dd;
+                if (mm < 10) mm = "0" + mm;
+
+                today = dd + "/" + mm + "/" + yyyy;
             },
 
             APICall: function () {
@@ -74,7 +87,7 @@ sap.ui.define(
                     )
                     .catch((error) => console.log("error", error));
 
-                console.log(localStorage.getItem("data")); 
+                console.log(localStorage.getItem("data"));
             },
 
             handleSwipe: function (oEvent) {
@@ -130,10 +143,10 @@ sap.ui.define(
                 var sDate = sRecipient.split("/");
                 sRecipient = sDate[1] + "/" + sDate[0] + "/" + sDate[2];
 
-                var sMsg = oBundle.getText("currentDate", [sRecipient]);
+                var data = oBundle.getText("currentDate", [sRecipient]);
                 document.getElementById(
                     "container-regesta.regestarapportini---Home--btn-BDI-content"
-                ).innerHTML = sMsg;
+                ).innerHTML = data;
             },
 
             handleDuplicate: function (oEvent) {
