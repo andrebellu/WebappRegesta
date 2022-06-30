@@ -3,6 +3,14 @@
     height: 0px;
 }
 
+html ul {
+    padding: 0.5rem 0.5rem 8rem 0.5rem !important;
+}
+
+/* #__container0{
+    margin-bottom: 50px !important;
+} */
+
 .dialogButton {
     margin: 5px 5px 0 0 !important;
 }
@@ -50,7 +58,6 @@
 .calendar {
     width: 100vw !important;
     border-radius: 10px;
-    margin-bottom: 15px;
 }
 
 .item {
@@ -157,7 +164,7 @@ input:focus textarea {
     position: fixed;
 }
 
-.hTitle{
+.hTitle {
     font-size: 20px;
     font-family: "Poppins", sans-serif;
     font-weight: bold;
