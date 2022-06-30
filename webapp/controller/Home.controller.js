@@ -36,10 +36,8 @@ sap.ui.define(
         "use strict";
 
         var CalendarType = coreLibrary.CalendarType;
-        var today;
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
-            oFormatYyyymmdd: null,
 
             onInit: function () {
                 var oModel = new JSONModel();
@@ -60,7 +58,7 @@ sap.ui.define(
             },
 
             getCurrentDate: function () {
-                today = new Date();
+                var today = new Date();
                 var yyyy = today.getFullYear();
                 var mm = today.getMonth() + 1;
                 var dd = today.getDate();
@@ -87,8 +85,6 @@ sap.ui.define(
                     .then((response) => response.text())
                     .then((result) => this.handleData(result))
                     .catch((error) => console.log("error", error));
-
-                console.log(localStorage.getItem("data"));
             },
 
             handleData: function (result) {
@@ -143,8 +139,6 @@ sap.ui.define(
                     .getResourceBundle();
 
                 var sRecipient = oEvent.getParameter("value");
-                var sDate = sRecipient.split("/");
-                sRecipient = sDate[1] + "/" + sDate[0] + "/" + sDate[2];
 
                 var data = oBundle.getText("currentDate", [sRecipient]);
                 document.getElementById(
