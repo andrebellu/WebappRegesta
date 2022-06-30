@@ -17,14 +17,17 @@
 
         <!--! Input date with datepicker -->
         <Label text="Giorno" class="labelMargin" required="true"/>
-        <DatePicker value="{
+        <DatePicker 
+        valueFormat="dd/MM/yyyy" 
+        displayFormat="dd/MM/yyyy"
+        value="{
         path : '/date',
-        type : 'sap.ui.model.type.Date',
+        type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
-            maxLength: 16
+            maxLength: 10
         }
-    }" id="date" class="roundedInput" displayFormat="dd/MM/yyyy" placeholder="Giorno" width="100%" valueStateText="La casella non deve essere vuota." showCurrentDateButton="true" enabled="true"/>
+    }" id="date" class="roundedInput" placeholder="Giorno" width="100%" valueStateText="La casella non deve essere vuota." showCurrentDateButton="true" enabled="true"/>
 
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true"/>
@@ -77,7 +80,8 @@
         path : '/site',
         type : 'sap.ui.model.type.String',
         constraints : {
-            minLength: 1
+            minLength: 1,
+            maxLength: 2
         }
     }" class="roundedInput" width="100%" enabled="true" id="site" placeholder="Sede">
             <items>
@@ -99,7 +103,10 @@
         <Label text="Descrizione" class="labelMargin" required="true"/>
         <Input value="{
         path : '/description',
-        type : 'sap.ui.model.type.String'
+        type : 'sap.ui.model.type.String',
+        constraints : {
+            minLength: 1
+        }
     }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "true" id="description" class="roundedInput" placeholder="Descrizione"/>
 
         <!-- Checkboxes in flexbox -->
