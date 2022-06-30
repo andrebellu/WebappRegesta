@@ -162,6 +162,12 @@ sap.ui.define(
             // source = oEvent.getSource()
             // source.getBindingContext()
             // source.getBindingContext().getObject()
+            _getData: function (oEvent) {
+                var source = oEvent.getSource();
+                source.getBindingContext()
+                source.getBindingContext().getObject()
+            },
+
             showPopup: function (oEvent) {
                 if (!this.pDialog) {
                     this.pDialog = this.loadFragment({
