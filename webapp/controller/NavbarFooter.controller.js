@@ -184,17 +184,15 @@ sap.ui.define(
           } else {
             var h = Number(new Date(year1, month1, gg1).getDay()) - 1;
           }
-          console.log(oInput.getValue());
 
           if (
-            gg==Number(date.getDate())-7 ||
+            gg == Number(date.getDate()) - 7 ||
             date.getDay() < h ||
             Math.abs(date.getDate() - gg) > 7 ||
             date.getMonth() + 1 != month ||
             date.getFullYear() != Number(year) + 2000 ||
             oInput == ""
-            )
-           {
+          ) {
             try {
               oBinding.getType().validateValue(oInput.getValue());
             } catch (oException) {
@@ -204,9 +202,6 @@ sap.ui.define(
           }
 
           oInput.setValueState(sValueState);
-          console.log(oInput.getValue());
-          console.log(oInput.getValueState());
-          console.log(bValidationError);
           return bValidationError;
         },
       }
