@@ -85,9 +85,11 @@ sap.ui.define(
         } else {
           // Store token in local storage
           sessionStorage.setItem("token", token);
-          // Redirect to home page
+
+          // Navigate to home page passing token as parameter
           var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-          oRouter.navTo("RouteHome");
+          oRouter.navTo("RouteHome", { token: token });
+        
           return true;
         }
       }

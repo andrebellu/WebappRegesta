@@ -95,7 +95,7 @@
       "routes": [
         {
           "name": "RouteHome",
-          "pattern": "home",
+          "pattern": "home/{token}",
           "target": [
             "TargetHome"
           ]
