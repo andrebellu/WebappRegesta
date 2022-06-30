@@ -105,12 +105,12 @@
                 },
                 {
                     "name": "RouteN",
-                    "pattern": "nav",
+                    "pattern": "nav/{token}",
                     "target": ["TargetNav"]
                 },
                 {
                     "name": "RouteTickets",
-                    "pattern": "tickets",
+                    "pattern": "tickets/{token}",
                     "target": ["TargetTickets"]
                 }
             ],
