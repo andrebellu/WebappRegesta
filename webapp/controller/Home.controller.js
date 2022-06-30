@@ -82,12 +82,16 @@ sap.ui.define(
                     requestOptions
                 )
                     .then((response) => response.text())
-                    .then((result) =>
-                        localStorage.setItem("data", JSON.stringify(result))
-                    )
+                    .then((result) => this.handleData(result))
                     .catch((error) => console.log("error", error));
 
                 console.log(localStorage.getItem("data"));
+            },
+
+            handleData: function (result) {
+                var oModel = this.getView().getModel();
+                var items = JSON.parse(result);
+                oModel.setProperty("/items", items);
             },
 
             handleSwipe: function (oEvent) {
@@ -113,10 +117,6 @@ sap.ui.define(
             handleMore: function (oEvent) {
                 var oButton = oEvent.getSource();
                 this.byId("actionSheet").openBy(oButton);
-            },
-
-            clicked: function () {
-                msgT.show("Rapportino clicked");
             },
 
             handleSelectToday: function (oEvent) {
@@ -162,7 +162,10 @@ sap.ui.define(
             },
 
             //! Dialog box
-            showPopup: function () {
+            // source = oEvent.getSource()
+            // source.getBindingContext()
+            // source.getBindingContext().getObject()
+            showPopup: function (oEvent) {
                 if (!this.pDialog) {
                     this.pDialog = this.loadFragment({
                         name: "regesta.regestarapportini.fragments.Details",
