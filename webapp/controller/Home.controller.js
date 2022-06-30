@@ -74,7 +74,7 @@ sap.ui.define(
                     )
                     .catch((error) => console.log("error", error));
 
-                console.log(localStorage.getItem("data")); 
+                console.log(localStorage.getItem("data"));
             },
 
             handleSwipe: function (oEvent) {
