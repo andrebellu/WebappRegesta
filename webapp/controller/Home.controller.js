@@ -42,7 +42,7 @@ sap.ui.define(
             oFormatYyyymmdd: null,
 
             onInit: function () {
-                var oModel = new JSONModel("model/data.json");
+                var oModel = new JSONModel();
                 var i18nModel = new ResourceModel({
                     bundleName: "regesta.regestarapportini.i18n.i18n",
                 });
@@ -65,10 +65,13 @@ sap.ui.define(
                 var mm = today.getMonth() + 1;
                 var dd = today.getDate();
 
-                if (dd < 10) dd = "0" + +dd;
+                if (dd < 10) dd = "0" + dd;
                 if (mm < 10) mm = "0" + mm;
 
                 today = dd + "/" + mm + "/" + yyyy;
+
+                var oModel = this.getView().getModel();
+                oModel.setProperty("/date", today);
             },
 
             APICall: function () {
