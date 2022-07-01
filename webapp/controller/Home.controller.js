@@ -82,8 +82,13 @@ sap.ui.define(
                     redirect: "follow",
                 };
 
+                var token = sessionStorage.getItem("token");
+
+                token = token.replace(/"/g, "");
+                token = encodeURIComponent(token);
+
                 fetch(
-                    "https://asstest.regestaitalia.it/api_v2/rapportini?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d",
+                    "https://asstest.regestaitalia.it/api_v2/rapportini?token=" + token,
                     requestOptions
                 )
                     .then((response) => response.text())
@@ -138,7 +143,7 @@ sap.ui.define(
                             if (sAction === sap.m.MessageBox.Action.YES) {
                                 var token = sessionStorage.getItem("token");
 
-                                token = token.replace(/"/g, '');
+                                token = token.replace(/"/g, "");
                                 token = encodeURIComponent(token);
 
                                 var myHeaders = new Headers();
@@ -153,17 +158,15 @@ sap.ui.define(
                                     redirect: "follow",
                                 };
 
-                                var url = "https://asstest.regestaitalia.it/api_v2/eliminarapportino?token=" +
-                                token +
-                                "&idRapportino=" +
-                                id;
+                                var url =
+                                    "https://asstest.regestaitalia.it/api_v2/eliminarapportino?token=" +
+                                    token +
+                                    "&idRapportino=" +
+                                    id;
 
                                 console.log(url);
 
-                                fetch(
-                                    url,
-                                    requestOptions
-                                )
+                                fetch(url, requestOptions)
                                     .then((response) => response.text())
                                     .then((result) => console.log(result))
                                     .catch((error) =>
