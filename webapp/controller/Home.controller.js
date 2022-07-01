@@ -147,11 +147,8 @@ sap.ui.define(
             handleMore: function (oEvent) {
                 var oButton = oEvent.getSource();
                 this.byId("actionSheet").openBy(oButton);
-
+                
                 oList = oEvent.getSource().getParent();
-                // var idR = this.byId("MyBtn").data("id");
-
-                // console.log(idR);
 
                 console.log(oEvent.getSource().data("id"));
             },
