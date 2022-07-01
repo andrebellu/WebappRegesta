@@ -74,9 +74,6 @@ sap.ui.define(
             this.pDialog = this.loadFragment({
               name: "regesta.regestarapportini.fragments.PopupTicket",
             })
-            var oModel = new JSONModel("model/dataT.json");
-            this.getView.addDependent(this.pDialog)
-            this.pDialog.ResourceModel(oModel);
           }
           this.pDialog.then(function (oDialog) {
             oDialog.open();
