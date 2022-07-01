@@ -16,6 +16,7 @@ sap.ui.define(
     "sap/m/List",
     "sap/m/StandardListItem",
     "sap/m/Text",
+    "sap/ui/core/Element",
   ],
   function (
     Controller,
@@ -33,11 +34,13 @@ sap.ui.define(
     mLibrary,
     List,
     StandardListItem,
-    Text
+    Text,
+    Element
   ) {
     "use strict";
 
     var CalendarType = coreLibrary.CalendarType;
+    var oList;
 
     return Controller.extend("regesta.regestarapportini.controller.Home", {
       onInit: function () {
@@ -88,6 +91,33 @@ sap.ui.define(
           .catch((error) => console.log("error", error));
       },
 
+      APICallRemoveRapportino: function () {
+        var token = sessionStorage.getItem("token");
+
+        var myHeaders = new Headers();
+        myHeaders.append(
+          "Cookie",
+          "ASP.NET_SessionId=p42wuyurx1pcevyrkavscdxu"
+        );
+
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          redirect: "follow",
+        };
+
+        fetch(
+          "https://asstest.regestaitalia.it/api_v2/eliminarapportino?token=" +
+            token +
+            "d&idRapportino=" +
+            idRapportino,
+          requestOptions
+        )
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.log("error", error));
+      },
+
       handleData: function (result) {
         var oModel = this.getView().getModel();
         var items = JSON.parse(result);
@@ -117,6 +147,39 @@ sap.ui.define(
       handleMore: function (oEvent) {
         var oButton = oEvent.getSource();
         this.byId("actionSheet").openBy(oButton);
+
+        oList = oEvent.getSource().getParent();
+
+        console.log(oEvent.getSource().data("id"));
+      },
+
+      handleDuplicate: function (oEvent) {
+        msgT.show("Duplicate");
+      },
+
+      handleEdit: function (oEvent) {
+        msgT.show("Edit");
+      },
+
+      handleDelete: function (oEvent) {
+        sap.m.MessageBox.warning(
+          "Sei sicuro di voler eliminare questo rapportino?",
+          {
+            title: "Attenzione!",
+            actions: [
+              sap.m.MessageBox.Action.YES,
+              sap.m.MessageBox.Action.CANCEL,
+            ],
+            onClose: function (sAction) {
+              if (sAction === sap.m.MessageBox.Action.YES) {
+                // this.APICallRemoveRapportino();
+
+                oList.removeAggregation("items", oList.getSwipedItem());
+                oList.swipeOut();
+              }
+            },
+          }
+        );
       },
 
       handleSelectToday: function (oEvent) {
@@ -141,64 +204,39 @@ sap.ui.define(
         ).innerHTML = data;
       },
 
-      handleDuplicate: function (oEvent) {
-        msgT.show("Duplicate");
-      },
-
-      handleEdit: function (oEvent) {
-        msgT.show("Edit");
-      },
-
-      handleDelete: function (oEvent) {
-        sap.m.MessageBox.show("Sei sicuro di voler eliminare questo rapportino?", {
-            title: "Attenzione!",
-            actions: [
-                sap.m.MessageBox.Action.YES,
-                sap.m.MessageBox.Action.CANCEL,
-            ],
-            onClose: function (sAction) {
-                if (sAction === sap.m.MessageBox.Action.YES) {
-                    oView.byId("list").removeSelections(true);
-                }
-            }
-        });
-      },
-
       //! Dialog box
 
       showPopup: function (oEvent) {
         var source = oEvent.getSource();
         var context = source.getBindingContext();
+        if (context != undefined) {
         var index = source.getBindingContext().getPath();
         this.getView().getModel().setProperty("/index", index);
         var path = this.getView().getModel().getProperty("/index");
         this.getView().getModel().setProperty("/path", path);
+        console.log(path);
 
         // Get date from list item and convert it to string from timestamp
         var date = context.getProperty("Giorno");
         // Get numbers from input
-        var timeStamp = date.replace(/\D/g, '');
+        var timeStamp = date.replace(/\D/g, "");
         // Convert timestamp to date and format it to put it into the model
         var date = new Date(parseInt(timeStamp));
-        date = date.toLocaleDateString("it-IT")
-        this.getView().getModel().setProperty(path + "/Giorno", date);
-
+        date = date.toLocaleDateString("it-IT");
+        this.getView()
+          .getModel()
+          .setProperty(path + "/Giorno", date);
+        }
+        
         if (!this.pDialog) {
           this.pDialog = this.loadFragment({
             name: "regesta.regestarapportini.fragments.Details",
           });
         }
         this.pDialog.then(function (oDialog) {
-            oDialog.setBindingContext(context);
-            oDialog.open(); 
+          oDialog.setBindingContext(context);
+          oDialog.open();
         });
-
-        
-        
-      },
-
-      onSave: function (oEvent) {
-        this.byId("detailsDialog").close();
       },
 
       onCancel: function (oEvent) {

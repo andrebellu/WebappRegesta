@@ -6,7 +6,7 @@
         <!--! Input user -->
         <Label text="Utente" class="labelMargin" />
         <Input value="{
-        path : 'path',
+        path : 'Utente',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
@@ -19,7 +19,7 @@
         <DatePicker 
         displayFormat="dd/MM/yyyy"
         value="{
-        path : '/date',
+        path : 'Giorno',
         constraints : {
             minLength: 1,
             maxLength: 10
