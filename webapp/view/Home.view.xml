@@ -29,7 +29,7 @@
 
                     </items>
                     <swipeContent>
-                        <Button id="MyBtn" press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu" app:id="{IDRapportini}">
+                        <Button id="MyBtn" press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu" app:id="{/items/0/IDRapportino}">
                             <dependents>
                                 <core:Fragment fragmentName="regesta.regestarapportini.fragments.ActionSheet" type="XML" />
                             </dependents>
