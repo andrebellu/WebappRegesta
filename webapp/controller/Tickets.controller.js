@@ -48,6 +48,7 @@ sap.ui.define(
                     this.getView().setModel(i18nModel, "i18n");
                     this.APIclienti();
                     this.APIcommesse();
+                    this.APIticket();
                     this.getView().getModel().setSizeLimit("10000");
                 },
 
@@ -121,7 +122,6 @@ sap.ui.define(
                   var oModel = this.getView().getModel();
                   var clienti = JSON.parse(result);
                   oModel.setProperty("/clienti", clienti);
-                  console.log(oModel.getProperty("/clienti"));
                 },
                 APIcommesse: function(){
                   var request = {
@@ -136,6 +136,23 @@ sap.ui.define(
                 handleCommesse: function(result){
                   var oModel = this.getView().getModel();
                   var commesse = JSON.parse(result);
+                  oModel.setProperty("/commesse", commesse);
+                },
+                APIticket: function(){
+                  var request = {
+                    method : "POST",
+                    redirect : "follow",
+                  };
+                  fetch("https://asstest.regestaitalia.it/api_v2/ticket?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idTicket=0", request)
+                    .then((response) => response.text())
+                    .then((result) => this.handleTicket(result))
+                    .catch((error) => console.log("error", error));
+                },
+                handleTicket: function(result){
+                  var oModel = this.getView().getModel();
+                  var ticket = JSON.parse(result);
+                  oModel.setProperty("/ticket", ticket);
+                  console.log(oModel.getProperty("/ticket"));
                 }
 
             }
