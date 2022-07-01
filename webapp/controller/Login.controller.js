@@ -35,7 +35,7 @@ sap.ui.define(
 
         // Store user input value in variable
         var username = oView.byId("nameInput").getValue();
-        localStorage.setItem("username", username);
+        sessionStorage.setItem("username", username);
 
         // Store password input value in variable
         var password = oView.byId("passwordInput").getValue();

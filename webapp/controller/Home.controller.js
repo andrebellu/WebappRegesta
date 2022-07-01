@@ -1,46 +1,46 @@
 sap.ui.define(
-    [
-        "sap/ui/core/mvc/Controller",
-        "sap/m/MessageToast",
-        "sap/ui/model/json/JSONModel",
-        "sap/ui/unified/DateRange",
-        "sap/ui/core/format/DateFormat",
-        "sap/ui/core/library",
-        "sap/ui/core/Fragment",
-        "sap/ui/model/resource/ResourceModel",
-        "sap/ui/core/IconPool",
-        "sap/m/Dialog",
-        "sap/m/Button",
-        "sap/m/MessageBox",
-        "sap/m/library",
-        "sap/m/List",
-        "sap/m/StandardListItem",
-        "sap/m/Text",
-        "sap/ui/core/Element",
-    ],
-    function (
-        Controller,
-        msgT,
-        JSONModel,
-        DateRange,
-        DateFormat,
-        coreLibrary,
-        Fragment,
-        ResourceModel,
-        MessageBox,
-        IconPool,
-        Dialog,
-        Button,
-        mLibrary,
-        List,
-        StandardListItem,
-        Text,
-        Element
-    ) {
-        "use strict";
+  [
+    "sap/ui/core/mvc/Controller",
+    "sap/m/MessageToast",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/unified/DateRange",
+    "sap/ui/core/format/DateFormat",
+    "sap/ui/core/library",
+    "sap/ui/core/Fragment",
+    "sap/ui/model/resource/ResourceModel",
+    "sap/ui/core/IconPool",
+    "sap/m/Dialog",
+    "sap/m/Button",
+    "sap/m/MessageBox",
+    "sap/m/library",
+    "sap/m/List",
+    "sap/m/StandardListItem",
+    "sap/m/Text",
+    "sap/ui/core/Element",
+  ],
+  function (
+    Controller,
+    msgT,
+    JSONModel,
+    DateRange,
+    DateFormat,
+    coreLibrary,
+    Fragment,
+    ResourceModel,
+    MessageBox,
+    IconPool,
+    Dialog,
+    Button,
+    mLibrary,
+    List,
+    StandardListItem,
+    Text,
+    Element
+  ) {
+    "use strict";
 
-        var CalendarType = coreLibrary.CalendarType;
-        var oList;
+    var CalendarType = coreLibrary.CalendarType;
+    var oList;
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
             onInit: function () {
@@ -217,11 +217,11 @@ sap.ui.define(
             showPopup: function (oEvent) {
                 var source = oEvent.getSource();
                 var context = source.getBindingContext();
+                if (context != undefined) {
                 var index = source.getBindingContext().getPath();
                 this.getView().getModel().setProperty("/index", index);
                 var path = this.getView().getModel().getProperty("/index");
                 this.getView().getModel().setProperty("/path", path);
-
                 // Get date from list item and convert it to string from timestamp
                 var date = context.getProperty("Giorno");
                 // Get numbers from input
@@ -230,19 +230,20 @@ sap.ui.define(
                 var date = new Date(parseInt(timeStamp));
                 date = date.toLocaleDateString("it-IT");
                 this.getView()
-                    .getModel()
-                    .setProperty(path + "/Giorno", date);
-
+                  .getModel()
+                  .setProperty(path + "/Giorno", date);
+                }
+                
                 if (!this.pDialog) {
-                    this.pDialog = this.loadFragment({
-                        name: "regesta.regestarapportini.fragments.Details",
-                    });
+                  this.pDialog = this.loadFragment({
+                    name: "regesta.regestarapportini.fragments.Details",
+                  });
                 }
                 this.pDialog.then(function (oDialog) {
-                    oDialog.setBindingContext(context);
-                    oDialog.open();
+                  oDialog.setBindingContext(context);
+                  oDialog.open();
                 });
-            },
+              },
 
             onSave: function (oEvent) {
                 this.byId("detailsDialog").close();
