@@ -6,8 +6,7 @@
         <!--! Input user -->
         <Label text="Utente" class="labelMargin" />
         <Input value="{
-        value : 'studente@notanemail.com',
-        path : '/name',
+        path : '/index',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
@@ -17,14 +16,15 @@
 
         <!--! Input date with datepicker -->
         <Label text="Giorno" class="labelMargin" required="true"/>
-        <DatePicker value="{
+        <DatePicker 
+        displayFormat="dd/MM/yyyy"
+        value="{
         path : '/date',
-        type : 'sap.ui.model.type.Date',
         constraints : {
             minLength: 1,
-            maxLength: 16
+            maxLength: 10
         }
-    }" id="date" class="roundedInput" placeholder="Giorno" width="100%" valueStateText="La casella non deve essere vuota." showCurrentDateButton="true" enabled="false"/>
+    }" id="date" class="roundedInput" change=".onGiornoChange" placeholder="dd/mm/yyyy" width="100%" showCurrentDateButton="true" enabled="false"/>
 
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true"/>

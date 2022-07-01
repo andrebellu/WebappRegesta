@@ -16,9 +16,9 @@
 
             <!-- <Label text="Rapportini" class="titleRP"/> -->
 
-            <Button id="btn" class="btnDP" ariaHasPopup="Dialog" text=" " press="openDatePicker" />
+            <Button id="btn" class="btnDP" ariaHasPopup="Dialog" text="{/date}" press="openDatePicker" />
 
-            <DatePicker id="HiddenDP" hideInput="true" change=".changeDateHandler" showCurrentDateButton="true"/>
+            <DatePicker id="HiddenDP" hideInput="true" change="changeDateHandler" showCurrentDateButton="true"/>
 
             <ScrollContainer height="100%" width="100%" vertical="true" horizontal="false" focusable="true">
                 <List noDataText="No element to display" items="{/items}" id="list">
