@@ -38,24 +38,29 @@ sap.ui.define(
         },
 
         fnChange: function (oEvent) {
-          var itemPressed = oEvent.getParameter("itemPressed").getId();
-          if (
-            itemPressed === "__item0-__switch0-0" ||
-            itemPressed === "__item1-__switch0-0"
-          ) {
-            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.navTo("RouteLogin");
-          } else if (
-            itemPressed === "__item0-__switch0-1" ||
-            itemPressed === "__item1-__switch0-1"
-          ) {
-            window.open("https://www.regestaitalia.eu/", "_blank");
-          } else {
-            window.open(
-              "https://github.com/andrebellu/WebappRegesta",
-              "_blank"
-            );
-          }
+            var itemPressed = oEvent
+                .getParameter("itemPressed")
+                .getId();
+
+            console.log(itemPressed);
+            if (
+                itemPressed === "__item0-__switch0-0" ||
+                itemPressed === "__item1-__switch1-0"
+            ) {
+                var oRouter =
+                    sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.navTo("RouteLogin");
+            } else if (
+                itemPressed === "__item0-__switch0-1" ||
+                itemPressed === "__item1-__switch1-1"
+            ) {
+                window.open("https://www.regestaitalia.eu/", "_blank");
+            } else {
+                window.open(
+                    "https://github.com/andrebellu/WebappRegesta",
+                    "_blank"
+                );
+            }
         },
 
         fnOpen: function (oEvent) {
