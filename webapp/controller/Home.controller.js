@@ -91,33 +91,6 @@ sap.ui.define(
                     .catch((error) => console.log("error", error));
             },
 
-            APICallRemoveRapportino: function () {
-                var token = sessionStorage.getItem("token");
-
-                var myHeaders = new Headers();
-                myHeaders.append(
-                    "Cookie",
-                    "ASP.NET_SessionId=p42wuyurx1pcevyrkavscdxu"
-                );
-
-                var requestOptions = {
-                    method: "POST",
-                    headers: myHeaders,
-                    redirect: "follow",
-                };
-
-                fetch(
-                    "https://asstest.regestaitalia.it/api_v2/eliminarapportino?token=" +
-                        token +
-                        "d&idRapportino=" +
-                        idRapportino,
-                    requestOptions
-                )
-                    .then((response) => response.text())
-                    .then((result) => console.log(result))
-                    .catch((error) => console.log("error", error));
-            },
-
             handleData: function (result) {
                 var oModel = this.getView().getModel();
                 var items = JSON.parse(result);
@@ -125,29 +98,18 @@ sap.ui.define(
             },
 
             handleSwipe: function (oEvent) {
-                // register swipe event
-                var oSwipeContent = oEvent.getParameter("swipeContent"), // get swiped content from event
-                    oSwipeDirection = oEvent.getParameter("swipeDirection"); // get swiped direction from event
-                var msg = "";
+                var swipedItem = oEvent.getParameter("listItem");
+                var context = swipedItem.getBindingContext();
+                var id = context.getObject().IDRapportino;
 
-                if (oSwipeDirection === "BeginToEnd") {
-                    // List item is approved, change swipeContent(button) text to Disapprove and type to Reject
-                    oSwipeContent.setText("Approve").setType("Accept");
-                    msg =
-                        "Swipe direction is from the beginning to the end (left ro right in LTR languages)";
-                } else {
-                    // List item is not approved, change swipeContent(button) text to Approve and type to Accept
-                    oSwipeContent.setText("Disapprove").setType("Reject");
-                    msg =
-                        "Swipe direction is from the end to the beginning (right to left in LTR languages)";
-                }
-                msgT.show(msg);
+                var oModel = this.getView().getModel();
+                oModel.setProperty("/id", id);
             },
 
             handleMore: function (oEvent) {
                 var oButton = oEvent.getSource();
                 this.byId("actionSheet").openBy(oButton);
-                
+
                 oList = oEvent.getSource().getParent();
 
                 console.log(oEvent.getSource().data("id"));
@@ -162,6 +124,8 @@ sap.ui.define(
             },
 
             handleDelete: function (oEvent) {
+                var id = this.getView().getModel().getProperty("/id");
+
                 sap.m.MessageBox.warning(
                     "Sei sicuro di voler eliminare questo rapportino?",
                     {
@@ -172,7 +136,39 @@ sap.ui.define(
                         ],
                         onClose: function (sAction) {
                             if (sAction === sap.m.MessageBox.Action.YES) {
-                                // this.APICallRemoveRapportino();
+                                var token = sessionStorage.getItem("token");
+
+                                token = token.replace(/"/g, '');
+                                token = encodeURIComponent(token);
+
+                                var myHeaders = new Headers();
+                                myHeaders.append(
+                                    "Cookie",
+                                    "ASP.NET_SessionId=p42wuyurx1pcevyrkavscdxu"
+                                );
+
+                                var requestOptions = {
+                                    method: "POST",
+                                    headers: myHeaders,
+                                    redirect: "follow",
+                                };
+
+                                var url = "https://asstest.regestaitalia.it/api_v2/eliminarapportino?token=" +
+                                token +
+                                "&idRapportino=" +
+                                id;
+
+                                console.log(url);
+
+                                fetch(
+                                    url,
+                                    requestOptions
+                                )
+                                    .then((response) => response.text())
+                                    .then((result) => console.log(result))
+                                    .catch((error) =>
+                                        console.log("error", error)
+                                    );
 
                                 oList.removeAggregation(
                                     "items",
