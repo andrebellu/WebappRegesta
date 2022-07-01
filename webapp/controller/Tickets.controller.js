@@ -48,6 +48,7 @@ sap.ui.define(
                     this.getView().setModel(i18nModel, "i18n");
                     this.APIclienti();
                     this.APIcommesse();
+                    this.getView().getModel().setSizeLimit("10000");
                 },
 
                 handleSwipe: function (oEvent) {
@@ -120,6 +121,7 @@ sap.ui.define(
                   var oModel = this.getView().getModel();
                   var clienti = JSON.parse(result);
                   oModel.setProperty("/clienti", clienti);
+                  console.log(oModel.getProperty("/clienti"));
                 },
                 APIcommesse: function(){
                   var request = {
@@ -134,8 +136,6 @@ sap.ui.define(
                 handleCommesse: function(result){
                   var oModel = this.getView().getModel();
                   var commesse = JSON.parse(result);
-                  oModel.setProperty("/commesse", commesse);
-                  console.log(oModel.getProperty("/commesse"));
                 }
 
             }
