@@ -22,14 +22,14 @@
             <DatePicker id="HiddenDP" hideInput="true" change="changeDateHandler" showCurrentDateButton="true" displayFormat="dd/MM/yyyy"/>
 
             <ScrollContainer height="100%" width="100%" vertical="true" horizontal="false" focusable="true">
-                <List noDataText="No element to display" items="{/items}" id="list">
+                <List noDataText="No element to display" items="{/items}" id="list" swipe="handleSwipe">
                     <items>
     
                         <StandardListItem type="Navigation" title="Commessa: {IDCommessa}" description="{Descrizione}" icon="sap-icon://activities" info="{Ore}" class="item" id="element" press="showPopup"/>
 
                     </items>
                     <swipeContent>
-                        <Button id="MyBtn" press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu" app:id="{/items/0/IDRapportino}">
+                        <Button id="MyBtn" press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu" app:id="">
                             <dependents>
                                 <core:Fragment fragmentName="regesta.regestarapportini.fragments.ActionSheet" type="XML" />
                             </dependents>

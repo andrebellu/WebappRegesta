@@ -71,6 +71,12 @@ html ul {
     font-family: "Poppins", sans-serif;
 }
 
+/* #container-regesta.regestarapportini---Home--list-swp {
+    top: 0.25rem !important;
+    opacity: 1;
+    padding-right: 0.5rem !important;
+} */
+
 .item:hover {
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
 }
