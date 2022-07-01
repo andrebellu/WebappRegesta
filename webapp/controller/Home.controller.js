@@ -16,6 +16,7 @@ sap.ui.define(
         "sap/m/List",
         "sap/m/StandardListItem",
         "sap/m/Text",
+        "sap/ui/core/Element"
     ],
     function (
         Controller,
@@ -33,7 +34,8 @@ sap.ui.define(
         mLibrary,
         List,
         StandardListItem,
-        Text
+        Text,
+        Element
     ) {
         "use strict";
 
@@ -144,11 +146,15 @@ sap.ui.define(
 
             handleMore: function (oEvent) {
                 var oButton = oEvent.getSource();
-
-                console.log(oButton.getBindingContext());
                 this.byId("actionSheet").openBy(oButton);
 
                 oList = oEvent.getSource().getParent();
+                // var idR = this.byId("MyBtn").data("id");
+
+                // console.log(idR);
+
+                console.log(oEvent.getSource().data("id"));
+
             },
 
             handleDuplicate: function (oEvent) {
@@ -170,7 +176,7 @@ sap.ui.define(
                         ],
                         onClose: function (sAction) {
                             if (sAction === sap.m.MessageBox.Action.YES) {
-                                this.APICallRemoveRapportino();
+                                // this.APICallRemoveRapportino();
 
                                 oList.removeAggregation(
                                     "items",

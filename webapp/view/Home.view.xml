@@ -4,7 +4,8 @@
     xmlns:core="sap.ui.core"
     xmlns="sap.m"
     xmlns:f="sap.f"
-    xmlns:u="sap.ui.unified">
+    xmlns:u="sap.ui.unified"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
 
 
@@ -24,11 +25,11 @@
                 <List noDataText="No element to display" items="{/items}" id="list">
                     <items>
     
-                        <StandardListItem type="Navigation" title="{id} - {cliente}" description="{descrizione}" icon="sap-icon://activities" info="{ore}" class="item" id="element" press="showPopup"/>
+                        <StandardListItem type="Navigation" title="Commessa: {IDCommessa}" description="{Descrizione}" icon="sap-icon://activities" info="{Ore}" class="item" id="element" press="showPopup"/>
 
                     </items>
                     <swipeContent>
-                        <Button press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu">
+                        <Button id="MyBtn" press="handleMore" icon="sap-icon://overflow" ariaHasPopup="Menu" app:id="{IDRapportini}">
                             <dependents>
                                 <core:Fragment fragmentName="regesta.regestarapportini.fragments.ActionSheet" type="XML" />
                             </dependents>
