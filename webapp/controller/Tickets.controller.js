@@ -38,7 +38,7 @@ sap.ui.define(
             "regesta.regestarapportini.controller.Tickets",
             {
                 onInit: function () {
-                    var oModel = new JSONModel("model/dataT.json");
+                    var oModel = new JSONModel();
 
                     this.getView().setModel(oModel);
                     // set i18n model on view
@@ -46,6 +46,10 @@ sap.ui.define(
                         bundleName: "regesta.regestarapportini.i18n.i18n",
                     });
                     this.getView().setModel(i18nModel, "i18n");
+                    this.getView().getModel().setSizeLimit("10000");
+                    this.APIclienti();
+                    this.APIcommesse();
+                    this.APIticket();
                 },
 
                 handleSwipe: function (oEvent) {
@@ -57,13 +61,11 @@ sap.ui.define(
                     if (oSwipeDirection === "BeginToEnd") {
                         // List item is approved, change swipeContent(button) text to Disapprove and type to Reject
                         oSwipeContent.setText("Approve").setType("Accept");
-                        msg =
-                            "Swipe direction is from the beginning to the end (left ro right in LTR languages)";
+                        msg = "Swipe direction is from the beginning to the end (left ro right in LTR languages)";
                     } else {
                         // List item is not approved, change swipeContent(button) text to Approve and type to Accept
                         oSwipeContent.setText("Disapprove").setType("Reject");
-                        msg =
-                            "Swipe direction is from the end to the beginning (right to left in LTR languages)";
+                        msg = "Swipe direction is from the end to the beginning (right to left in LTR languages)";
                     }
                     msgT.show(msg);
                 },
@@ -76,41 +78,76 @@ sap.ui.define(
                     } else {
                         endTime = new Date().getTime();
                         console.log(endTime);
-
                         timeDiff = endTime - startTime;
                         console.log(timeDiff);
-
                         var minutes = Math.floor(timeDiff / 60000);
                         var seconds = ((timeDiff % 60000) / 1000).toFixed(0);
-
                         console.log(
                             minutes + ":" + (seconds < 10 ? "0" : "") + seconds
                         );
-
                         check = true;
                     }
                 },
 
-                clicked: function () {
-                    msgT.show("Rapportino clicked");
-                },
                 showPopup: function () {
                     if (!this.pDialog) {
                         this.pDialog = this.loadFragment({
-                            name: "regesta.regestarapportini.fragments.Popup",
+                            name: "regesta.regestarapportini.fragments.PopupTicket",
                         });
                     }
                     this.pDialog.then(function (oDialog) {
                         oDialog.open();
                     });
                 },
-                onSave: function (oEvent) {
-                    this.byId("popup").close();
-                },
-
                 onCancel: function (oEvent) {
-                    this.byId("popup").close();
+                  this.byId("popup").close();
                 },
+                APIclienti: function(){
+                  var request = {
+                    method : "POST",
+                    redirect : "follow",
+                  };
+                  fetch("https://asstest.regestaitalia.it/api_v2/clienti?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idCliente=0", request)
+                    .then((response) => response.text())
+                    .then((result) => this.handleClienti(result))
+                    .catch((error) => console.log("error", error));
+                },
+                handleClienti: function(result){
+                  var oModel = this.getView().getModel();
+                  var clienti = JSON.parse(result);
+                  oModel.setProperty("/clienti", clienti);
+                },
+                APIcommesse: function(){
+                  var request = {
+                    method : "POST",
+                    redirect : "follow",
+                  };
+                  fetch("https://asstest.regestaitalia.it/api_v2/commesse?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idCommessa=0&idCliente=0", request)
+                    .then((response) => response.text())
+                    .then((result) => this.handleCommesse(result))
+                    .catch((error) => console.log("error", error));
+                },
+                handleCommesse: function(result){
+                  var oModel = this.getView().getModel();
+                  var commesse = JSON.parse(result);
+                  oModel.setProperty("/commesse", commesse);
+                },
+                APIticket: function(){
+                  var request = {
+                    method : "POST",
+                    redirect : "follow",
+                  };
+                  fetch("https://asstest.regestaitalia.it/api_v2/ticket?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idTicket=0", request)
+                    .then((response) => response.text())
+                    .then((result) => this.handleTicket(result))
+                    .catch((error) => console.log("error", error));
+                },
+                handleTicket: function(result){
+                  var oModel = this.getView().getModel();
+                  var ticket = JSON.parse(result);
+                  oModel.setProperty("/ticket", ticket);
+                  console.log(oModel.getProperty("/ticket"));
+                }
             }
         );
     }
