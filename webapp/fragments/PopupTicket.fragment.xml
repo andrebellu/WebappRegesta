@@ -11,13 +11,13 @@
         <Label text=" Data di inserimento" class="labelMargin"/>
         <DatePicker value="{
                 value : '20/07/2022',   
-                type : 'sap.ui.model.type.String'}" 
+                type : 'sap.ui.model.type.String' }" 
                 id="date" class="roundedInput" width="100%" enabled="false"/>
 
         <Label text="Titolo" class="labelMargin"/>
         <Input value="{
                 value : 'Test titolo',
-                type : 'sap.ui.model.type.String'}" 
+                type : 'sap.ui.model.type.String' }" 
                 class="roundedInput" textAlign="Left" width="100%" enabled="false" id="title"/>
 
         <Label text="ID Ticket" class="labelMargin"/>
@@ -29,25 +29,25 @@
         <Label text="Cliente" class="labelMargin"/>
         <Input value="{
                 value : 'ClienteTicket',
-                type : 'sap.ui.model.type.String'}" 
+                type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" id="client" class="roundedInput"/>
 
         <Label text="ID Commessa" class="labelMargin"/>
         <Input value="{
                 value : '17680 - la commessa',
-                type : 'sap.ui.model.type.String'}" 
+                type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" class="roundedInput" id="IDOrder"/>
 
         <Label text="Data consegna richiesta" class="labelMargin"/>
         <Input value="{
                 value : '08/07/2022',
-                type : 'sap.ui.model.type.String'}" 
+                type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" class="roundedInput" id="requestedDate"/>
 
         <Label text="Ultima modifica" class="labelMargin"/>
         <Input value="{
                 value : 'personamolto.sospetta',
-                type : 'sap.ui.model.type.String'}" 
+                type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" class="roundedInput" id="lastChange"/>
         <FlexBox class="closeDialog">
             <Button text="Chiudi" press= ".onCancel" enabled="true" class="dialogButton"/>

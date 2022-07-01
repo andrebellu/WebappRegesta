@@ -46,10 +46,10 @@ sap.ui.define(
                         bundleName: "regesta.regestarapportini.i18n.i18n",
                     });
                     this.getView().setModel(i18nModel, "i18n");
+                    this.getView().getModel().setSizeLimit("10000");
                     this.APIclienti();
                     this.APIcommesse();
                     this.APIticket();
-                    this.getView().getModel().setSizeLimit("10000");
                 },
 
                 handleSwipe: function (oEvent) {
@@ -61,13 +61,11 @@ sap.ui.define(
                     if (oSwipeDirection === "BeginToEnd") {
                         // List item is approved, change swipeContent(button) text to Disapprove and type to Reject
                         oSwipeContent.setText("Approve").setType("Accept");
-                        msg =
-                            "Swipe direction is from the beginning to the end (left ro right in LTR languages)";
+                        msg = "Swipe direction is from the beginning to the end (left ro right in LTR languages)";
                     } else {
                         // List item is not approved, change swipeContent(button) text to Approve and type to Accept
                         oSwipeContent.setText("Disapprove").setType("Reject");
-                        msg =
-                            "Swipe direction is from the end to the beginning (right to left in LTR languages)";
+                        msg = "Swipe direction is from the end to the beginning (right to left in LTR languages)";
                     }
                     msgT.show(msg);
                 },
@@ -80,17 +78,13 @@ sap.ui.define(
                     } else {
                         endTime = new Date().getTime();
                         console.log(endTime);
-
                         timeDiff = endTime - startTime;
                         console.log(timeDiff);
-
                         var minutes = Math.floor(timeDiff / 60000);
                         var seconds = ((timeDiff % 60000) / 1000).toFixed(0);
-
                         console.log(
                             minutes + ":" + (seconds < 10 ? "0" : "") + seconds
                         );
-
                         check = true;
                     }
                 },
@@ -106,7 +100,7 @@ sap.ui.define(
                     });
                 },
                 onCancel: function (oEvent) {
-                    this.byId("popup").close();
+                  this.byId("popup").close();
                 },
                 APIclienti: function(){
                   var request = {
@@ -154,7 +148,6 @@ sap.ui.define(
                   oModel.setProperty("/ticket", ticket);
                   console.log(oModel.getProperty("/ticket"));
                 }
-
             }
         );
     }
