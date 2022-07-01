@@ -36,7 +36,7 @@
             minLength: 1,
             maxLength: 3
         }
-    }" class="roundedInput" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24" step="1" enabled="true"/>
+    }" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24" step="1" enabled="true"/>
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
@@ -46,7 +46,7 @@
         constraints : {
             minLength: 1
         }
-    }" class="roundedInput" width="100%" enabled="true" id="ticket" placeholder="Ticket">
+    }" class="roundedInput"  width="100%" enabled="true" id="ticket" placeholder="Ticket">
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="1" text="Ticket 1"/>
                 <core:Item xmlns:core="sap.ui.core" key="2" text="Ticket 2"/>
@@ -73,14 +73,7 @@
 
         <!--! Input site with combo box -->
         <Label text="Sede" class="labelMargin"/>
-        <ComboBox value="{
-        path : '/site',
-        type : 'sap.ui.model.type.String',
-        constraints : {
-            minLength: 1,
-            maxLength: 2
-        }
-    }" class="roundedInput" width="100%" enabled="true" id="site" placeholder="Sede">
+        <ComboBox value="UF" class="roundedInput" width="100%" enabled="true" id="site" placeholder="Sede">
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="1" text="UF"/>
                 <core:Item xmlns:core="sap.ui.core" key="2" text="CL"/>

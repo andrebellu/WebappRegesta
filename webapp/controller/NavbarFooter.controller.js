@@ -247,14 +247,18 @@ sap.ui.define(
           } else {
             var h = Number(new Date(year1, month1, gg1).getDay()) - 1;
           }
+          if (date.getDate()<=7&&gg>=26){
+            var t=date.getDate()+30;
+        }
 
-          if (
+        if (
+            t-7==gg||
             date.getDay() < h ||
-            Math.abs(date.getDate() - gg) > 7 ||
-            date.getMonth() + 1 != month ||
+            Math.abs(t - gg) > 7 ||
+            date.getMonth() + 1 -  month >1 ||
             date.getFullYear() != Number(year) + 2000 ||
             oInput == ""
-          ) {
+        ) {
             try {
               oBinding.getType().validateValue(oInput.getValue());
             } catch (oException) {
@@ -266,6 +270,91 @@ sap.ui.define(
           oInput.setValueState(sValueState);
           return bValidationError;
         },
+        onSubmit: function () {
+          // collect input controls               
+                              var oView = this.getView(),
+              
+          
+              hello=[oView.byId("date")],                    
+              
+              bValidationError = false;
+         
+
+              // Check that inputs are not empty.
+              // Validation does not happen during data binding as this is only triggered by user actions.
+              
+              hello.forEach(function (oInput) {
+                  bValidationError = this._validateGiornoInput(oInput) || bValidationError;
+              }, this);
+
+
+          if (!bValidationError) {
+              MessageBox.success("la procedura è andata con successo");
+
+              var oModel = this.getView().getModel();
+              
+              var ciao={
+                  
+                "IDUtente": oModel.getProperty('/name').getId(),
+                "Utente": oModel.getProperty('/name'),
+                "IDCliente": oModel.getProperty('/client').getId(),
+                "IDCommessa": oModel.getProperty('/commessa'),
+                "IDClienteSede": null,
+                "IDProgetto": null,
+                "IDProgettoAttivita": null,
+                "IDTodoList": null,
+                "Codice": null,
+                "Descrizione": oModel.getProperty('/description'),
+                "Attivita": null,
+                "Sede": oModel.getProperty('/sede'),
+                "Destinazione": oModel.getProperty('/destination'),
+                "Giorno":oModel.getProperty('/date'),
+                "Ore": oModel.getProperty('/ore'),
+                "OreLavorate": null,
+                "Km": oModel.getProperty('/km'),
+                "KmEuro": oModel.getProperty('/kmPrice'),
+                "Pedaggio": oModel.getProperty('/toll'),
+                "Forfait": oModel.getProperty('/forfait'),
+                "Vitto": oModel.getProperty('/food'),
+                "Alloggio": oModel.getProperty('/accomodation'),
+                "Noleggio": oModel.getProperty('/rental'),
+                "Trasporti": oModel.getProperty('/transport'),
+                "Varie": oModel.getProperty('/various'),
+                "Plus": oModel.getProperty('/plus'),
+                "Fatturabile": oModel.getProperty('/fatturabile'),
+                
+              }
+
+              var myHeaders = new Headers();
+              myHeaders.append("Content-Type", "application/javascript");
+              myHeaders.append("Cookie", "ASP.NET_SessionId=itum2qy5jqtcpqmuf4r1abap");
+
+
+              var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body:JSON.stringify(ciao),
+                redirect: 'follow'
+              };
+
+              fetch("https://asstest.regestaitalia.it/api_v2/nuovorapportino?token="+token+"", requestOptions)
+                .then(response => response.text())
+                .then(result => this.handleData(result))
+                .catch(error => console.log('error', error));
+  
+              
+  
+  
+          } else {
+              MessageBox.alert("la procedura è andata a fallimento");
+          }
+
+      },
+      handleData: function (result) {
+        var oModel = this.getView().getModel();
+        var items = JSON.parse(result);
+        oModel.setProperty("/items", items);
+    },
       }
     );
   }
