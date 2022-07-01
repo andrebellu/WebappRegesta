@@ -47,6 +47,7 @@ sap.ui.define(
                     });
                     this.getView().setModel(i18nModel, "i18n");
                     this.APIclienti();
+                    this.APIcommesse();
                 },
 
                 handleSwipe: function (oEvent) {
@@ -119,7 +120,22 @@ sap.ui.define(
                   var oModel = this.getView().getModel();
                   var clienti = JSON.parse(result);
                   oModel.setProperty("/clienti", clienti);
-                  console.log(oModel.getProperty("/clienti"));
+                },
+                APIcommesse: function(){
+                  var request = {
+                    method : "POST",
+                    redirect : "follow",
+                  };
+                  fetch("https://asstest.regestaitalia.it/api_v2/commesse?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idCommessa=0&idCliente=0", request)
+                    .then((response) => response.text())
+                    .then((result) => this.handleCommesse(result))
+                    .catch((error) => console.log("error", error));
+                },
+                handleCommesse: function(result){
+                  var oModel = this.getView().getModel();
+                  var commesse = JSON.parse(result);
+                  oModel.setProperty("/commesse", commesse);
+                  console.log(oModel.getProperty("/commesse"));
                 }
 
             }
