@@ -4,20 +4,17 @@
 		{
 			"src": "sap-icon://visits",
 			"title": "Cambia account",
-			"subTitle": "Clicca per tornare alla schermata di accesso",
-			"function": "changeAccount"
+			"subTitle": "Clicca per tornare alla schermata di accesso"
 		},
 		{
 			"src": "sap-icon://internet-browser",
 			"title": "Sito web",
-			"subTitle": "Visita il sito Regesta",
-			"function": "goToWebsite"
+			"subTitle": "Visita il sito Regesta"
 		},
 		{
 			"src": "sap-icon://contacts",
 			"title": "Log cambiamenti",
-			"subTitle": "Visualizza i cambiamenti della webapp",
-			"function": "logChanges"	
+			"subTitle": "Visualizza i cambiamenti della webapp"
 		}
 	]
 }
