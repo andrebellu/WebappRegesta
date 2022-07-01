@@ -221,7 +221,6 @@ sap.ui.define(
                 this.getView().getModel().setProperty("/index", index);
                 var path = this.getView().getModel().getProperty("/index");
                 this.getView().getModel().setProperty("/path", path);
-                console.log(path);
 
                 // Get date from list item and convert it to string from timestamp
                 var date = context.getProperty("Giorno");
