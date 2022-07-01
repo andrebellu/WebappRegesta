@@ -7,6 +7,7 @@ sap.ui.define(
         "sap/ui/core/format/DateFormat",
         "sap/ui/core/library",
         "sap/ui/core/Fragment",
+        "sap/m/MessageBox",
         "sap/ui/model/resource/ResourceModel",
         "sap/ui/core/IconPool",
         "sap/m/Dialog",
@@ -23,6 +24,7 @@ sap.ui.define(
         DateRange,
         DateFormat,
         coreLibrary,
+        MessageBox,
         Fragment,
         ResourceModel,
         IconPool,
@@ -38,7 +40,6 @@ sap.ui.define(
         var CalendarType = coreLibrary.CalendarType;
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
-
             onInit: function () {
                 var oModel = new JSONModel();
                 var i18nModel = new ResourceModel({
@@ -155,7 +156,7 @@ sap.ui.define(
             },
 
             handleDelete: function (oEvent) {
-                msgT.show("Delete");
+
             },
 
             //! Dialog box
