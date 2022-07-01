@@ -168,11 +168,21 @@ sap.ui.define(
 
       showPopup: function (oEvent) {
         var source = oEvent.getSource();
+        var context = source.getBindingContext();
         var index = source.getBindingContext().getPath();
         this.getView().getModel().setProperty("/index", index);
         var path = this.getView().getModel().getProperty("/index");
         this.getView().getModel().setProperty("/path", path);
         console.log(path);
+
+        // Get date from list item and convert it to string from timestamp
+        var date = context.getProperty("Giorno");
+        // Get numbers from input
+        var timeStamp = date.replace(/\D/g, '');
+        // Convert timestamp to date and format it to put it into the model
+        var date = new Date(parseInt(timeStamp));
+        date = date.toLocaleDateString("it-IT")
+        this.getView().getModel().setProperty(path + "/Giorno", date);
 
         if (!this.pDialog) {
           this.pDialog = this.loadFragment({
@@ -180,7 +190,8 @@ sap.ui.define(
           });
         }
         this.pDialog.then(function (oDialog) {
-          oDialog.open(); 
+            oDialog.setBindingContext(context);
+            oDialog.open(); 
         });
 
         

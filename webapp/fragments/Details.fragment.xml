@@ -6,7 +6,7 @@
         <!--! Input user -->
         <Label text="Utente" class="labelMargin" />
         <Input value="{
-        path : '/items',
+        path: 'Utente',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
@@ -19,7 +19,7 @@
         <DatePicker 
         displayFormat="dd/MM/yyyy"
         value="{
-        path : '/date',
+        path : 'Giorno',
         constraints : {
             minLength: 1,
             maxLength: 10
@@ -29,8 +29,7 @@
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true"/>
         <StepInput value="{
-        value : '0.0',
-        path : '/hours',
+        path : 'Ore',
         type : 'sap.ui.model.type.Float',
         constraints : {
             minLength: 1,
@@ -74,7 +73,7 @@
         <!--! Input site with combo box -->
         <Label text="Sede" class="labelMargin"/>
         <ComboBox value="{
-        path : '/site',
+        path : 'Sede',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1
@@ -91,24 +90,25 @@
         <!--! Input destination -->
         <Label text="Destinazione" class="labelMargin"/>
         <Input value="{
-        path : '/destination',
+        path : 'Destinazione',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onDestinationChange" width= "100%" enabled= "false" id="destination" class="roundedInput" placeholder="Destinazione"/>
 
         <!--! Input description -->
         <Label text="Descrizione" class="labelMargin" required="true"/>
         <Input value="{
-        path : '/description',
+        path : 'Descrizione',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "false" id="description" class="roundedInput" placeholder="Descrizione"/>
 
         <!-- Checkboxes in flexbox -->
         <FlexBox direction="Row" class="checkStyle">
             <!--! Checkbox plus -->
-            <CheckBox text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="false" selected="false"/>
+            <CheckBox text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="false"/>
 
             <!--! Checkbox fatturabile -->
-            <CheckBox text="Fatturabile" id="fatturabile" class="checkboxMargin" width="100%" enabled="false" selected="true"/>
+            <CheckBox getBindingPath="Fatturabile"
+            text="Fatturabile" id="fatturabile" class="checkboxMargin" width="100%" enabled="false"/>
         </FlexBox>
 
         <!--! Expandable panel with inputs -->
@@ -117,70 +117,70 @@
             <!--! Input km -->
             <Label text="Km" class="labelMargin"/>
             <Input value="{
-            path : '/km',
+            path : 'Km',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onKmChange" width= "100%" enabled= "false" id="km" class="roundedInput" placeholder="Km"/>
 
             <!--! Input km/€ formatted in currency -->
             <Label text="Km/€" class="labelMargin"/>
             <Input value="{
-            path : '/kmPrice',
+            path : 'KmEuro',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onKmPriceChange" width= "100%" enabled= "false" id="kmPrice" class="roundedInput" placeholder="Km/€"/>
 
             <!--! Input toll formatted in currency -->
             <Label text="Pedaggio" class="labelMargin"/>
             <Input value="{
-            path : '/toll',
+            path : 'Pedaggio',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onTollChange" width= "100%" enabled= "false" id="toll" class="roundedInput" placeholder="Pedaggio"/>
 
             <!--! Input forfait formatted in currency -->
             <Label text="Forfait" class="labelMargin"/>
             <Input value="{
-            path : '/forfait',
+            path : 'Forfait',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onForfaitChange" width= "100%" enabled= "false" id="forfait" class="roundedInput" placeholder="Forfait"/>
 
             <!--! Input food formatted in currency -->
             <Label text="Vitto" class="labelMargin"/>
             <Input value="{
-            path : '/food',
+            path : 'Vitto',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onFoodChange" width= "100%" enabled= "false" id="food" class="roundedInput" placeholder="Vitto"/>
 
             <!--! Input accomodation formatted in currency -->
             <Label text="Alloggio" class="labelMargin"/>
             <Input value="{
-            path : '/accomodation',
+            path : 'Alloggio',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onAccomodationChange" width= "100%" enabled= "false" id="accomodation" class="roundedInput" placeholder="Alloggio"/>
 
             <!--! Input rental formatted in currency -->
             <Label text="Noleggio" class="labelMargin"/>
             <Input value="{
-            path : '/rental',
+            path : 'Noleggio',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onRentalChange" width= "100%" enabled= "false" id="rental" class="roundedInput" placeholder="Noleggio"/>
 
             <!--! Input transport formatted in currency -->
             <Label text="Trasporti" class="labelMargin"/>
             <Input value="{
-            path : '/transport',
+            path : 'Trasporti',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onTransportChange" width= "100%" enabled= "false" id="transport" class="roundedInput" placeholder="Trasporti"/>
 
             <!--! Input various formatted in currency -->
             <Label text="Varie" class="labelMargin"/>
             <Input value="{
-            path : '/various',
+            path : 'Varie',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onVariousChange" width= "100%" enabled= "false" id="various" class="roundedInput" placeholder="Varie"/>
 
             <!--! Input reserved formatted in currency -->
             <Label text="Riservato" class="labelMargin"/>
             <Input value="{
-            path : '/reserved',
+            path : 'SpeseVarie',
             type : 'sap.ui.model.type.Float'
         }" type="Number" change= ".onReservedChange" width= "100%" enabled= "false" id="reserved" class="roundedInput" placeholder="Riservato"/>
 
