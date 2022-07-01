@@ -172,6 +172,7 @@ sap.ui.define(
         this.getView().getModel().setProperty("/index", index);
         var path = this.getView().getModel().getProperty("/index");
         this.getView().getModel().setProperty("/path", path);
+        console.log(path);
 
         if (!this.pDialog) {
           this.pDialog = this.loadFragment({
@@ -179,16 +180,19 @@ sap.ui.define(
           });
         }
         this.pDialog.then(function (oDialog) {
-          oDialog.open();
+          oDialog.open(); 
         });
+
+        
+        
       },
 
       onSave: function (oEvent) {
-        this.byId("popup").close();
+        this.byId("detailsDialog").close();
       },
 
       onCancel: function (oEvent) {
-        this.byId("popup").close();
+        this.byId("detailsDialog").close();
       },
     });
   }

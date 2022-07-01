@@ -1,12 +1,12 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <Dialog 
-        xmlns="sap.m" title="Inserisci i dati del rapportino" type="Message" id="popup" class="dialogStyle">
+        xmlns="sap.m" title="Inserisci i dati del rapportino" type="Message" id="detailsDialog" class="dialogStyle">
 
         <!--! Input user -->
         <Label text="Utente" class="labelMargin" />
         <Input value="{
-        path : '# {/index} ',
+        path : '/items',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
@@ -187,10 +187,8 @@
         </Panel>
         <FlexBox class="closeDialog">
             <!--! Cancel button -->
-            <Button text="Annulla" press= ".onCancel" enabled="true" class="dialogButton"/>
+            <Button text="Chiudi" press= ".onCancel" enabled="true" class="dialogButton"/>
 
-            <!--! Save button -->
-            <Button text="Salva" type="Emphasized" press= ".onSave" enabled="true" class="dialogButton"/>
         </FlexBox>
     </Dialog>
 </core:FragmentDefinition>
