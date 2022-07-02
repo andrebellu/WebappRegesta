@@ -249,6 +249,9 @@ sap.ui.define(
           }
           if (date.getDate()<=7&&gg>=26){
             var t=date.getDate()+30;
+        }else{
+            var t=date.getDate()
+
         }
 
         if (
@@ -265,6 +268,16 @@ sap.ui.define(
               sValueState = "Error";
               bValidationError = true;
             }
+          }else{
+            if (date.getMonth() + 1 -  month==1 &&date.getDate()>7){
+              try {
+                oBinding.getType().validateValue(oInput.getValue());
+              } catch (oException) {
+                sValueState = "Error";
+                bValidationError = true;
+              } 
+            }
+
           }
 
           oInput.setValueState(sValueState);
