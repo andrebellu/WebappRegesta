@@ -224,13 +224,13 @@ sap.ui.define(
           var sValueState = "None";
           var bValidationError = false;
           var oBinding = oInput.getBinding("value");
-
+      
           var [gg, month, year] = oInput.getValue().split("/");
           //per costruttore
           var gg1 = Number(gg) + 1,
             month1 = Number(month) - 1,
             year1 = Number(year) + 2000;
-
+      
           var date = new Date();
           if (
             new Date(year1, month1, gg1).getDay() == 0 ||
@@ -238,7 +238,7 @@ sap.ui.define(
           ) {
             MessageBox.information("Hai avuto il premesso?");
           }
-
+      
           if (
             new Date(year1, month1, gg1).getDay() == 1 ||
             new Date(year1, month1, gg1).getDay() == 0
@@ -249,40 +249,40 @@ sap.ui.define(
           }
           if (date.getDate()<=7&&gg>=26){
             var t=date.getDate()+30;
-        }else{
-            var t=date.getDate()
-
-        }
-
-        if (
+          }else{
+            var t=date.getDate();
+      
+          }
+      
+          if (
             t-7==gg||
             date.getDay() < h ||
             Math.abs(t - gg) > 7 ||
             date.getMonth() + 1 -  month >1 ||
             date.getFullYear() != Number(year) + 2000 ||
             oInput == ""
-        ) {
+          ) {
+            try {
+            oBinding.getType().validateValue(oInput.getValue());
+            } catch (oException) {
+            sValueState = "Error";
+            bValidationError = true;
+            }
+          }else{
+            if (date.getMonth() + 1 -  month==1 &&date.getDate()>7){
             try {
               oBinding.getType().validateValue(oInput.getValue());
             } catch (oException) {
               sValueState = "Error";
               bValidationError = true;
+            } 
             }
-          }else{
-            if (date.getMonth() + 1 -  month==1 &&date.getDate()>7){
-              try {
-                oBinding.getType().validateValue(oInput.getValue());
-              } catch (oException) {
-                sValueState = "Error";
-                bValidationError = true;
-              } 
-            }
-
+      
           }
-
+      
           oInput.setValueState(sValueState);
           return bValidationError;
-        },
+          },
         onSubmit: function () {
           // collect input controls               
                               var oView = this.getView(),
