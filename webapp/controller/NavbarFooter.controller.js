@@ -303,61 +303,8 @@ sap.ui.define(
 
           if (!bValidationError) {
               MessageBox.success("la procedura è andata con successo");
-
-              var oModel = this.getView().getModel();
-              
-              var ciao={
+              this.ApiGenera();
                   
-                "IDUtente": oModel.getProperty('/name').getId(),
-                "Utente": oModel.getProperty('/name'),
-                "IDCliente": oModel.getProperty('/client').getId(),
-                "IDCommessa": oModel.getProperty('/commessa'),
-                "IDClienteSede": null,
-                "IDProgetto": null,
-                "IDProgettoAttivita": null,
-                "IDTodoList": null,
-                "Codice": null,
-                "Descrizione": oModel.getProperty('/description'),
-                "Attivita": null,
-                "Sede": oModel.getProperty('/sede'),
-                "Destinazione": oModel.getProperty('/destination'),
-                "Giorno":oModel.getProperty('/date'),
-                "Ore": oModel.getProperty('/ore'),
-                "OreLavorate": null,
-                "Km": oModel.getProperty('/km'),
-                "KmEuro": oModel.getProperty('/kmPrice'),
-                "Pedaggio": oModel.getProperty('/toll'),
-                "Forfait": oModel.getProperty('/forfait'),
-                "Vitto": oModel.getProperty('/food'),
-                "Alloggio": oModel.getProperty('/accomodation'),
-                "Noleggio": oModel.getProperty('/rental'),
-                "Trasporti": oModel.getProperty('/transport'),
-                "Varie": oModel.getProperty('/various'),
-                "Plus": oModel.getProperty('/plus'),
-                "Fatturabile": oModel.getProperty('/fatturabile'),
-                
-              }
-
-              var myHeaders = new Headers();
-              myHeaders.append("Content-Type", "application/javascript");
-              myHeaders.append("Cookie", "ASP.NET_SessionId=itum2qy5jqtcpqmuf4r1abap");
-
-
-              var requestOptions = {
-                method: 'POST',
-                headers: myHeaders,
-                body:JSON.stringify(ciao),
-                redirect: 'follow'
-              };
-
-              fetch("https://asstest.regestaitalia.it/api_v2/nuovorapportino?token="+token+"", requestOptions)
-                .then(response => response.text())
-                .then(result => this.handleData(result))
-                .catch(error => console.log('error', error));
-  
-              
-  
-  
           } else {
               MessageBox.alert("la procedura è andata a fallimento");
           }
@@ -368,6 +315,60 @@ sap.ui.define(
         var items = JSON.parse(result);
         oModel.setProperty("/items", items);
     },
+      ApiGenera: function(){
+
+        var oModel = this.getView().getModel();
+              
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+          "IDRapportino": 595443,
+          "IDUtente": null,
+          "Utente": oModel.getProperty('/name'),
+          "IDCliente": 5555,
+          "IDCommessa": 1969,
+          "IDClienteSede": null,
+          "IDProgetto": null,
+          "IDProgettoAttivita": null,
+          "IDTodoList": 25329,
+          "Codice": null,
+          "Descrizione": oModel.getProperty('/description'),
+          "Attivita": null,
+          "Sede": oModel.getProperty('/sede'),
+          "Destinazione": oModel.getProperty('/destination'),
+          "Giorno": oModel.getProperty('/date'),
+          "Ore": oModel.getProperty('/ore'),
+          "OreLavorate": null,
+          "Km": oModel.getProperty('/km'),
+          "KmEuro": oModel.getProperty('/kmPrice'),
+          "Pedaggio": oModel.getProperty('/toll'),
+          "Forfait": oModel.getProperty('/forfait'),
+          "Vitto": oModel.getProperty('/food'),
+          "Alloggio": oModel.getProperty('/accomodation'),
+          "Noleggio": oModel.getProperty('/rental'),
+          "Trasporti": oModel.getProperty('/transport'),
+          "Varie": oModel.getProperty('/various'),
+          "Plus": oModel.getProperty('/plus'),
+          "Fatturabile": oModel.getProperty('/fatturabile'),
+          "Bloccato": null,
+          "SpeseVarie": null,
+          "Docente": null
+        });
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" + token, requestOptions)
+          .then(response => response.text())
+          .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+      },
       }
     );
   }
