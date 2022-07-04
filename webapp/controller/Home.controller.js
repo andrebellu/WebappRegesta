@@ -1,46 +1,47 @@
 sap.ui.define(
-  [
-    "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/unified/DateRange",
-    "sap/ui/core/format/DateFormat",
-    "sap/ui/core/library",
-    "sap/ui/core/Fragment",
-    "sap/ui/model/resource/ResourceModel",
-    "sap/ui/core/IconPool",
-    "sap/m/Dialog",
-    "sap/m/Button",
-    "sap/m/MessageBox",
-    "sap/m/library",
-    "sap/m/List",
-    "sap/m/StandardListItem",
-    "sap/m/Text",
-    "sap/ui/core/Element",
-  ],
-  function (
-    Controller,
-    msgT,
-    JSONModel,
-    DateRange,
-    DateFormat,
-    coreLibrary,
-    Fragment,
-    ResourceModel,
-    MessageBox,
-    IconPool,
-    Dialog,
-    Button,
-    mLibrary,
-    List,
-    StandardListItem,
-    Text,
-    Element
-  ) {
-    "use strict";
+    [
+        "sap/ui/core/mvc/Controller",
+        "sap/m/MessageToast",
+        "sap/ui/model/json/JSONModel",
+        "sap/ui/unified/DateRange",
+        "sap/ui/core/format/DateFormat",
+        "sap/ui/core/library",
+        "sap/ui/core/Fragment",
+        "sap/ui/model/resource/ResourceModel",
+        "sap/ui/core/IconPool",
+        "sap/m/Dialog",
+        "sap/m/Button",
+        "sap/m/MessageBox",
+        "sap/m/library",
+        "sap/m/List",
+        "sap/m/StandardListItem",
+        "sap/m/Text",
+        "sap/ui/core/Element",
+    ],
+    function (
+        Controller,
+        msgT,
+        JSONModel,
+        DateRange,
+        DateFormat,
+        coreLibrary,
+        Fragment,
+        ResourceModel,
+        MessageBox,
+        IconPool,
+        Dialog,
+        Button,
+        mLibrary,
+        List,
+        StandardListItem,
+        Text,
+        Element
+    ) {
+        "use strict";
 
-    var CalendarType = coreLibrary.CalendarType;
-    var oList;
+        var CalendarType = coreLibrary.CalendarType;
+        var oList;
+        var firstTime = true;
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
             onInit: function () {
@@ -67,9 +68,6 @@ sap.ui.define(
                 var mm = today.getMonth() + 1;
                 var dd = today.getDate();
 
-                if (dd < 10) dd = "0" + dd;
-                if (mm < 10) mm = "0" + mm;
-
                 today = dd + "/" + mm + "/" + yyyy;
 
                 var oModel = this.getView().getModel();
@@ -85,10 +83,13 @@ sap.ui.define(
                 var token = sessionStorage.getItem("token");
 
                 token = token.replace(/"/g, "");
-                token = encodeURIComponent(token);
+                var encodedToken = encodeURIComponent(token);
+
+                sessionStorage.setItem("encodedToken", encodedToken);
 
                 fetch(
-                    "https://asstest.regestaitalia.it/api_v2/rapportini?token=" + token,
+                    "https://asstest.regestaitalia.it/api_v2/rapportini?token=" +
+                        sessionStorage.getItem("encodedToken"),
                     requestOptions
                 )
                     .then((response) => response.text())
@@ -100,15 +101,58 @@ sap.ui.define(
                 var oModel = this.getView().getModel();
                 var items = JSON.parse(result);
                 oModel.setProperty("/items", items);
+
+                this.filterItems();
+            },
+
+            filterItems: function () {
+                var oModel = this.getView().getModel();
+                var items = oModel.getProperty("/items");
+
+                if (firstTime) {
+                    var selectedDate = oModel.getProperty("/date");
+                    firstTime = false;
+                } else {
+                    var selectedDate = oModel.getProperty("/selectedDate");
+                }
+
+                var filteredItems = items.filter(function (item) {
+
+                    if (
+                        new Date(
+                            parseInt(item.Giorno.replace(/\D/g, ""))
+                        ).toLocaleDateString("it-IT") === selectedDate
+                    ) {
+                        return item;
+                    }
+                });
+
+                oModel.setProperty("/filteredItems", filteredItems);
+                this.sumHours();
+            },
+
+            sumHours: function () {
+                var oModel = this.getView().getModel();
+                var filteredItems = oModel.getProperty("/filteredItems");
+                var sum = 0.0;
+
+                filteredItems.forEach(function (item) {
+                    sum += parseFloat(item.Ore);
+                });
+
+                oModel.setProperty("/sum", sum);
             },
 
             handleSwipe: function (oEvent) {
                 var swipedItem = oEvent.getParameter("listItem");
                 var context = swipedItem.getBindingContext();
+                var body = context.getObject();
                 var id = context.getObject().IDRapportino;
 
                 var oModel = this.getView().getModel();
+
                 oModel.setProperty("/id", id);
+                oModel.setProperty("/body", body);
             },
 
             handleMore: function (oEvent) {
@@ -121,7 +165,35 @@ sap.ui.define(
             },
 
             handleDuplicate: function (oEvent) {
-                msgT.show("Duplicate");
+                var body = this.getView().getModel().getProperty("/body");
+
+                // ? API CALL NUOVO RAPPORTIN
+
+                // var myHeaders = new Headers();
+                // myHeaders.append("Content-Type", "application/json");
+                // myHeaders.append(
+                //     "Cookie",
+                //     "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
+                // );
+
+                // var raw = JSON.stringify({
+                //     body
+                // });
+
+                // var requestOptions = {
+                //     method: "POST",
+                //     headers: myHeaders
+                //     body: raw,
+                //     redirect: "follow",
+                // };
+
+                // fetch(
+                //     "https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
+                //     requestOptions
+                // )
+                //     .then((response) => response.text())
+                //     .then((result) => console.log(result))
+                //     .catch((error) => console.log("error", error));
             },
 
             handleEdit: function (oEvent) {
@@ -204,12 +276,18 @@ sap.ui.define(
                     .getModel("i18n")
                     .getResourceBundle();
 
-                var sRecipient = oEvent.getParameter("value");
+                var sRecipient = oEvent.getParameter("value").replace(/\b0/g, '');
+                
+                this.getView()
+                    .getModel()
+                    .setProperty("/selectedDate", sRecipient);
 
                 var data = oBundle.getText("currentDate", [sRecipient]);
                 document.getElementById(
                     "container-regesta.regestarapportini---Home--btn-BDI-content"
                 ).innerHTML = data;
+
+                this.filterItems();
             },
 
             //! Dialog box
@@ -218,34 +296,32 @@ sap.ui.define(
                 var source = oEvent.getSource();
                 var context = source.getBindingContext();
                 if (context != undefined) {
-                var index = source.getBindingContext().getPath();
-                this.getView().getModel().setProperty("/index", index);
-                var path = this.getView().getModel().getProperty("/index");
-                this.getView().getModel().setProperty("/path", path);
-                console.log(path);
-        
-                // Get date from list item and convert it to string from timestamp
-                var date = context.getProperty("Giorno");
-                // Get numbers from input
-                var timeStamp = date.replace(/\D/g, "");
-                // Convert timestamp to date and format it to put it into the model
-                var date = new Date(parseInt(timeStamp));
-                date = date.toLocaleDateString("it-IT");
-                this.getView()
-                  .getModel()
-                  .setProperty(path + "/Giorno", date);
+                    var index = source.getBindingContext().getPath();
+                    this.getView().getModel().setProperty("/index", index);
+                    var path = this.getView().getModel().getProperty("/index");
+                    this.getView().getModel().setProperty("/path", path);
+                    // Get date from list item and convert it to string from timestamp
+                    var date = context.getProperty("Giorno");
+                    // Get numbers from input
+                    var timeStamp = date.replace(/\D/g, "");
+                    // Convert timestamp to date and format it to put it into the model
+                    var date = new Date(parseInt(timeStamp));
+                    date = date.toLocaleDateString("it-IT");
+                    this.getView()
+                        .getModel()
+                        .setProperty(path + "/Giorno", date);
                 }
-                
+
                 if (!this.pDialog) {
-                  this.pDialog = this.loadFragment({
-                    name: "regesta.regestarapportini.fragments.Details",
-                  });
+                    this.pDialog = this.loadFragment({
+                        name: "regesta.regestarapportini.fragments.Details",
+                    });
                 }
                 this.pDialog.then(function (oDialog) {
-                  oDialog.setBindingContext(context);
-                  oDialog.open();
+                    oDialog.setBindingContext(context);
+                    oDialog.open();
                 });
-              },
+            },
 
             onSave: function (oEvent) {
                 this.byId("detailsDialog").close();
