@@ -106,6 +106,7 @@ sap.ui.define(
                         
                         check = true;
                         sessionStorage.setItem("timeDiff", timeDiff);
+                        this.showPopup();
                         
                     }
                 },
