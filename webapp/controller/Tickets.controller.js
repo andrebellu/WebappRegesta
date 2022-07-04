@@ -112,19 +112,15 @@ sap.ui.define(
                 },
 
                 showPopup: function () {
+                    var date=new Date();
                     var nuovoRapportino = this.getView()
-                    .getModel()
-                    .getProperty("/nuovoRapportino");
-                nuovoRapportino.Giorno = this.getCurrentDate();
-                nuovoRapportino.Utente = sessionStorage.getItem("username");
-                nuovoRapportino.Ore=sessionStorage.setItem("timeDiff", timeDiff);
-                console.log(nuovoRapportino);
-
-                this.getView()
-                    .getModel()
-                    .setProperty("/nuovoRapportino", nuovoRapportino);
-
-                if (!this.pDialog) {
+                    .getModel();
+                    var data=date.getDate()+"/"+Number(date.getMonth())+1+"/"+date.getFullYear();
+                    nuovoRapportino.setProperty("Giorno",data);
+                    nuovoRapportino.setProperty("Utente",sessionStorage.getItem("username"));
+                    nuovoRapportino.setProperty("Ore",sessionStorage.getItem("timeDiff"))
+                    console.log(nuovoRapportino);
+                    if (!this.pDialog) {
                     this.pDialog = this.loadFragment({
                     name: "regesta.regestarapportini.fragments.Popup",
                     });
