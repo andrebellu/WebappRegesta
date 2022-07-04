@@ -30,10 +30,8 @@ sap.ui.define(
         Text
     ) {
         "use strict";
-
         var check = true;
         var startTime, endTime, timeDiff;
-
         return Controller.extend(
             "regesta.regestarapportini.controller.Tickets",
             {
@@ -53,21 +51,10 @@ sap.ui.define(
                 },
 
                 handleSwipe: function (oEvent) {
-                    // register swipe event
-                    var oSwipeContent = oEvent.getParameter("swipeContent"), // get swiped content from event
-                        oSwipeDirection = oEvent.getParameter("swipeDirection"); // get swiped direction from event
-                    var msg = "";
-
-                    if (oSwipeDirection === "BeginToEnd") {
-                        // List item is approved, change swipeContent(button) text to Disapprove and type to Reject
-                        oSwipeContent.setText("Approve").setType("Accept");
-                        msg = "Swipe direction is from the beginning to the end (left ro right in LTR languages)";
-                    } else {
-                        // List item is not approved, change swipeContent(button) text to Approve and type to Accept
-                        oSwipeContent.setText("Disapprove").setType("Reject");
-                        msg = "Swipe direction is from the end to the beginning (right to left in LTR languages)";
-                    }
-                    msgT.show(msg);
+                    var swipedItem = oEvent.getParameter("listItem");
+                    var context = swipedItem.getBindingContext();
+                    var oModel = this.getView().getModel();
+                    oModel.setProperty("/id", id);
                 },
 
                 Timer: function () {
@@ -89,13 +76,21 @@ sap.ui.define(
                     }
                 },
 
-                showPopup: function () {
+                showPopup: function (oEvent) {
+                    var source = oEvent.getSource();
+                    var context = source.getBindingContext();
+                    var index = source.getBindingContext().getPath();
+                    this.getView().getModel().setProperty("/index", index);
+                    var path = this.getView().getModel().getProperty("/index");
+                    this.getView().getModel().setProperty("/path", path);
+                    console.log(path);
                     if (!this.pDialog) {
                         this.pDialog = this.loadFragment({
                             name: "regesta.regestarapportini.fragments.PopupTicket",
                         });
                     }
                     this.pDialog.then(function (oDialog) {
+                        oDialog.setBindingContext(context);
                         oDialog.open();
                     });
                 },
@@ -107,7 +102,11 @@ sap.ui.define(
                     method : "POST",
                     redirect : "follow",
                   };
-                  fetch("https://asstest.regestaitalia.it/api_v2/clienti?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idCliente=0", request)
+                    var token = sessionStorage.getItem("token");
+                    token = token.replace(/"/g, "");
+                    token = encodeURIComponent(token);
+
+                  fetch("https://asstest.regestaitalia.it/api_v2/clienti?token="  + token + "&idCommessa=0&idCliente=0", request)
                     .then((response) => response.text())
                     .then((result) => this.handleClienti(result))
                     .catch((error) => console.log("error", error));
@@ -129,8 +128,9 @@ sap.ui.define(
                 },
                 handleCommesse: function(result){
                   var oModel = this.getView().getModel();
-                  var commesse = JSON.parse(result);
-                  oModel.setProperty("/commesse", commesse);
+                  var clienti = JSON.parse(result);
+                  oModel.setProperty("/clienti", clienti);
+                  console.log(clienti);
                 },
                 APIticket: function(){
                   var request = {
@@ -144,8 +144,8 @@ sap.ui.define(
                 },
                 handleTicket: function(result){
                   var oModel = this.getView().getModel();
-                  var ticket = JSON.parse(result);
-                  oModel.setProperty("/ticket", ticket);
+                  var clienti = JSON.parse(result);
+                  oModel.setProperty("/clienti", clienti);
                   console.log(oModel.getProperty("/ticket"));
                 }
             }
