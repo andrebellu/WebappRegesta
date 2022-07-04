@@ -23,12 +23,11 @@ sap.ui.define(
     "use strict";
 
     var token = sessionStorage.getItem("token");
-    
+
     return Controller.extend(
       "regesta.regestarapportini.controller.NavbarFooter",
       {
         onInit: function () {
-
           var i18nModel = new ResourceModel({
             bundleName: "regesta.regestarapportini.i18n.i18n",
           });
@@ -148,17 +147,17 @@ sap.ui.define(
             IDUtente: null,
             Utente: sessionStorage.getItem("username"),
             IDCliente: null,
-            IDCommessa: null,
+            IDCommessa: 1969,
             IDClienteSede: null,
             IDProgetto: null,
             IDProgettoAttivita: null,
-            IDTodoList: null,
+            IDTodoList: 25329,
             Codice: null,
             Descrizione: null,
             Attivita: null,
             Sede: "UF",
             Destinazione: null,
-            Giorno: this.getCurrentDate(),
+            Giorno: "2022-07-04T00:00:00",
             Ore: null,
             OreLavorate: null,
             Km: null,
@@ -170,13 +169,13 @@ sap.ui.define(
             Noleggio: null,
             Trasporti: null,
             Varie: null,
-            Plus: null,
-            Fatturabile: null,
+            Plus: false,
+            Fatturabile: true,
             Bloccato: null,
             SpeseVarie: null,
             Docente: null,
           };
-      
+
           var oModel = this.getView().getModel();
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
@@ -186,7 +185,7 @@ sap.ui.define(
 
           nuovoRapportino.Giorno = this.getCurrentDate();
           nuovoRapportino.Utente = sessionStorage.getItem("username");
-          
+
           var source = oEvent.getSource();
           var setContext = source.setBindingContext(
             new sap.ui.model.Context(oModel, "/nuovoRapportino")
@@ -206,32 +205,64 @@ sap.ui.define(
         },
 
         onSave: function () {
+          const defaultBody = {
+            IDRapportino: null,
+            IDUtente: null,
+            Utente: "studente.itis",
+            IDCliente: 5,
+            IDCommessa: 1969,
+            IDClienteSede: null,
+            IDProgetto: null,
+            IDProgettoAttivita: null,
+            IDTodoList: 25329,
+            Codice: null,
+            Descrizione: "Pizda mati",
+            Attivita: null,
+            Sede: "UF",
+            Destinazione: null,
+            Giorno: "2022-07-04T00:00:00",
+            Ore: 22.0,
+            OreLavorate: null,
+            Km: null,
+            KmEuro: null,
+            Pedaggio: null,
+            Forfait: null,
+            Vitto: null,
+            Alloggio: null,
+            Noleggio: null,
+            Trasporti: null,
+            Varie: null,
+            Plus: false,
+            Fatturabile: false,
+            Bloccato: null,
+            SpeseVarie: null,
+            Docente: null,
+          };
           var nuovoRapportino = this.getView()
-          .getModel()
-          .getProperty("/nuovoRapportino");
+            .getModel()
+            .getProperty("/nuovoRapportino");
           console.log(nuovoRapportino);
-
-          var myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-          myHeaders.append(
-            "Cookie",
-            "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
-          );
-
+          console.log(JSON.stringify(defaultBody));
 
           var requestOptions = {
             method: "POST",
-            headers: myHeaders,
-            body: nuovoRapportino,
+            body: JSON.stringify(defaultBody),
             redirect: "follow",
           };
+
+          var token = sessionStorage.getItem("token");
+
+          token = token.replace(/"/g, "");
+          var encodedToken = encodeURIComponent(token);
+
+          sessionStorage.setItem("encodedToken", encodedToken);
 
           fetch(
             "https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" +
               sessionStorage.getItem("encodedToken"),
             requestOptions
           )
-            .then((response) => response.text())
+            .then((response) => console.log(response.text()))
             .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
           this.byId("popup").close();
