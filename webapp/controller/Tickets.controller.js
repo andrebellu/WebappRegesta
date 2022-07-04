@@ -86,18 +86,51 @@ sap.ui.define(
                             minutes + ":" + (seconds < 10 ? "0" : "") + seconds
                         );
                         check = true;
+                        
+                    }
+                },
+                Timer1: function () {
+                    if (check) {
+                        check = false;
+                        startTime =String( new Date().getHours())+" : "+String(new Date().getMinutes());
+                        console.log(startTime);
+                    } else {
+                        endTime = String( new Date().getHours())+" : "+String(new Date().getMinutes());
+                        console.log(endTime);
+                        var [hourstart,minutestart]=String(startTime).split(" : ")
+                        var [hourend,minutend]=String(endTime).split(" : ")
+                        timeDiffHour=Number(hourend)-Number(hourstart);
+                        timeDiffMinute=Number(minutend)-Number(minutestart);
+                        timeDiff = timeDiffHour + timeDiffMinute/60;
+                        console.log(timeDiff);
+                        
+                        check = true;
+                        sessionStorage.setItem("timeDiff", timeDiff);
+                        
                     }
                 },
 
                 showPopup: function () {
-                    if (!this.pDialog) {
-                        this.pDialog = this.loadFragment({
-                            name: "regesta.regestarapportini.fragments.PopupTicket",
-                        });
-                    }
-                    this.pDialog.then(function (oDialog) {
-                        oDialog.open();
+                    var nuovoRapportino = this.getView()
+                    .getModel()
+                    .getProperty("/nuovoRapportino");
+                nuovoRapportino.Giorno = this.getCurrentDate();
+                nuovoRapportino.Utente = sessionStorage.getItem("username");
+                nuovoRapportino.Ore=sessionStorage.setItem("timeDiff", timeDiff);
+                console.log(nuovoRapportino);
+
+                this.getView()
+                    .getModel()
+                    .setProperty("/nuovoRapportino", nuovoRapportino);
+
+                if (!this.pDialog) {
+                    this.pDialog = this.loadFragment({
+                    name: "regesta.regestarapportini.fragments.Popup",
                     });
+                }
+                this.pDialog.then(function (oDialog) {
+                    oDialog.open();
+                });
                 },
                 onCancel: function (oEvent) {
                   this.byId("popup").close();
