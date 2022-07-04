@@ -3,6 +3,10 @@ html {
     scrollbar-width: none;
 }
 
+#__xmlview1--hourBadge-inner{
+    border-radius: 20px;
+}
+
 ::-webkit-scrollbar {
     display: none;
     width: 0px;
