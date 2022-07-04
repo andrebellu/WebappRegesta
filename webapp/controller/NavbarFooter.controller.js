@@ -312,13 +312,15 @@ sap.ui.define(
               
       
           var myHeaders = new Headers();
+          var myHeaders = new Headers();
           myHeaders.append("Content-Type", "application/json");
-      
+          myHeaders.append("Cookie", "ASP.NET_SessionId=ykhyiqc5du5r3cytzuxzovhd");
+          
           var raw = JSON.stringify({
             "IDRapportino": 595443,
             "IDUtente": null,
             "Utente": oModel.getProperty('/name'),
-            "IDCliente": 5555,
+            "IDCliente": 10,
             "IDCommessa": 1969,
             "IDClienteSede": null,
             "IDProgetto": null,
@@ -347,21 +349,18 @@ sap.ui.define(
             "SpeseVarie": null,
             "Docente": null
           });
-      
+          
           var requestOptions = {
             method: 'POST',
             headers: myHeaders,
             body: raw,
             redirect: 'follow'
           };
-      
-          fetch("https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d%0A%0A", requestOptions)
+          
+          fetch("https://asstest.regestaitalia.it/api_v2/nuovorapportino?token="+token, requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-      
-            
-            this.handleData(raw);
           
           },
         
