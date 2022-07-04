@@ -8,6 +8,7 @@ sap.ui.define(
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
     "sap/ui/model/resource/ResourceModel",
+    "sap/m/BadgeEnabler",
   ],
   function (
     Device,
@@ -22,12 +23,45 @@ sap.ui.define(
     "use strict";
 
     var token = sessionStorage.getItem("token");
+    var defaultBody = {
+			"IDRapportino": null,
+			"IDUtente": null,
+			"Utente": null,
+			"IDCliente": null,
+			"IDCommessa": null,
+			"IDClienteSede": null,
+			"IDProgetto": null,
+			"IDProgettoAttivita": null,
+			"IDTodoList": null,
+			"Codice": null,
+			"Descrizione": null,
+			"Attivita": null,
+			"Sede": "UF",
+			"Destinazione": null,
+			"Giorno": null,
+			"Ore": null,
+			"OreLavorate": null,
+			"Km": null,
+			"KmEuro": null,
+			"Pedaggio": null,
+			"Forfait": null,
+			"Vitto": null,
+			"Alloggio": null,
+			"Noleggio": null,
+			"Trasporti": null,
+			"Varie": null,
+			"Plus": null,
+			"Fatturabile": null,
+			"Bloccato": null,
+			"SpeseVarie": null,
+			"Docente": null
+  };
 
     return Controller.extend(
       "regesta.regestarapportini.controller.NavbarFooter",
       {
         onInit: function () {
-          var oModel = new JSONModel("model/data.json");
+          var oModel = new JSONModel();
 
           var i18nModel = new ResourceModel({
             bundleName: "regesta.regestarapportini.i18n.i18n",
@@ -147,17 +181,24 @@ sap.ui.define(
         },
 
         showPopup: function (oEvent) {
+          
+          var oModel = this.getView().getModel();
+          oModel.setProperty("/nuovoRapportino", defaultBody);
+
           var nuovoRapportino = this.getView()
             .getModel()
             .getProperty("/nuovoRapportino");
           nuovoRapportino.Giorno = this.getCurrentDate();
           nuovoRapportino.Utente = sessionStorage.getItem("username");
 
+          oModel.setProperty("/nuovoRapportino", nuovoRapportino);
+          
+          var source = oEvent.getSource();
+          var setContext = source.setBindingContext(new sap.ui.model.Context(oModel, "/nuovoRapportino"));
+          var getContext = setContext.getBindingContext();
+          console.log(setContext);
+          console.log(getContext);
           console.log(nuovoRapportino);
-
-          this.getView()
-            .getModel()
-            .setProperty("/nuovoRapportino", nuovoRapportino);
 
           if (!this.pDialog) {
             this.pDialog = this.loadFragment({
@@ -165,6 +206,7 @@ sap.ui.define(
             });
           }
           this.pDialog.then(function (oDialog) {
+            oDialog.setBindingContext(getContext);
             oDialog.open();
           });
         },
