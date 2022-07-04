@@ -61,13 +61,11 @@ sap.ui.define(
       "regesta.regestarapportini.controller.NavbarFooter",
       {
         onInit: function () {
-          var oModel = new JSONModel();
 
           var i18nModel = new ResourceModel({
             bundleName: "regesta.regestarapportini.i18n.i18n",
           });
 
-          this.getView().setModel(oModel);
           this.getView().setModel(i18nModel, "i18n");
         },
 

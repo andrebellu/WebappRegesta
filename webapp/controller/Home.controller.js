@@ -128,6 +128,19 @@ sap.ui.define(
                 });
 
                 oModel.setProperty("/filteredItems", filteredItems);
+                this.sumHours();
+            },
+
+            sumHours: function () {
+                var oModel = this.getView().getModel();
+                var filteredItems = oModel.getProperty("/filteredItems");
+                var sum = 0.0;
+
+                filteredItems.forEach(function (item) {
+                    sum += parseFloat(item.Ore);
+                });
+
+                oModel.setProperty("/sum", sum);
             },
 
             handleSwipe: function (oEvent) {
