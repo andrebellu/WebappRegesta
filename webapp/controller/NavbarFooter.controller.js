@@ -262,7 +262,7 @@ sap.ui.define(
               sessionStorage.getItem("encodedToken"),
             requestOptions
           )
-            .then((response) => console.log(response.text()))
+            .then((response) => response.text())
             .then((result) => console.log(result))
             .catch((error) => console.log("error", error));
           this.byId("popup").close();
