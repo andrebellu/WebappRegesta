@@ -29,11 +29,44 @@ sap.ui.define(
         StandardListItem,
         Text
     ) {
+        
         "use strict";
 
         var check = true;
         var startTime, endTime, timeDiff;
-
+        var defaultBody = {
+			"IDRapportino": null,
+			"IDUtente": null,
+			"Utente": null,
+			"IDCliente": null,
+			"IDCommessa": null,
+			"IDClienteSede": null,
+			"IDProgetto": null,
+			"IDProgettoAttivita": null,
+			"IDTodoList": null,
+			"Codice": null,
+			"Descrizione": null,
+			"Attivita": null,
+			"Sede": "UF",
+			"Destinazione": null,
+			"Giorno": null,
+			"Ore": null,
+			"OreLavorate": null,
+			"Km": null,
+			"KmEuro": null,
+			"Pedaggio": null,
+			"Forfait": null,
+			"Vitto": null,
+			"Alloggio": null,
+			"Noleggio": null,
+			"Trasporti": null,
+			"Varie": null,
+			"Plus": null,
+			"Fatturabile": null,
+			"Bloccato": null,
+			"SpeseVarie": null,
+			"Docente": null
+  };
         return Controller.extend(
             "regesta.regestarapportini.controller.Tickets",
             {
@@ -89,7 +122,7 @@ sap.ui.define(
                         
                     }
                 },
-                Timer1: function () {
+                Timer1: function (oEvent) {
                     if (check) {
                         check = false;
                         startTime =String( new Date().getHours())+" : "+String(new Date().getMinutes());
@@ -99,23 +132,23 @@ sap.ui.define(
                         console.log(endTime);
                         var [hourstart,minutestart]=String(startTime).split(" : ")
                         var [hourend,minutend]=String(endTime).split(" : ")
-                        timeDiffHour=Number(hourend)-Number(hourstart);
-                        timeDiffMinute=Number(minutend)-Number(minutestart);
+                        var timeDiffHour=Number(hourend)-Number(hourstart);
+                        var timeDiffMinute=Number(minutend)-Number(minutestart);
                         timeDiff = timeDiffHour + timeDiffMinute/60;
                         console.log(timeDiff);
                         
                         check = true;
                         sessionStorage.setItem("timeDiff", timeDiff);
-                        this.showPopup();
+                        this.showPopup(oEvent);
                         
                     }
                 },
 
-                showPopup: function () {
+                showPopup: function (oEvent) {
                     var date=new Date();
                     var nuovoRapportino = this.getView()
                     .getModel();
-                    var data=date.getDate()+"/"+Number(date.getMonth())+1+"/"+date.getFullYear();
+                    var data=date.getDate()+"/"+Number(date.getMonth()+1)+"/"+date.getFullYear();
                     var oModel = this.getView().getModel();
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
@@ -124,7 +157,10 @@ sap.ui.define(
             .getProperty("/nuovoRapportino");
           nuovoRapportino.Giorno = data;
           nuovoRapportino.Utente = sessionStorage.getItem("username");
-          nuovoRapportino.Ore=sessionStorage.getItem("timeDiff");
+          console.log(nuovoRapportino.Ore);
+          var input=oModel.getElementById("Ore").stepUp(1.1);
+          console.log(nuovoRapportino.Ore);
+          console.log(input);
           oModel.setProperty("/nuovoRapportino", nuovoRapportino);
           
           var source = oEvent.getSource();

@@ -334,7 +334,7 @@ sap.ui.define(
       
           if (!bValidationError) {
             MessageBox.success("la procedura è andata con successo");
-            this.ApiGenera();
+            //this.ApiGenera();
               
           } else {
             MessageBox.alert("la procedura è andata a fallimento");

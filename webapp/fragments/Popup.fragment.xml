@@ -27,16 +27,16 @@
     }" id="date" class="roundedInput" change=".onGiornoChange" placeholder="dd/mm/yyyy" width="100%" showCurrentDateButton="true" enabled="true"/>
 
         <!--! Input work hours with step input -->
-        <Label text="Ore" class="labelMargin" required="true"/>
+        <Label text="Ore" class="labelMargin" required="true" />
         <StepInput value="{
-        value : '0.0',
+        value : '',
         path : 'Ore',
         type : 'sap.ui.model.type.Float',
         constraints : {
             minLength: 1,
-            maxLength: 3
+            maxLength: 5
         }
-    }" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24" step="1" enabled="true"/>
+    }" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="0.1" enabled="true"/>
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
@@ -197,7 +197,7 @@
         <!--! Save button -->
         <Button text="Salva"
         type="Emphasized"
-        press= ".onSave"
+        press= ".onSubmit"
         enabled="true"
         class="dialogButton"/>
     </FlexBox>
