@@ -74,9 +74,6 @@
 
         <!--! Input site with combo box -->
         <Label text="Sede" class="labelMargin"/>
-<<<<<<< HEAD
-        <ComboBox value="UF" class="roundedInput" width="100%" enabled="true" id="site" placeholder="Sede">
-=======
         <ComboBox value="{
         path : 'Sede',
         type : 'sap.ui.model.type.String',
@@ -85,7 +82,6 @@
             maxLength: 2
         }
     }" class="roundedInput" width="100%" enabled="true" id="site" placeholder="Sede">
->>>>>>> fe6b8b82a68d26dacaff902d20a164689bdfdfe4
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="1" text="UF"/>
                 <core:Item xmlns:core="sap.ui.core" key="2" text="CL"/>

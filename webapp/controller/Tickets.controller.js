@@ -116,19 +116,34 @@ sap.ui.define(
                     var nuovoRapportino = this.getView()
                     .getModel();
                     var data=date.getDate()+"/"+Number(date.getMonth())+1+"/"+date.getFullYear();
-                    nuovoRapportino.setProperty("Giorno",data);
-                    nuovoRapportino.setProperty("Utente",sessionStorage.getItem("username"));
-                    nuovoRapportino.setProperty("Ore",sessionStorage.getItem("timeDiff"))
-                    console.log(nuovoRapportino);
-                    if (!this.pDialog) {
-                    this.pDialog = this.loadFragment({
-                    name: "regesta.regestarapportini.fragments.Popup",
-                    });
-                }
-                this.pDialog.then(function (oDialog) {
-                    oDialog.open();
-                });
-                },
+                    var oModel = this.getView().getModel();
+          oModel.setProperty("/nuovoRapportino", defaultBody);
+
+          var nuovoRapportino = this.getView()
+            .getModel()
+            .getProperty("/nuovoRapportino");
+          nuovoRapportino.Giorno = data;
+          nuovoRapportino.Utente = sessionStorage.getItem("username");
+          nuovoRapportino.Ore=sessionStorage.getItem("timeDiff");
+          oModel.setProperty("/nuovoRapportino", nuovoRapportino);
+          
+          var source = oEvent.getSource();
+          var setContext = source.setBindingContext(new sap.ui.model.Context(oModel, "/nuovoRapportino"));
+          var getContext = setContext.getBindingContext();
+          console.log(setContext);
+          console.log(getContext);
+          console.log(nuovoRapportino);
+
+          if (!this.pDialog) {
+            this.pDialog = this.loadFragment({
+              name: "regesta.regestarapportini.fragments.Popup",
+            });
+          }
+          this.pDialog.then(function (oDialog) {
+            oDialog.setBindingContext(getContext);
+            oDialog.open();
+          });
+        },
                 onCancel: function (oEvent) {
                   this.byId("popup").close();
                 },
