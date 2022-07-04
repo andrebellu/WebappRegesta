@@ -85,11 +85,13 @@ sap.ui.define(
                 var token = sessionStorage.getItem("token");
 
                 token = token.replace(/"/g, "");
-                token = encodeURIComponent(token);
+                var encodedToken = encodeURIComponent(token);
+
+                sessionStorage.setItem("encodedToken", encodedToken);
 
                 fetch(
                     "https://asstest.regestaitalia.it/api_v2/rapportini?token=" +
-                        token,
+                        sessionStorage.getItem("encodedToken"),
                     requestOptions
                 )
                     .then((response) => response.text())
@@ -106,10 +108,13 @@ sap.ui.define(
             handleSwipe: function (oEvent) {
                 var swipedItem = oEvent.getParameter("listItem");
                 var context = swipedItem.getBindingContext();
+                var body = context.getObject();
                 var id = context.getObject().IDRapportino;
 
                 var oModel = this.getView().getModel();
+
                 oModel.setProperty("/id", id);
+                oModel.setProperty("/body", body);
             },
 
             handleMore: function (oEvent) {
@@ -122,7 +127,35 @@ sap.ui.define(
             },
 
             handleDuplicate: function (oEvent) {
-                msgT.show("Duplicate");
+                var body = this.getView().getModel().getProperty("/body");
+
+                // ? API CALL NUOVO RAPPORTINO
+
+                // var myHeaders = new Headers();
+                // myHeaders.append("Content-Type", "application/json");
+                // myHeaders.append(
+                //     "Cookie",
+                //     "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
+                // );
+
+                // var raw = JSON.stringify({
+                //     body
+                // });
+
+                // var requestOptions = {
+                //     method: "POST",
+                //     headers: myHeaders,
+                //     body: raw,
+                //     redirect: "follow",
+                // };
+
+                // fetch(
+                //     "https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
+                //     requestOptions
+                // )
+                //     .then((response) => response.text())
+                //     .then((result) => console.log(result))
+                //     .catch((error) => console.log("error", error));
             },
 
             handleEdit: function (oEvent) {
