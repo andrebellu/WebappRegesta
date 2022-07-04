@@ -117,7 +117,6 @@ sap.ui.define(
                 }
 
                 var filteredItems = items.filter(function (item) {
-
                     if (
                         new Date(
                             parseInt(item.Giorno.replace(/\D/g, ""))
@@ -276,8 +275,10 @@ sap.ui.define(
                     .getModel("i18n")
                     .getResourceBundle();
 
-                var sRecipient = oEvent.getParameter("value").replace(/\b0/g, '');
-                
+                var sRecipient = oEvent
+                    .getParameter("value")
+                    .replace(/\b0/g, "");
+
                 this.getView()
                     .getModel()
                     .setProperty("/selectedDate", sRecipient);

@@ -88,7 +88,7 @@ html ul {
 
 .item:focus div,
 span::before {
-    color: white;
+    color: aliceblue;
 }
 
 .sapMSLIInfo.sapMSLIInfoNone {

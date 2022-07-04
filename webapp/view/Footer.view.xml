@@ -13,6 +13,9 @@
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
 				<Button icon="sap-icon://fob-watch" press="checkHours" id="hourBadge">
+					<customData>
+						<BadgeCustomData key="badge" value="{/sum}" visible="" id="badge"/>
+					</customData>
 				</Button>
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
