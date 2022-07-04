@@ -19,10 +19,10 @@
 
             <Button id="btn" class="btnDP" ariaHasPopup="Dialog" text="{/date}" press="openDatePicker" />
 
-            <DatePicker id="HiddenDP" hideInput="true" change="changeDateHandler" showCurrentDateButton="true" displayFormat="dd/MM/yyyy"/>
+            <DatePicker id="HiddenDP" hideInput="true" change="changeDateHandler" showCurrentDateButton="true" displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy"/>
 
             <ScrollContainer height="100%" width="100%" vertical="true" horizontal="false" focusable="true">
-                <List noDataText="No element to display" items="{/items}" id="list" swipe="handleSwipe">
+                <List noDataText="No element to display" items="{/filteredItems}" id="list" swipe="handleSwipe">
                     <items>
     
                         <StandardListItem type="Navigation" title="Commessa: {IDCommessa}" description="{Descrizione}" icon="sap-icon://activities" info="{Ore}" class="item" id="element" press="showPopup"/>

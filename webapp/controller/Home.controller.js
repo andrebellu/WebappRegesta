@@ -41,6 +41,7 @@ sap.ui.define(
 
         var CalendarType = coreLibrary.CalendarType;
         var oList;
+        var firstTime = true;
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
             onInit: function () {
@@ -66,9 +67,6 @@ sap.ui.define(
                 var yyyy = today.getFullYear();
                 var mm = today.getMonth() + 1;
                 var dd = today.getDate();
-
-                if (dd < 10) dd = "0" + dd;
-                if (mm < 10) mm = "0" + mm;
 
                 today = dd + "/" + mm + "/" + yyyy;
 
@@ -103,6 +101,51 @@ sap.ui.define(
                 var oModel = this.getView().getModel();
                 var items = JSON.parse(result);
                 oModel.setProperty("/items", items);
+
+                this.filterItems();
+            },
+
+            filterItems: function () {
+                var oModel = this.getView().getModel();
+                var items = oModel.getProperty("/items");
+
+                if (firstTime) {
+                    var selectedDate = oModel.getProperty("/date");
+                    firstTime = false;
+                } else {
+                    var selectedDate = oModel.getProperty("/selectedDate");
+                }
+
+                var filteredItems = items.filter(function (item) {
+                    if (
+                        new Date(
+                            parseInt(item.Giorno.replace(/\D/g, ""))
+                        ).toLocaleDateString("it-IT") === selectedDate
+                    ) {
+                        return item;
+                    }
+                });
+
+                oModel.setProperty("/filteredItems", filteredItems);
+                this.sumHours();
+            },
+
+            sumHours: function () {
+                var oModel = this.getView().getModel();
+                var filteredItems = oModel.getProperty("/filteredItems");
+                var sum = 0.0;
+
+                filteredItems.forEach(function (item) {
+                    sum += parseFloat(item.Ore);
+                });
+
+                if (sum >= 8) {
+                    document.getElementById("__xmlview1--hourBadge-inner").style.setProperty("background-color", "rgba(194, 249, 112, .2)", "important");
+                }else{
+                    document.getElementById("__xmlview1--hourBadge-inner").style.setProperty("background-color", "rgba(254, 121, 104, .2)", "important");
+                }
+
+                oModel.setProperty("/sum", sum);
             },
 
             handleSwipe: function (oEvent) {
@@ -129,7 +172,7 @@ sap.ui.define(
             handleDuplicate: function (oEvent) {
                 var body = this.getView().getModel().getProperty("/body");
 
-                // ? API CALL NUOVO RAPPORTINO
+                // ? API CALL NUOVO RAPPORTIN
 
                 // var myHeaders = new Headers();
                 // myHeaders.append("Content-Type", "application/json");
@@ -144,7 +187,7 @@ sap.ui.define(
 
                 // var requestOptions = {
                 //     method: "POST",
-                //     headers: myHeaders,
+                //     headers: myHeaders
                 //     body: raw,
                 //     redirect: "follow",
                 // };
@@ -238,12 +281,20 @@ sap.ui.define(
                     .getModel("i18n")
                     .getResourceBundle();
 
-                var sRecipient = oEvent.getParameter("value");
+                var sRecipient = oEvent
+                    .getParameter("value")
+                    .replace(/\b0/g, "");
+
+                this.getView()
+                    .getModel()
+                    .setProperty("/selectedDate", sRecipient);
 
                 var data = oBundle.getText("currentDate", [sRecipient]);
                 document.getElementById(
                     "container-regesta.regestarapportini---Home--btn-BDI-content"
                 ).innerHTML = data;
+
+                this.filterItems();
             },
 
             //! Dialog box
