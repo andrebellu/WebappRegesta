@@ -12,7 +12,8 @@
 				<Button icon="sap-icon://activities" press="goToTickets" />
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
-				<Button icon="sap-icon://fob-watch" press="checkHours" />
+				<Button icon="sap-icon://fob-watch" press="checkHours" id="hourBadge">
+				</Button>
 				<ToolbarSpacer/>
 				<ToolbarSpacer/>
 				<Button icon="sap-icon://add" press="showPopup"/>
