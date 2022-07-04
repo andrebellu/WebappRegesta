@@ -198,28 +198,6 @@ sap.ui.define(
         },
 
         //! Check date input
-        _validateInput: function (oInput) {
-          var sValueState = "None";
-          var bValidationError = false;
-          var oBinding = oInput.getBinding("value");
-
-          try {
-            oBinding.getType().validateValue(oInput.getValue());
-          } catch (oException) {
-            sValueState = "Error";
-            bValidationError = true;
-          }
-
-          oInput.setValueState(sValueState);
-
-          return bValidationError;
-        },
-
-        onGiornoChange: function (oEvent) {
-          var oInput = oEvent.getSource();
-          this._validateGiornoInput(oInput);
-        },
-
         _validateGiornoInput: function (oInput) {
           var sValueState = "None";
           var bValidationError = false;
@@ -271,6 +249,7 @@ sap.ui.define(
             t - f < 0 ||
             t - f > 7 ||
             date.getMonth() + 1 -  month >1 ||
+            date.getMonth() + 1 -  month <0 ||
             date.getFullYear() != Number(year) + 2000 ||
             oInput == ""
           ) {
@@ -295,93 +274,100 @@ sap.ui.define(
           oInput.setValueState(sValueState);
           return bValidationError;
           },
-        onSubmit: function () {
+          onSubmit: function () {
           // collect input controls               
-                              var oView = this.getView(),
-              
+                    var oView = this.getView(),
+            
           
-              hello=[oView.byId("date")],                    
-              
-              bValidationError = false;
-         
-
-              // Check that inputs are not empty.
-              // Validation does not happen during data binding as this is only triggered by user actions.
-              
-              hello.forEach(function (oInput) {
-                  bValidationError = this._validateGiornoInput(oInput) || bValidationError;
-              }, this);
-
-
+            hello=[oView.byId("date")],                    
+            
+            bValidationError = false;
+           
+      
+            // Check that inputs are not empty.
+            // Validation does not happen during data binding as this is only triggered by user actions.
+            
+            hello.forEach(function (oInput) {
+              bValidationError = this._validateGiornoInput(oInput) || bValidationError;
+            }, this);
+      
+      
           if (!bValidationError) {
-              MessageBox.success("la procedura è andata con successo");
-              this.ApiGenera();
-                  
-          } else {
-              MessageBox.alert("la procedura è andata a fallimento");
-          }
-
-      },
-      handleData: function (result) {
-        var oModel = this.getView().getModel();
-        var items = JSON.parse(result);
-        oModel.setProperty("/items", items);
-    },
-      ApiGenera: function(){
-
-        var oModel = this.getView().getModel();
+            MessageBox.success("la procedura è andata con successo");
+            this.ApiGenera();
               
-
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
-          "IDRapportino": 595443,
-          "IDUtente": null,
-          "Utente": oModel.getProperty('/name'),
-          "IDCliente": 5555,
-          "IDCommessa": 1969,
-          "IDClienteSede": null,
-          "IDProgetto": null,
-          "IDProgettoAttivita": null,
-          "IDTodoList": 25329,
-          "Codice": null,
-          "Descrizione": oModel.getProperty('/description'),
-          "Attivita": null,
-          "Sede": oModel.getProperty('/sede'),
-          "Destinazione": oModel.getProperty('/destination'),
-          "Giorno": oModel.getProperty('/date'),
-          "Ore": oModel.getProperty('/ore'),
-          "OreLavorate": null,
-          "Km": oModel.getProperty('/km'),
-          "KmEuro": oModel.getProperty('/kmPrice'),
-          "Pedaggio": oModel.getProperty('/toll'),
-          "Forfait": oModel.getProperty('/forfait'),
-          "Vitto": oModel.getProperty('/food'),
-          "Alloggio": oModel.getProperty('/accomodation'),
-          "Noleggio": oModel.getProperty('/rental'),
-          "Trasporti": oModel.getProperty('/transport'),
-          "Varie": oModel.getProperty('/various'),
-          "Plus": oModel.getProperty('/plus'),
-          "Fatturabile": oModel.getProperty('/fatturabile'),
-          "Bloccato": null,
-          "SpeseVarie": null,
-          "Docente": null
-        });
-
-        var requestOptions = {
-          method: 'POST',
-          headers: myHeaders,
-          body: raw,
-          redirect: 'follow'
-        };
-
-        fetch("https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" + token, requestOptions)
-          .then(response => response.text())
-          .then(result => console.log(result))
-          .catch(error => console.log('error', error));
-      },
-      }
-    );
-  }
-);
+          } else {
+            MessageBox.alert("la procedura è andata a fallimento");
+          }
+      
+        },
+        handleData: function (raw) {
+          var oModel = this.getView().getModel();
+          var items = raw
+          oModel.setProperty("/items", items);
+        },
+          ApiGenera: function(){
+      
+          var oModel = this.getView().getModel();
+              
+      
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+      
+          var raw = JSON.stringify({
+            "IDRapportino": 595443,
+            "IDUtente": null,
+            "Utente": oModel.getProperty('/name'),
+            "IDCliente": 5555,
+            "IDCommessa": 1969,
+            "IDClienteSede": null,
+            "IDProgetto": null,
+            "IDProgettoAttivita": null,
+            "IDTodoList": 25329,
+            "Codice": null,
+            "Descrizione": oModel.getProperty('/description'),
+            "Attivita": null,
+            "Sede": oModel.getProperty('/sede'),
+            "Destinazione": oModel.getProperty('/destination'),
+            "Giorno": oModel.getProperty('/date'),
+            "Ore": oModel.getProperty('/ore'),
+            "OreLavorate": null,
+            "Km": oModel.getProperty('/km'),
+            "KmEuro": oModel.getProperty('/kmPrice'),
+            "Pedaggio": oModel.getProperty('/toll'),
+            "Forfait": oModel.getProperty('/forfait'),
+            "Vitto": oModel.getProperty('/food'),
+            "Alloggio": oModel.getProperty('/accomodation'),
+            "Noleggio": oModel.getProperty('/rental'),
+            "Trasporti": oModel.getProperty('/transport'),
+            "Varie": oModel.getProperty('/various'),
+            "Plus": oModel.getProperty('/plus'),
+            "Fatturabile": oModel.getProperty('/fatturabile'),
+            "Bloccato": null,
+            "SpeseVarie": null,
+            "Docente": null
+          });
+      
+          var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+      
+          fetch("https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d%0A%0A", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+      
+            
+            this.handleData(raw);
+          
+          },
+        
+      
+    
+        
+    
+      });
+    });
