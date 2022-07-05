@@ -3,7 +3,7 @@
     <Dialog  xmlns="sap.m" title="Ticket" type="Message" id="popup" class="dialogStyle">
         <Label text=" Data di inserimento" class="labelMargin"/>
         <DatePicker value="{
-                path : 'InsertDate',   
+                path : 'DataInserimento',   
                 type : 'sap.ui.model.type.String' }" 
                 id="date" class="roundedInput" width="100%" enabled="false"/>
 
@@ -41,7 +41,7 @@
 
         <Label text="Data consegna richiesta" class="labelMargin"/>
         <Input value="{
-                path : 'DataConsegnaRichiesta',
+                path : 'DataConsegna',
                 type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" class="roundedInput" id="requestedDate"/>
 

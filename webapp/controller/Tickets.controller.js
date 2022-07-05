@@ -34,6 +34,39 @@ sap.ui.define(
         var startTime, endTime, timeDiff;
         var oList;
         var token;
+        var defaultBody = {
+          IDRapportino: null,
+          IDUtente: null,
+          Utente: null,
+          IDCliente: null,
+          IDCommessa: null,
+          IDClienteSede: null,
+          IDProgetto: null,
+          IDProgettoAttivita: null,
+          IDTodoList: null,
+          Codice: null,
+          Descrizione: null,
+          Attivita: null,
+          Sede: "UF",
+          Destinazione: null,
+          Giorno: null,
+          Ore: null,
+          OreLavorate: null,
+          Km: null,
+          KmEuro: null,
+          Pedaggio: null,
+          Forfait: null,
+          Vitto: null,
+          Alloggio: null,
+          Noleggio: null,
+          Trasporti: null,
+          Varie: null,
+          Plus: null,
+          Fatturabile: null,
+          Bloccato: null,
+          SpeseVarie: null,
+          Docente: null,
+        };
         return Controller.extend(
             "regesta.regestarapportini.controller.Tickets",
             {
@@ -60,26 +93,6 @@ sap.ui.define(
                     var context = swipedItem.getBindingContext();
                     var oModel = this.getView().getModel();
                 },
-
-                Timer: function (oEvent) {
-                        if (check) {
-                        check = false;
-                        startTime = new Date().getTime();
-                        console.log(startTime);
-                    } else {
-                        endTime = new Date().getTime();
-                        console.log(endTime);
-                        timeDiff = endTime - startTime;
-                        console.log(timeDiff);
-                        var minutes = Math.floor(timeDiff / 60000);
-                        var seconds = ((timeDiff % 60000) / 1000).toFixed(0);
-                        console.log(
-                            minutes + ":" + (seconds < 10 ? "0" : "") + seconds
-                        );
-                        check = true;
-                    }
-                },
-
                 showPopup: function (oEvent) {
                     var i;
                     var code;
@@ -114,18 +127,20 @@ sap.ui.define(
                     }
                     var clientName = code + " - " + clientDescription;
                     oModel.setProperty(path + "/ClientName", clientName);
+
                     oModel.setProperty(path + "/Order", orderDescription);
+
                     var insertDate = context.getProperty("InsertDate");
                     var timeStamp = insertDate.replace(/\D/g, "");
                     var insertDate = new Date(parseInt(timeStamp));
                     insertDate = insertDate.toLocaleDateString("it-IT");
-                    oModel.setProperty(path + "/InsertDate", insertDate);
+                    oModel.setProperty(path + "/DataInserimento", insertDate);
 
                     var DataConsegnaRichiesta = context.getProperty("DataConsegnaRichiesta");
                     var timeStamp = DataConsegnaRichiesta.replace(/\D/g, "");
                     var DataConsegnaRichiesta = new Date(parseInt(timeStamp));
                     DataConsegnaRichiesta = DataConsegnaRichiesta.toLocaleDateString("it-IT");
-                    oModel.setProperty(path + "/DataConsegnaRichiesta", DataConsegnaRichiesta);
+                    oModel.setProperty(path + "/DataConsegna", DataConsegnaRichiesta);
 
                     var UltimaModifica = context.getProperty("UltimaModifica");
                     var timeStamp = UltimaModifica.replace(/\D/g, "");
