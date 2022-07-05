@@ -23,6 +23,7 @@ sap.ui.define(
     "use strict";
 
     var token = sessionStorage.getItem("token");
+    var ore;
 
     return Controller.extend(
       "regesta.regestarapportini.controller.NavbarFooter",
@@ -121,30 +122,12 @@ sap.ui.define(
         },
 
         getHours: function (oEvent) {
-          var ore = oEvent.getParameter("value");
+          ore = oEvent.getParameter("value");
           var nuovoRapportino = this.getView()
             .getModel()
             .getProperty("/nuovoRapportino");
 
           nuovoRapportino.Ore = ore;
-        },
-
-        getPlus: function (oEvent) {
-          var plus = oEvent.getParameter("value");
-          var nuovoRapportino = this.getView()
-            .getModel()
-            .getProperty("/nuovoRapportino");
-
-          nuovoRapportino.Plus = plus;
-        },
-
-        getFatturabile: function (oEvent) {
-          var fatturabile = oEvent.getParameter("value");
-          var nuovoRapportino = this.getView()
-            .getModel()
-            .getProperty("/nuovoRapportino");
-
-          nuovoRapportino.Fatturabile = fatturabile;
         },
 
         showPopup: function (oEvent) {
@@ -159,12 +142,12 @@ sap.ui.define(
             IDProgettoAttivita: null,
             IDTodoList: null,
             Codice: null,
-            Descrizione: "",
+            Descrizione: " ",
             Attivita: null,
             Sede: "UF",
             Destinazione: null,
             Giorno: this.getCurrentDate(),
-            Ore: 0,
+            Ore: ore,
             OreLavorate: null,
             Km: null,
             KmEuro: null,
