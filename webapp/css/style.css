@@ -186,3 +186,8 @@ input:focus textarea {
     font-family: "Poppins", sans-serif;
     font-weight: bold;
 }
+
+/* ! Navbar */
+.sapUiSizeCompact .sapFShellBar{
+    height: 4rem !important;
+}
