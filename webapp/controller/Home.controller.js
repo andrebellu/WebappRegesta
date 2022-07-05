@@ -94,15 +94,14 @@ sap.ui.define(
                 sessionStorage.setItem("encodedToken", encodedToken);
 
                 fetch(
-                    sessionStorage.getItem("hostname") + "/api_v2/rapportini?token=" +
+                    sessionStorage.getItem("hostname") +
+                        "/api_v2/rapportini?token=" +
                         sessionStorage.getItem("encodedToken"),
                     requestOptions
                 )
                     .then((response) => response.text())
                     .then((result) => this.handleData(result))
                     .catch((error) => console.log("error", error));
-
-                
             },
 
             handleData: function (result) {
@@ -256,7 +255,8 @@ sap.ui.define(
                                 };
 
                                 var url =
-                                sessionStorage.getItem("hostname") + "/api_v2/eliminarapportino?token=" +
+                                    sessionStorage.getItem("hostname") +
+                                    "/api_v2/eliminarapportino?token=" +
                                     token +
                                     "&idRapportino=" +
                                     id;
@@ -281,7 +281,6 @@ sap.ui.define(
                 );
 
                 this.APICall();
-                oList.getModel().updateBindings(true);
             },
 
             handleSelectToday: function (oEvent) {

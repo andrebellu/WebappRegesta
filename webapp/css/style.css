@@ -28,7 +28,7 @@ html ul {
     box-sizing: border-box;
 }
 .tabBar {
-    position: sticky;
+    position: fixed;
 }
 
 #__container1 {
