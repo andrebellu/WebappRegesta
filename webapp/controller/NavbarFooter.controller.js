@@ -106,27 +106,6 @@ sap.ui.define(
           oRouter.navTo("RouteTickets", { token: token });
         },
 
-        APICall: function () {
-          var requestOptions = {
-            method: "POST",
-            redirect: "follow",
-          };
-
-          fetch(
-            "https://asstest.regestaitalia.it/api_v2/rapportini?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d",
-            requestOptions
-          )
-            .then((response) => response.text())
-            .then((result) => this.handleData(result))
-            .catch((error) => console.log("error", error));
-        },
-
-        handleData: function (data) {
-          var oModel = this.getView().getModel();
-          var items = JSON.parse(result);
-          oModel.setProperty("/nuovoRapportino", items);
-        },
-
         getCurrentDate: function () {
           var today = new Date();
           var yyyy = today.getFullYear();
@@ -244,21 +223,42 @@ sap.ui.define(
           console.log(nuovoRapportino);
           console.log(JSON.stringify(defaultBody));
 
+          // var requestOptions = {
+          //   method: "POST",
+          //   body: JSON.stringify(defaultBody),
+          //   redirect: "follow",
+          // };
+
+          // var token = sessionStorage.getItem("token");
+
+          // token = token.replace(/"/g, "");
+          // var encodedToken = encodeURIComponent(token);
+
+          // sessionStorage.setItem("encodedToken", encodedToken);
+
+          // fetch(
+          //   hostname + "/api_v2/nuovorapportino?token=" +
+          //     sessionStorage.getItem("encodedToken"),
+          //   requestOptions
+          // )
+          //   .then((response) => response.text())
+          //   .then((result) => console.log(result))
+          //   .catch((error) => console.log("error", error));
+
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+
+          var raw = JSON.stringify(nuovoRapportino);
+
           var requestOptions = {
             method: "POST",
-            body: JSON.stringify(defaultBody),
+            headers: myHeaders,
+            body: raw,
             redirect: "follow",
           };
 
-          var token = sessionStorage.getItem("token");
-
-          token = token.replace(/"/g, "");
-          var encodedToken = encodeURIComponent(token);
-
-          sessionStorage.setItem("encodedToken", encodedToken);
-
           fetch(
-            "https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" +
+            hostname + "/api_v2/nuovorapportino?token=" +
               sessionStorage.getItem("encodedToken"),
             requestOptions
           )

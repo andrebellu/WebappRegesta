@@ -106,7 +106,7 @@ sap.ui.define(
                     token = token.replace(/"/g, "");
                     token = encodeURIComponent(token);
 
-                  fetch("https://asstest.regestaitalia.it/api_v2/clienti?token="  + token + "&idCommessa=0&idCliente=0", request)
+                  fetch(hostname + "/api_v2/clienti?token="  + token + "&idCommessa=0&idCliente=0", request)
                     .then((response) => response.text())
                     .then((result) => this.handleClienti(result))
                     .catch((error) => console.log("error", error));
@@ -121,7 +121,7 @@ sap.ui.define(
                     method : "POST",
                     redirect : "follow",
                   };
-                  fetch("https://asstest.regestaitalia.it/api_v2/commesse?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idCommessa=0&idCliente=0", request)
+                  fetch(hostname + "/api_v2/commesse?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idCommessa=0&idCliente=0", request)
                     .then((response) => response.text())
                     .then((result) => this.handleCommesse(result))
                     .catch((error) => console.log("error", error));
@@ -137,7 +137,7 @@ sap.ui.define(
                     method : "POST",
                     redirect : "follow",
                   };
-                  fetch("https://asstest.regestaitalia.it/api_v2/ticket?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idTicket=0", request)
+                  fetch(hostname + "/api_v2/ticket?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idTicket=0", request)
                     .then((response) => response.text())
                     .then((result) => this.handleTicket(result))
                     .catch((error) => console.log("error", error));
