@@ -45,6 +45,12 @@ sap.ui.define(
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
             onInit: function () {
+                var oRouter = this.getOwnerComponent().getRouter();
+
+                oRouter.getRoute("RouteHome").attachMatched(function () {
+                    this.sumHours();
+                }, this);
+
                 var oModel = new JSONModel();
                 var i18nModel = new ResourceModel({
                     bundleName: "regesta.regestarapportini.i18n.i18n",
@@ -88,13 +94,15 @@ sap.ui.define(
                 sessionStorage.setItem("encodedToken", encodedToken);
 
                 fetch(
-                    "https://asstest.regestaitalia.it/api_v2/rapportini?token=" +
+                    sessionStorage.getItem("hostname") + "/api_v2/rapportini?token=" +
                         sessionStorage.getItem("encodedToken"),
                     requestOptions
                 )
                     .then((response) => response.text())
                     .then((result) => this.handleData(result))
                     .catch((error) => console.log("error", error));
+
+                
             },
 
             handleData: function (result) {
@@ -199,13 +207,13 @@ sap.ui.define(
 
                 // var requestOptions = {
                 //     method: "POST",
-                //     headers: myHeaders
+                //     headers: myHeaders,
                 //     body: raw,
                 //     redirect: "follow",
                 // };
 
                 // fetch(
-                //     "https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
+                //     sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
                 //     requestOptions
                 // )
                 //     .then((response) => response.text())
@@ -248,7 +256,7 @@ sap.ui.define(
                                 };
 
                                 var url =
-                                    "https://asstest.regestaitalia.it/api_v2/eliminarapportino?token=" +
+                                sessionStorage.getItem("hostname") + "/api_v2/eliminarapportino?token=" +
                                     token +
                                     "&idRapportino=" +
                                     id;
@@ -268,11 +276,12 @@ sap.ui.define(
                                 );
                                 oList.swipeOut();
                             }
-
-                            this.APICall();
                         },
                     }
                 );
+
+                this.APICall();
+                oList.getModel().updateBindings(true);
             },
 
             handleSelectToday: function (oEvent) {

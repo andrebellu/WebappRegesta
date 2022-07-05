@@ -106,27 +106,6 @@ sap.ui.define(
           oRouter.navTo("RouteTickets", { token: token });
         },
 
-        APICall: function () {
-          var requestOptions = {
-            method: "POST",
-            redirect: "follow",
-          };
-
-          fetch(
-            "https://asstest.regestaitalia.it/api_v2/rapportini?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d",
-            requestOptions
-          )
-            .then((response) => response.text())
-            .then((result) => this.handleData(result))
-            .catch((error) => console.log("error", error));
-        },
-
-        handleData: function (data) {
-          var oModel = this.getView().getModel();
-          var items = JSON.parse(result);
-          oModel.setProperty("/nuovoRapportino", items);
-        },
-
         getCurrentDate: function () {
           var today = new Date();
           var yyyy = today.getFullYear();
@@ -244,21 +223,42 @@ sap.ui.define(
           console.log(nuovoRapportino);
           console.log(JSON.stringify(defaultBody));
 
+          // var requestOptions = {
+          //   method: "POST",
+          //   body: JSON.stringify(defaultBody),
+          //   redirect: "follow",
+          // };
+
+          // var token = sessionStorage.getItem("token");
+
+          // token = token.replace(/"/g, "");
+          // var encodedToken = encodeURIComponent(token);
+
+          // sessionStorage.setItem("encodedToken", encodedToken);
+
+          // fetch(
+          //   sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" +
+          //     sessionStorage.getItem("encodedToken"),
+          //   requestOptions
+          // )
+          //   .then((response) => response.text())
+          //   .then((result) => console.log(result))
+          //   .catch((error) => console.log("error", error));
+
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+
+          var raw = JSON.stringify(nuovoRapportino);
+
           var requestOptions = {
             method: "POST",
-            body: JSON.stringify(defaultBody),
+            headers: myHeaders,
+            body: raw,
             redirect: "follow",
           };
 
-          var token = sessionStorage.getItem("token");
-
-          token = token.replace(/"/g, "");
-          var encodedToken = encodeURIComponent(token);
-
-          sessionStorage.setItem("encodedToken", encodedToken);
-
           fetch(
-            "https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" +
+            sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" +
               sessionStorage.getItem("encodedToken"),
             requestOptions
           )
@@ -293,39 +293,17 @@ sap.ui.define(
         },
 
         //! Check date input
-        _validateInput: function (oInput) {
-          var sValueState = "None";
-          var bValidationError = false;
-          var oBinding = oInput.getBinding("value");
-
-          try {
-            oBinding.getType().validateValue(oInput.getValue());
-          } catch (oException) {
-            sValueState = "Error";
-            bValidationError = true;
-          }
-
-          oInput.setValueState(sValueState);
-
-          return bValidationError;
-        },
-
-        onGiornoChange: function (oEvent) {
-          var oInput = oEvent.getSource();
-          this._validateGiornoInput(oInput);
-        },
-
         _validateGiornoInput: function (oInput) {
           var sValueState = "None";
           var bValidationError = false;
           var oBinding = oInput.getBinding("value");
-
+        
           var [gg, month, year] = oInput.getValue().split("/");
           //per costruttore
           var gg1 = Number(gg) + 1,
             month1 = Number(month) - 1,
             year1 = Number(year) + 2000;
-
+        
           var date = new Date();
           if (
             new Date(year1, month1, gg1).getDay() == 0 ||
@@ -333,7 +311,7 @@ sap.ui.define(
           ) {
             MessageBox.information("Hai avuto il premesso?");
           }
-
+        
           if (
             new Date(year1, month1, gg1).getDay() == 1 ||
             new Date(year1, month1, gg1).getDay() == 0
@@ -342,26 +320,146 @@ sap.ui.define(
           } else {
             var h = Number(new Date(year1, month1, gg1).getDay()) - 1;
           }
-
+          if (date.getDay()==0){
+            var c=date.getDay()+7
+          }else{
+            var c=date.getDay()
+          }
+          
+          if (date.getDate()<=7&&gg<=7||date.getDate()<=7&&gg>=24){
+            var t=date.getDate()+30;
+            if (gg>=24){
+              var f = Number(gg)
+            }else{
+              var f = Number(gg)+30
+            }
+          }else{
+            var f= gg
+            var t=date.getDate();
+          }
+        
           if (
-            date.getDay() < h ||
-            Math.abs(date.getDate() - gg) > 7 ||
-            date.getMonth() + 1 != month ||
+            t-7==gg||
+            c < h ||
+            t - f < 0 ||
+            t - f > 7 ||
+            date.getMonth() + 1 -  month >1 ||
+            date.getMonth() + 1 -  month <0 ||
             date.getFullYear() != Number(year) + 2000 ||
             oInput == ""
           ) {
             try {
-              oBinding.getType().validateValue(oInput.getValue());
+            oBinding.getType().validateValue(oInput.getValue());
             } catch (oException) {
-              sValueState = "Error";
-              bValidationError = true;
+            sValueState = "Error";
+            bValidationError = true;
             }
+          }else{
+            if (date.getMonth() + 1 -  month==1 &&date.getDate()>7){
+            try {
+            oBinding.getType().validateValue(oInput.getValue());
+            } catch (oException) {
+            sValueState = "Error";
+            bValidationError = true;
+            } 
+            }
+        
           }
-
+        
           oInput.setValueState(sValueState);
           return bValidationError;
-        },
-      }
-    );
-  }
+          },
+          onSubmit: function () {
+          // collect input controls               
+                    var oView = this.getView(),
+                        hello = [oView.byId("date")],
+                        bValidationError = false;
+
+                    // Check that inputs are not empty.
+                    // Validation does not happen during data binding as this is only triggered by user actions.
+
+                    hello.forEach(function (oInput) {
+                        bValidationError =
+                            this._validateGiornoInput(oInput) ||
+                            bValidationError;
+                    }, this);
+
+                    if (!bValidationError) {
+                        MessageBox.success(
+                            "la procedura è andata con successo"
+                        );
+                        //this.ApiGenera();
+                    } else {
+                        MessageBox.alert("la procedura è andata a fallimento");
+                    }
+                },
+                handleData: function (raw) {
+                    var oModel = this.getView().getModel();
+                    var items = raw;
+                    oModel.setProperty("/items", items);
+                },
+                ApiGenera: function () {
+                    var oModel = this.getView().getModel();
+
+                    var myHeaders = new Headers();
+                    var myHeaders = new Headers();
+                    myHeaders.append("Content-Type", "application/json");
+                    myHeaders.append(
+                        "Cookie",
+                        "ASP.NET_SessionId=ykhyiqc5du5r3cytzuxzovhd"
+                    );
+
+                    var raw = JSON.stringify({
+                        IDRapportino: 595443,
+                        IDUtente: null,
+                        Utente: oModel.getProperty("/name"),
+                        IDCliente: 10,
+                        IDCommessa: 1969,
+                        IDClienteSede: null,
+                        IDProgetto: null,
+                        IDProgettoAttivita: null,
+                        IDTodoList: 25329,
+                        Codice: null,
+                        Descrizione: oModel.getProperty("/description"),
+                        Attivita: null,
+                        Sede: oModel.getProperty("/sede"),
+                        Destinazione: oModel.getProperty("/destination"),
+                        Giorno: oModel.getProperty("/date"),
+                        Ore: oModel.getProperty("/ore"),
+                        OreLavorate: null,
+                        Km: oModel.getProperty("/km"),
+                        KmEuro: oModel.getProperty("/kmPrice"),
+                        Pedaggio: oModel.getProperty("/toll"),
+                        Forfait: oModel.getProperty("/forfait"),
+                        Vitto: oModel.getProperty("/food"),
+                        Alloggio: oModel.getProperty("/accomodation"),
+                        Noleggio: oModel.getProperty("/rental"),
+                        Trasporti: oModel.getProperty("/transport"),
+                        Varie: oModel.getProperty("/various"),
+                        Plus: oModel.getProperty("/plus"),
+                        Fatturabile: oModel.getProperty("/fatturabile"),
+                        Bloccato: null,
+                        SpeseVarie: null,
+                        Docente: null,
+                    });
+
+                    var requestOptions = {
+                        method: "POST",
+                        headers: myHeaders,
+                        body: raw,
+                        redirect: "follow",
+                    };
+
+                    fetch(
+                        "https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" +
+                            token,
+                        requestOptions
+                    )
+                        .then((response) => response.text())
+                        .then((result) => console.log(result))
+                        .catch((error) => console.log("error", error));
+                },
+            }
+        );
+    }
 );
