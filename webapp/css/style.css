@@ -174,7 +174,7 @@ input:focus textarea {
 /* ! Footbar */
 .sapMPageFooter {
     position: fixed;
-    height: 3.5rem;
+    height: 4rem;
 }
 
 .sapUiSizeCompact .sapMPageHeader .sapMIBar, .sapUiSizeCompact .sapMPageFooter .sapMIBar{
