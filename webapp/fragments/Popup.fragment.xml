@@ -31,7 +31,7 @@
         <StepInput value="{
         value : '',
         path : 'Ore',
-        type : 'sap.ui.model.type.Float',
+        type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
             maxLength: 5

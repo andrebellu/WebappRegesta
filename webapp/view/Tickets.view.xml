@@ -8,9 +8,9 @@
     <Page showHeader="false" enableScrolling="false">
         <mvc:XMLView viewName="regesta.regestarapportini.view.Navbar" />
         <ScrollContainer height="100%" width="100%" vertical="true" horizontal="false" focusable="true">
-            <List noDataText="No element to display" items="{/clienti}" id="list">
+            <List noDataText="No element to display" items="{/clienti}" id="list" swipe="handleSwipe">
                 <items>
-                    <StandardListItem type="Navigation" title="{Codice} - {Descrizione}" description="{Descrizione}" icon="sap-icon://receipt" class="item" id="element" press="showPopup"/>
+                    <StandardListItem type="Navigation" title="Cliente: {IDCliente} - {Codice}" description="{Descrizione}" icon="sap-icon://receipt" class="item" id="element" press="showPopup"/>
                 </items>
                 <swipeContent>
                     <Button press="Timer1" icon="sap-icon://lateness">
