@@ -45,6 +45,12 @@ sap.ui.define(
 
     return Controller.extend("regesta.regestarapportini.controller.Home", {
       onInit: function () {
+        var oRouter = this.getOwnerComponent().getRouter();
+
+        oRouter.getRoute("RouteHome").attachMatched(function () {
+          this.sumHours();
+        }, this);
+
         var oModel = new JSONModel();
         var i18nModel = new ResourceModel({
           bundleName: "regesta.regestarapportini.i18n.i18n",
@@ -236,37 +242,193 @@ sap.ui.define(
                 token = token.replace(/"/g, "");
                 token = encodeURIComponent(token);
 
-                var myHeaders = new Headers();
-                myHeaders.append(
-                  "Cookie",
-                  "ASP.NET_SessionId=p42wuyurx1pcevyrkavscdxu"
-                );
+                sessionStorage.setItem("encodedToken", encodedToken);
 
-                var requestOptions = {
-                  method: "POST",
-                  headers: myHeaders,
-                  redirect: "follow",
-                };
-
-                var url =
+                fetch(
                   sessionStorage.getItem("hostname") +
-                  "/api_v2/eliminarapportino?token=" +
-                  token +
-                  "&idRapportino=" +
-                  id;
-
-                console.log(url);
-
-                fetch(url, requestOptions)
+                    "/api_v2/rapportini?token=" +
+                    sessionStorage.getItem("encodedToken"),
+                  requestOptions
+                )
                   .then((response) => response.text())
-                  .then((result) => console.log(result))
+                  .then((result) => this.handleData(result))
                   .catch((error) => console.log("error", error));
+              }
+            },
 
-                oList.removeAggregation("items", oList.getSwipedItem());
-                oList.swipeOut();
+            handleData: function (result) {
+              var oModel = this.getView().getModel();
+              var items = JSON.parse(result);
+              oModel.setProperty("/items", items);
+
+              this.filterItems();
+            },
+
+            filterItems: function () {
+              var oModel = this.getView().getModel();
+              var items = oModel.getProperty("/items");
+
+              if (firstTime) {
+                var selectedDate = oModel.getProperty("/date");
+                firstTime = false;
+              } else {
+                var selectedDate = oModel.getProperty("/selectedDate");
               }
 
+              var filteredItems = items.filter(function (item) {
+                if (
+                  new Date(
+                    parseInt(item.Giorno.replace(/\D/g, ""))
+                  ).toLocaleDateString("it-IT") === selectedDate
+                ) {
+                  return item;
+                }
+              });
+
+              oModel.setProperty("/filteredItems", filteredItems);
+              this.sumHours();
+            },
+
+            sumHours: function () {
+              var oModel = this.getView().getModel();
+              var filteredItems = oModel.getProperty("/filteredItems");
+              var sum = 0.0;
+
+              filteredItems.forEach(function (item) {
+                sum += parseFloat(item.Ore);
+              });
+
+              if (sum >= 8) {
+                document
+                  .getElementById("__xmlview1--hourBadge-inner")
+                  .style.setProperty(
+                    "background-color",
+                    "rgba(194, 249, 112, .2)",
+                    "important"
+                  );
+              } else {
+                document
+                  .getElementById("__xmlview1--hourBadge-inner")
+                  .style.setProperty(
+                    "background-color",
+                    "rgba(254, 121, 104, .2)",
+                    "important"
+                  );
+              }
+
+              oModel.setProperty("/sum", sum);
+            },
+
+            handleSwipe: function (oEvent) {
+              var swipedItem = oEvent.getParameter("listItem");
+              var context = swipedItem.getBindingContext();
+              var body = context.getObject();
+              var id = context.getObject().IDRapportino;
+
+              var oModel = this.getView().getModel();
+
+              oModel.setProperty("/id", id);
+              oModel.setProperty("/body", body);
+            },
+
+            handleMore: function (oEvent) {
+              var oButton = oEvent.getSource();
+              this.byId("actionSheet").openBy(oButton);
+
+              oList = oEvent.getSource().getParent();
+
+              console.log(oEvent.getSource().data("id"));
+            },
+
+            handleDuplicate: function (oEvent) {
+              var body = this.getView().getModel().getProperty("/body");
+
+              // ? API CALL NUOVO RAPPORTIN
+
+              // var myHeaders = new Headers();
+              // myHeaders.append("Content-Type", "application/json");
+              // myHeaders.append(
+              //     "Cookie",
+              //     "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
+              // );
+
+              // var raw = JSON.stringify({
+              //     body
+              // });
+
+              // var requestOptions = {
+              //     method: "POST",
+              //     headers: myHeaders,
+              //     body: raw,
+              //     redirect: "follow",
+              // };
+
+              // fetch(
+              //     sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
+              //     requestOptions
+              // )
+              //     .then((response) => response.text())
+              //     .then((result) => console.log(result))
+              //     .catch((error) => console.log("error", error));
+            },
+
+            handleEdit: function (oEvent) {
+              msgT.show("Edit");
+            },
+
+            handleDelete: function (oEvent) {
+              var id = this.getView().getModel().getProperty("/id");
+
+              sap.m.MessageBox.warning(
+                "Sei sicuro di voler eliminare questo rapportino?",
+                {
+                  title: "Attenzione!",
+                  actions: [
+                    sap.m.MessageBox.Action.YES,
+                    sap.m.MessageBox.Action.CANCEL,
+                  ],
+                  onClose: function (sAction) {
+                    if (sAction === sap.m.MessageBox.Action.YES) {
+                      var token = sessionStorage.getItem("token");
+
+                      token = token.replace(/"/g, "");
+                      token = encodeURIComponent(token);
+
+                      var myHeaders = new Headers();
+                      myHeaders.append(
+                        "Cookie",
+                        "ASP.NET_SessionId=p42wuyurx1pcevyrkavscdxu"
+                      );
+
+                      var requestOptions = {
+                        method: "POST",
+                        headers: myHeaders,
+                        redirect: "follow",
+                      };
+
+                      var url =
+                        sessionStorage.getItem("hostname") +
+                        "/api_v2/eliminarapportino?token=" +
+                        token +
+                        "&idRapportino=" +
+                        id;
+
+                      console.log(url);
+
+                      fetch(url, requestOptions)
+                        .then((response) => response.text())
+                        .then((result) => console.log(result))
+                        .catch((error) => console.log("error", error));
+
+                      oList.removeAggregation("items", oList.getSwipedItem());
+                      oList.swipeOut();
+                    }
+                  },
+                }
+              );
+
               this.APICall();
+              oList.getModel().updateBindings(true);
             },
           }
         );

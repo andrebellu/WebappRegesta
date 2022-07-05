@@ -125,19 +125,19 @@ sap.ui.define(
             IDRapportino: null,
             IDUtente: null,
             Utente: sessionStorage.getItem("username"),
-            IDCliente: null,
+            IDCliente: 5,
             IDCommessa: 1969,
             IDClienteSede: null,
             IDProgetto: null,
             IDProgettoAttivita: null,
-            IDTodoList: 25329,
+            IDTodoList: null,
             Codice: null,
-            Descrizione: null,
+            Descrizione: "dute mata an cur",
             Attivita: null,
             Sede: "UF",
             Destinazione: null,
-            Giorno: "2022-07-04T00:00:00",
-            Ore: null,
+            Giorno: this.getCurrentDate(),
+            Ore: 22,
             OreLavorate: null,
             Km: null,
             KmEuro: null,
@@ -158,14 +158,6 @@ sap.ui.define(
           var oModel = this.getView().getModel();
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
-          var nuovoRapportino = this.getView()
-            .getModel()
-            .getProperty("/nuovoRapportino");
-
-          // nuovoRapportino.Giorno = this.getCurrentDate();
-          nuovoRapportino.Giorno = "2020-07-05T00:00:00";
-          nuovoRapportino.Utente = sessionStorage.getItem("username");
-
           var source = oEvent.getSource();
           var setContext = source.setBindingContext(
             new sap.ui.model.Context(oModel, "/nuovoRapportino")
@@ -185,54 +177,110 @@ sap.ui.define(
         },
 
         onSave: function () {
+          const defaultBody = {
+            IDRapportino: null,
+            IDUtente: null,
+            Utente: sessionStorage.getItem("username"),
+            IDCliente: 5,
+            IDCommessa: 1969,
+            IDClienteSede: null,
+            IDProgetto: null,
+            IDProgettoAttivita: null,
+            IDTodoList: null,
+            Codice: null,
+            Descrizione: "dute mata an cur",
+            Attivita: null,
+            Sede: "UF",
+            Destinazione: null,
+            Giorno: this.getCurrentDate(),
+            Ore: 22,
+            OreLavorate: null,
+            Km: null,
+            KmEuro: null,
+            Pedaggio: null,
+            Forfait: null,
+            Vitto: null,
+            Alloggio: null,
+            Noleggio: null,
+            Trasporti: null,
+            Varie: null,
+            Plus: false,
+            Fatturabile: true,
+            Bloccato: null,
+            SpeseVarie: null,
+            Docente: null,
+          };
           var nuovoRapportino = this.getView()
             .getModel()
             .getProperty("/nuovoRapportino");
           console.log(nuovoRapportino);
 
-          // var requestOptions = {
-          //   method: "POST",
-          //   body: JSON.stringify(defaultBody),
-          //   redirect: "follow",
-          // };
+          // ? Chech date
+          // collect input controls
+          var oView = this.getView();
+          var getDate = oView.byId("date");
+          var bValidationError = false;
 
-          // var token = sessionStorage.getItem("token");
+          bValidationError = this._validateGiornoInput(getDate);
 
-          // token = token.replace(/"/g, "");
-          // var encodedToken = encodeURIComponent(token);
+          if (!bValidationError) {
+            MessageToast.show("Rapportino aggiunto");
 
-          // sessionStorage.setItem("encodedToken", encodedToken);
+            //! API call for newRepo
+            // var raw = JSON.stringify(defaultBody);
 
-          // fetch(
-          //   sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" +
-          //     sessionStorage.getItem("encodedToken"),
-          //   requestOptions
-          // )
-          //   .then((response) => response.text())
-          //   .then((result) => console.log(result))
-          //   .catch((error) => console.log("error", error));
+            // var requestOptions = {
+            //   method: "POST",
+            //   body: raw,
+            //   redirect: "follow",
+            // };
 
-          var myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
+            // var token = sessionStorage.getItem("token");
 
-          var raw = JSON.stringify(nuovoRapportino);
+            // token = token.replace(/"/g, "");
+            // var encodedToken = encodeURIComponent(token);
 
-          var requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: raw,
-            redirect: "follow",
-          };
+            // sessionStorage.setItem("encodedToken", encodedToken);
 
-          fetch(
-            sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" +
+            // fetch(
+            //   sessionStorage.getItem("hostname") +
+            //     "/api_v2/nuovorapportino?token=" +
+            //     sessionStorage.getItem("encodedToken"),
+            //   requestOptions
+            // )
+            //   .then((response) => response.text())
+            //   .then((result) => console.log(result))
+            //   .catch((error) => console.log("error", error));
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+            myHeaders.append(
+              "Cookie",
+              "ASP.NET_SessionId=h44eqjrap4hk2tsla2tjsbwv"
+            );
+
+            var raw = JSON.stringify(defaultBody);
+
+            var requestOptions = {
+              method: "POST",
+              headers: myHeaders,
+              body: raw,
+              redirect: "follow",
+            };
+
+            fetch(
+              sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" +
               sessionStorage.getItem("encodedToken"),
-            requestOptions
-          )
-            .then((response) => response.text())
-            .then((result) => console.log(result))
-            .catch((error) => console.log("error", error));
-          this.byId("popup").close();
+              requestOptions
+            )
+              .then((response) => response.text())
+              .then((result) => console.log(result))
+              .catch((error) => console.log("error", error));
+
+            this.byId("popup").close();
+          } else {
+            MessageToast.show("Inserisci i dati correttamemte");
+          }
         },
 
         onCancel: function (oEvent) {
@@ -259,26 +307,33 @@ sap.ui.define(
           });
         },
 
+        onGiornoChange: function (oEvent) {
+          var oInput = oEvent.getSource();
+          this._validateGiornoInput(oInput);
+        },
+
         //! Check date input
         _validateGiornoInput: function (oInput) {
           var sValueState = "None";
           var bValidationError = false;
           var oBinding = oInput.getBinding("value");
-        
+
           var [gg, month, year] = oInput.getValue().split("/");
           //per costruttore
           var gg1 = Number(gg) + 1,
             month1 = Number(month) - 1,
-            year1 = Number(year) + 2000;
-        
+            year1 = Number(year);
+
           var date = new Date();
           if (
             new Date(year1, month1, gg1).getDay() == 0 ||
             new Date(year1, month1, gg1).getDay() == 1
           ) {
-            MessageBox.information("Hai avuto il premesso?");
+            MessageBox.information(
+              "Hai avuto il premesso di creare il rapportino durante il weekend?"
+            );
           }
-        
+
           if (
             new Date(year1, month1, gg1).getDay() == 1 ||
             new Date(year1, month1, gg1).getDay() == 0
@@ -287,148 +342,58 @@ sap.ui.define(
           } else {
             var h = Number(new Date(year1, month1, gg1).getDay()) - 1;
           }
-          if (date.getDay()==0){
-            var c=date.getDay()+7
-          }else{
-            var c=date.getDay()
+          if (date.getDay() == 0) {
+            var c = date.getDay() + 7;
+          } else {
+            var c = date.getDay();
           }
-          
-          if (date.getDate()<=7&&gg<=7||date.getDate()<=7&&gg>=24){
-            var t=date.getDate()+30;
-            if (gg>=24){
-              var f = Number(gg)
-            }else{
-              var f = Number(gg)+30
-            }
-          }else{
-            var f= gg
-            var t=date.getDate();
-          }
-        
+
           if (
-            t-7==gg||
+            (date.getDate() <= 7 && gg <= 7) ||
+            (date.getDate() <= 7 && gg >= 24)
+          ) {
+            var t = date.getDate() + 30;
+            if (gg >= 24) {
+              var f = Number(gg);
+            } else {
+              var f = Number(gg) + 30;
+            }
+          } else {
+            var f = gg;
+            var t = date.getDate();
+          }
+
+          if (
+            t - 7 == gg ||
             c < h ||
             t - f < 0 ||
             t - f > 7 ||
-            date.getMonth() + 1 -  month >1 ||
-            date.getMonth() + 1 -  month <0 ||
-            date.getFullYear() != Number(year) + 2000 ||
+            date.getMonth() + 1 - month > 1 ||
+            date.getMonth() + 1 - month < 0 ||
+            date.getFullYear() != Number(year) ||
             oInput == ""
           ) {
             try {
-            oBinding.getType().validateValue(oInput.getValue());
+              oBinding.getType().validateValue(oInput.getValue());
             } catch (oException) {
-            sValueState = "Error";
-            bValidationError = true;
+              sValueState = "Error";
+              bValidationError = true;
             }
-          }else{
-            if (date.getMonth() + 1 -  month==1 &&date.getDate()>7){
-            try {
-            oBinding.getType().validateValue(oInput.getValue());
-            } catch (oException) {
-            sValueState = "Error";
-            bValidationError = true;
-            } 
+          } else {
+            if (date.getMonth() + 1 - month == 1 && date.getDate() > 7) {
+              try {
+                oBinding.getType().validateValue(oInput.getValue());
+              } catch (oException) {
+                sValueState = "Error";
+                bValidationError = true;
+              }
             }
-        
           }
-        
+
           oInput.setValueState(sValueState);
           return bValidationError;
-          },
-          onSubmit: function () {
-          // collect input controls               
-                    var oView = this.getView(),
-            
-          
-            hello=[oView.byId("date")],                    
-            
-            bValidationError = false;
-           
-      
-            // Check that inputs are not empty.
-            // Validation does not happen during data binding as this is only triggered by user actions.
-            
-            hello.forEach(function (oInput) {
-              bValidationError = this._validateGiornoInput(oInput) || bValidationError;
-            }, this);
-      
-      
-          if (!bValidationError) {
-            MessageBox.success("la procedura è andata con successo");
-            //this.ApiGenera();
-              
-          } else {
-            MessageBox.alert("la procedura è andata a fallimento");
-          }
-      
         },
-        handleData: function (raw) {
-          var oModel = this.getView().getModel();
-          var items = raw
-          oModel.setProperty("/items", items);
-        },
-          ApiGenera: function(){
-      
-          var oModel = this.getView().getModel();
-              
-      
-          var myHeaders = new Headers();
-          var myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-          myHeaders.append("Cookie", "ASP.NET_SessionId=ykhyiqc5du5r3cytzuxzovhd");
-          
-          var raw = JSON.stringify({
-            "IDRapportino": 595443,
-            "IDUtente": null,
-            "Utente": oModel.getProperty('/name'),
-            "IDCliente": 10,
-            "IDCommessa": 1969,
-            "IDClienteSede": null,
-            "IDProgetto": null,
-            "IDProgettoAttivita": null,
-            "IDTodoList": 25329,
-            "Codice": null,
-            "Descrizione": oModel.getProperty('/description'),
-            "Attivita": null,
-            "Sede": oModel.getProperty('/sede'),
-            "Destinazione": oModel.getProperty('/destination'),
-            "Giorno": oModel.getProperty('/date'),
-            "Ore": oModel.getProperty('/ore'),
-            "OreLavorate": null,
-            "Km": oModel.getProperty('/km'),
-            "KmEuro": oModel.getProperty('/kmPrice'),
-            "Pedaggio": oModel.getProperty('/toll'),
-            "Forfait": oModel.getProperty('/forfait'),
-            "Vitto": oModel.getProperty('/food'),
-            "Alloggio": oModel.getProperty('/accomodation'),
-            "Noleggio": oModel.getProperty('/rental'),
-            "Trasporti": oModel.getProperty('/transport'),
-            "Varie": oModel.getProperty('/various'),
-            "Plus": oModel.getProperty('/plus'),
-            "Fatturabile": oModel.getProperty('/fatturabile'),
-            "Bloccato": null,
-            "SpeseVarie": null,
-            "Docente": null
-          });
-          
-          var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-          };
-          
-          fetch("https://asstest.regestaitalia.it/api_v2/nuovorapportino?token="+token, requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
-          
-          },
-        
-      
-    
-        
-    
-      });
-    });
+      }
+    );
+  }
+);
