@@ -158,9 +158,7 @@ sap.ui.define(
           nuovoRapportino.Giorno = data;
           nuovoRapportino.Utente = sessionStorage.getItem("username");
           console.log(nuovoRapportino.Ore);
-          var input=oModel.getElementById("Ore").stepUp(1.1);
-          console.log(nuovoRapportino.Ore);
-          console.log(input);
+          nuovoRapportino.Ore=10;
           oModel.setProperty("/nuovoRapportino", nuovoRapportino);
           
           var source = oEvent.getSource();

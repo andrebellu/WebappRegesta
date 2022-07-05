@@ -237,6 +237,10 @@ sap.ui.define(
           });
         },
 
+        onGiornoChange: function (oEvent) {
+          var oInput = oEvent.getSource();
+          this._validateGiornoInput(oInput);
+          },
         //! Check date input
         _validateGiornoInput: function (oInput) {
           var sValueState = "None";
