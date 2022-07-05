@@ -162,7 +162,8 @@ sap.ui.define(
             .getModel()
             .getProperty("/nuovoRapportino");
 
-          nuovoRapportino.Giorno = this.getCurrentDate();
+          // nuovoRapportino.Giorno = this.getCurrentDate();
+          nuovoRapportino.Giorno = "2020-07-05T00:00:00";
           nuovoRapportino.Utente = sessionStorage.getItem("username");
 
           var source = oEvent.getSource();
@@ -184,44 +185,10 @@ sap.ui.define(
         },
 
         onSave: function () {
-          const defaultBody = {
-            IDRapportino: null,
-            IDUtente: null,
-            Utente: "studente.itis",
-            IDCliente: 5,
-            IDCommessa: 1969,
-            IDClienteSede: null,
-            IDProgetto: null,
-            IDProgettoAttivita: null,
-            IDTodoList: 25329,
-            Codice: null,
-            Descrizione: "Pizda mati",
-            Attivita: null,
-            Sede: "UF",
-            Destinazione: null,
-            Giorno: "2022-07-04T00:00:00",
-            Ore: 22.0,
-            OreLavorate: null,
-            Km: null,
-            KmEuro: null,
-            Pedaggio: null,
-            Forfait: null,
-            Vitto: null,
-            Alloggio: null,
-            Noleggio: null,
-            Trasporti: null,
-            Varie: null,
-            Plus: false,
-            Fatturabile: false,
-            Bloccato: null,
-            SpeseVarie: null,
-            Docente: null,
-          };
           var nuovoRapportino = this.getView()
             .getModel()
             .getProperty("/nuovoRapportino");
           console.log(nuovoRapportino);
-          console.log(JSON.stringify(defaultBody));
 
           // var requestOptions = {
           //   method: "POST",
