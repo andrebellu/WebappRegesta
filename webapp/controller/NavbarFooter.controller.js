@@ -159,7 +159,7 @@ sap.ui.define(
             IDProgettoAttivita: null,
             IDTodoList: null,
             Codice: null,
-            Descrizione: null,
+            Descrizione: "",
             Attivita: null,
             Sede: "UF",
             Destinazione: null,
@@ -185,8 +185,6 @@ sap.ui.define(
           var oModel = this.getView().getModel();
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
-          var nuovoRapportino = oModel.getProperty("/nuovoRapportino");
-
           var source = oEvent.getSource();
           var setContext = source.setBindingContext(
             new sap.ui.model.Context(oModel, "/nuovoRapportino")
@@ -202,8 +200,6 @@ sap.ui.define(
             oModel.setProperty("/nuovoRapportino", defaultBody);
             oDialog.setBindingContext(getContext);
             oDialog.open();
-            nuovoRapportino.Plus = oDialog.byId("plus").getSelected();
-            nuovoRapportino.Fatturabile = oDialog.byId("fatturabile").getSelected();
           });
         },
 
