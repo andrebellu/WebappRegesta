@@ -94,7 +94,7 @@ sap.ui.define(
                 sessionStorage.setItem("encodedToken", encodedToken);
 
                 fetch(
-                    "https://asstest.regestaitalia.it/api_v2/rapportini?token=" +
+                    sessionStorage.getItem("hostname") + "/api_v2/rapportini?token=" +
                         sessionStorage.getItem("encodedToken"),
                     requestOptions
                 )
@@ -213,7 +213,7 @@ sap.ui.define(
                 // };
 
                 // fetch(
-                //     "https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
+                //     sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
                 //     requestOptions
                 // )
                 //     .then((response) => response.text())
@@ -256,7 +256,7 @@ sap.ui.define(
                                 };
 
                                 var url =
-                                    "https://asstest.regestaitalia.it/api_v2/eliminarapportino?token=" +
+                                sessionStorage.getItem("hostname") + "/api_v2/eliminarapportino?token=" +
                                     token +
                                     "&idRapportino=" +
                                     id;

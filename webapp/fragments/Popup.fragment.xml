@@ -1,5 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
     <Dialog 
         xmlns="sap.m" title="Inserisci i dati del rapportino" type="Message" id="popup" class="dialogStyle">
 
@@ -29,12 +30,12 @@
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true" />
         <StepInput value="{
-        value : '',
+        value : '0,0',
         path : 'Ore',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
-            maxLength: 5
+            maxLength: 2
         }
     }" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="0.1" enabled="true"/>
 
@@ -123,70 +124,70 @@
             <Label text="Km" class="labelMargin"/>
             <Input value="{
             path : 'Km',
-            type : 'sap.ui.model.type.Float'
-        }" type="Number" valueLiveUpdate="true" change= ".onKmChange" width= "100%" enabled= "true" id="km" class="roundedInput" placeholder="Km"/>
+            type : 'sap.ui.model.type.String'
+        }"  type="Number" valueLiveUpdate="true" width= "100%" enabled= "true" class="roundedInput" placeholder="Km"/>
 
             <!--! Input km/€ formatted in currency -->
             <Label text="Km/€" class="labelMargin"/>
             <Input value="{
             path : 'KmEuro',
-            type : 'sap.ui.model.type.Float'
+            type : 'sap.ui.model.type.String'
         }" type="Number" valueLiveUpdate="true" change= ".onKmPriceChange" width= "100%" enabled= "true" id="kmPrice" class="roundedInput" placeholder="Km/€"/>
 
             <!--! Input toll formatted in currency -->
             <Label text="Pedaggio" class="labelMargin"/>
             <Input value="{
             path : 'Pedaggio',
-            type : 'sap.ui.model.type.Float'
+            type : 'sap.ui.model.type.String'
         }" type="Number" valueLiveUpdate="true" change= ".onTollChange" width= "100%" enabled= "true" id="toll" class="roundedInput" placeholder="Pedaggio"/>
 
             <!--! Input forfait formatted in currency -->
             <Label text="Forfait" class="labelMargin"/>
             <Input value="{
             path : 'Forfait',
-            type : 'sap.ui.model.type.Float'
+            type : 'sap.ui.model.type.String'
         }" type="Number" valueLiveUpdate="true" change= ".onForfaitChange" width= "100%" enabled= "true" id="forfait" class="roundedInput" placeholder="Forfait"/>
 
             <!--! Input food formatted in currency -->
             <Label text="Vitto" class="labelMargin"/>
             <Input value="{
             path : 'Vitto',
-            type : 'sap.ui.model.type.Float'
+            type : 'sap.ui.model.type.String'
         }" type="Number" valueLiveUpdate="true" change= ".onFoodChange" width= "100%" enabled= "true" id="food" class="roundedInput" placeholder="Vitto"/>
 
             <!--! Input accomodation formatted in currency -->
             <Label text="Alloggio" class="labelMargin"/>
             <Input value="{
             path : 'Alloggio',
-            type : 'sap.ui.model.type.Float'
+            type : 'sap.ui.model.type.String'
         }" type="Number" valueLiveUpdate="true" change= ".onAccomodationChange" width= "100%" enabled= "true" id="accomodation" class="roundedInput" placeholder="Alloggio"/>
 
             <!--! Input rental formatted in currency -->
             <Label text="Noleggio" class="labelMargin"/>
             <Input value="{
             path : 'Noleggio',
-            type : 'sap.ui.model.type.Float'
+            type : 'sap.ui.model.type.String'
         }" type="Number" valueLiveUpdate="true" change= ".onRentalChange" width= "100%" enabled= "true" id="rental" class="roundedInput" placeholder="Noleggio"/>
 
             <!--! Input transport formatted in currency -->
             <Label text="Trasporti" class="labelMargin"/>
             <Input value="{
             path : 'Trasporti',
-            type : 'sap.ui.model.type.Float'
+            type : 'sap.ui.model.type.String'
         }" type="Number" valueLiveUpdate="true" change= ".onTransportChange" width= "100%" enabled= "true" id="transport" class="roundedInput" placeholder="Trasporti"/>
 
             <!--! Input various formatted in currency -->
             <Label text="Varie" class="labelMargin"/>
             <Input value="{
             path : 'Varie',
-            type : 'sap.ui.model.type.Float'
+            type : 'sap.ui.model.type.String'
         }" type="Number" valueLiveUpdate="true" change= ".onVariousChange" width= "100%" enabled= "true" id="various" class="roundedInput" placeholder="Varie"/>
 
             <!--! Input reserved formatted in currency -->
             <Label text="Riservato" class="labelMargin"/>
             <Input value="{
             path : 'SpeseVarie',
-            type : 'sap.ui.model.type.Float'
+            type : 'sap.ui.model.type.String'
         }" type="Number" valueLiveUpdate="true" change= ".onReservedChange" width= "100%" enabled= "true" id="reserved" class="roundedInput" placeholder="Riservato"/>
 
         </Panel>

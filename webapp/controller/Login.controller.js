@@ -66,7 +66,7 @@ sap.ui.define(
 
         // Send POST request and print result
         fetch(
-          "https://asstest.regestaitalia.it/api_v2/login?username=" +
+          sessionStorage.getItem("hostname") + "/api_v2/login?username=" +
             username +
             "&password=" +
             password,
