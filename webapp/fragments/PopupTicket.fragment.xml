@@ -3,19 +3,19 @@
     <Dialog  xmlns="sap.m" title="Ticket" type="Message" id="popup" class="dialogStyle">
         <Label text=" Data di inserimento" class="labelMargin"/>
         <DatePicker value="{
-                value : '20/07/2022',   
+                path : 'DataInserimento',   
                 type : 'sap.ui.model.type.String' }" 
                 id="date" class="roundedInput" width="100%" enabled="false"/>
 
         <Label text="Titolo" class="labelMargin"/>
         <Input value="{
-                value : 'titolo',
+                path : 'Titolo',
                 type : 'sap.ui.model.type.String' }" 
                 class="roundedInput" textAlign="Left" width="100%" enabled="false" id="title"/>
 
         <Label text="ID Ticket" class="labelMargin"/>
         <Input value="{
-                value: '123456',    
+                path : 'IDTodoList',    
                 type : 'sap.ui.model.type.String' }" 
                 class="roundedInput" width="100%"    enabled="false" id="IDTicket"/>
         <Label text="IDCliente" class="labelMargin"/>
@@ -25,12 +25,12 @@
                 type="Text" width= "100%" enabled= "false" id="IDclient" class="roundedInput"/>
         <Label text="Cliente" class="labelMargin"/>
         <Input value="{
-                path : 'Codice',
+                path : 'ClientName',
                 type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" id="client" class="roundedInput"/>
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
-                path : 'Descrizione',
+                path : 'Order',
                 type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" class="roundedInput" id="order"/>
         <Label text="ID Commessa" class="labelMargin"/>
@@ -41,13 +41,13 @@
 
         <Label text="Data consegna richiesta" class="labelMargin"/>
         <Input value="{
-                value : '08/07/2022',
+                path : 'DataConsegna',
                 type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" class="roundedInput" id="requestedDate"/>
 
         <Label text="Ultima modifica" class="labelMargin"/>
         <Input value="{
-                value : 'personamolto.sospetta',
+                path : 'Modifica',
                 type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" class="roundedInput" id="lastChange"/>
         <FlexBox class="closeDialog">

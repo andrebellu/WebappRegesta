@@ -300,9 +300,14 @@ sap.ui.define(
             year1 = Number(year);
 
           var date = new Date();
+          if (year1<100){
+            var l=year1+(date.getFullYear-year1);
+          }else{
+            var l=year1;
+          }
           if (
-            new Date(year1, month1, gg1).getDay() == 0 ||
-            new Date(year1, month1, gg1).getDay() == 1
+            new Date(l, month1, gg1).getDay() == 0 ||
+            new Date(l, month1, gg1).getDay() == 1
           ) {
             MessageBox.information(
               "Hai avuto il premesso di creare il rapportino durante il weekend?"
@@ -310,12 +315,12 @@ sap.ui.define(
           }
 
           if (
-            new Date(year1, month1, gg1).getDay() == 1 ||
-            new Date(year1, month1, gg1).getDay() == 0
+            new Date(l, month1, gg1).getDay() == 1 ||
+            new Date(l, month1, gg1).getDay() == 0
           ) {
-            var h = Number(new Date(year1, month1, gg1).getDay()) + 6;
+            var h = Number(new Date(l, month1, gg1).getDay()) + 6;
           } else {
-            var h = Number(new Date(year1, month1, gg1).getDay()) - 1;
+            var h = Number(new Date(l, month1, gg1).getDay()) - 1;
           }
           if (date.getDay() == 0) {
             var c = date.getDay() + 7;
@@ -345,7 +350,7 @@ sap.ui.define(
             t - f > 7 ||
             date.getMonth() + 1 - month > 1 ||
             date.getMonth() + 1 - month < 0 ||
-            date.getFullYear() != Number(year) ||
+            date.getFullYear() != l ||
             oInput == ""
           ) {
             try {
