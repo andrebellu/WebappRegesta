@@ -120,6 +120,33 @@ sap.ui.define(
           return today;
         },
 
+        getHours: function (oEvent) {
+          var ore = oEvent.getParameter("value");
+          var nuovoRapportino = this.getView()
+            .getModel()
+            .getProperty("/nuovoRapportino");
+
+          nuovoRapportino.Ore = ore;
+        },
+
+        getPlus: function (oEvent) {
+          var plus = oEvent.getParameter("value");
+          var nuovoRapportino = this.getView()
+            .getModel()
+            .getProperty("/nuovoRapportino");
+
+          nuovoRapportino.Plus = plus;
+        },
+
+        getFatturabile: function (oEvent) {
+          var fatturabile = oEvent.getParameter("value");
+          var nuovoRapportino = this.getView()
+            .getModel()
+            .getProperty("/nuovoRapportino");
+
+          nuovoRapportino.Fatturabile = fatturabile;
+        },
+
         showPopup: function (oEvent) {
           const defaultBody = {
             IDRapportino: null,
@@ -132,12 +159,12 @@ sap.ui.define(
             IDProgettoAttivita: null,
             IDTodoList: null,
             Codice: null,
-            Descrizione: "dute mata an cur",
+            Descrizione: null,
             Attivita: null,
             Sede: "UF",
             Destinazione: null,
             Giorno: this.getCurrentDate(),
-            Ore: 22,
+            Ore: 0,
             OreLavorate: null,
             Km: null,
             KmEuro: null,
@@ -158,6 +185,8 @@ sap.ui.define(
           var oModel = this.getView().getModel();
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
+          var nuovoRapportino = oModel.getProperty("/nuovoRapportino");
+
           var source = oEvent.getSource();
           var setContext = source.setBindingContext(
             new sap.ui.model.Context(oModel, "/nuovoRapportino")
@@ -173,47 +202,18 @@ sap.ui.define(
             oModel.setProperty("/nuovoRapportino", defaultBody);
             oDialog.setBindingContext(getContext);
             oDialog.open();
+            nuovoRapportino.Plus = oDialog.byId("plus").getSelected();
+            nuovoRapportino.Fatturabile = oDialog.byId("fatturabile").getSelected();
           });
         },
 
         onSave: function () {
-          const defaultBody = {
-            IDRapportino: null,
-            IDUtente: null,
-            Utente: sessionStorage.getItem("username"),
-            IDCliente: 5,
-            IDCommessa: 1969,
-            IDClienteSede: null,
-            IDProgetto: null,
-            IDProgettoAttivita: null,
-            IDTodoList: null,
-            Codice: null,
-            Descrizione: "dute mata an cur",
-            Attivita: null,
-            Sede: "UF",
-            Destinazione: null,
-            Giorno: this.getCurrentDate(),
-            Ore: 22,
-            OreLavorate: null,
-            Km: null,
-            KmEuro: null,
-            Pedaggio: null,
-            Forfait: null,
-            Vitto: null,
-            Alloggio: null,
-            Noleggio: null,
-            Trasporti: null,
-            Varie: null,
-            Plus: false,
-            Fatturabile: true,
-            Bloccato: null,
-            SpeseVarie: null,
-            Docente: null,
-          };
           var nuovoRapportino = this.getView()
             .getModel()
             .getProperty("/nuovoRapportino");
           console.log(nuovoRapportino);
+
+          
 
           // ? Chech date
           // collect input controls
@@ -227,31 +227,6 @@ sap.ui.define(
             MessageToast.show("Rapportino aggiunto");
 
             //! API call for newRepo
-            // var raw = JSON.stringify(defaultBody);
-
-            // var requestOptions = {
-            //   method: "POST",
-            //   body: raw,
-            //   redirect: "follow",
-            // };
-
-            // var token = sessionStorage.getItem("token");
-
-            // token = token.replace(/"/g, "");
-            // var encodedToken = encodeURIComponent(token);
-
-            // sessionStorage.setItem("encodedToken", encodedToken);
-
-            // fetch(
-            //   sessionStorage.getItem("hostname") +
-            //     "/api_v2/nuovorapportino?token=" +
-            //     sessionStorage.getItem("encodedToken"),
-            //   requestOptions
-            // )
-            //   .then((response) => response.text())
-            //   .then((result) => console.log(result))
-            //   .catch((error) => console.log("error", error));
-
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append(
@@ -259,7 +234,7 @@ sap.ui.define(
               "ASP.NET_SessionId=h44eqjrap4hk2tsla2tjsbwv"
             );
 
-            var raw = JSON.stringify(defaultBody);
+            var raw = JSON.stringify(nuovoRapportino);
 
             var requestOptions = {
               method: "POST",
