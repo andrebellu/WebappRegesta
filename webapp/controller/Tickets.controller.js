@@ -29,48 +29,53 @@ sap.ui.define(
         StandardListItem,
         Text
     ) {
-        
         "use strict";
         var check = true;
         var startTime, endTime, timeDiff;
 
         var defaultBody = {
-			"IDRapportino": null,
-			"IDUtente": null,
-			"Utente": null,
-			"IDCliente": null,
-			"IDCommessa": null,
-			"IDClienteSede": null,
-			"IDProgetto": null,
-			"IDProgettoAttivita": null,
-			"IDTodoList": null,
-			"Codice": null,
-			"Descrizione": null,
-			"Attivita": null,
-			"Sede": "UF",
-			"Destinazione": null,
-			"Giorno": null,
-			"Ore": null,
-			"OreLavorate": null,
-			"Km": null,
-			"KmEuro": null,
-			"Pedaggio": null,
-			"Forfait": null,
-			"Vitto": null,
-			"Alloggio": null,
-			"Noleggio": null,
-			"Trasporti": null,
-			"Varie": null,
-			"Plus": null,
-			"Fatturabile": null,
-			"Bloccato": null,
-			"SpeseVarie": null,
-			"Docente": null
-  };
+            IDRapportino: null,
+            IDUtente: null,
+            Utente: null,
+            IDCliente: null,
+            IDCommessa: null,
+            IDClienteSede: null,
+            IDProgetto: null,
+            IDProgettoAttivita: null,
+            IDTodoList: null,
+            Codice: null,
+            Descrizione: null,
+            Attivita: null,
+            Sede: "UF",
+            Destinazione: null,
+            Giorno: null,
+            Ore: null,
+            OreLavorate: null,
+            Km: null,
+            KmEuro: null,
+            Pedaggio: null,
+            Forfait: null,
+            Vitto: null,
+            Alloggio: null,
+            Noleggio: null,
+            Trasporti: null,
+            Varie: null,
+            Plus: null,
+            Fatturabile: null,
+            Bloccato: null,
+            SpeseVarie: null,
+            Docente: null,
+        };
         return Controller.extend(
             "regesta.regestarapportini.controller.Tickets",
             {
                 onInit: function () {
+                    var oRouter = this.getOwnerComponent().getRouter();
+
+                    oRouter.getRoute("RouteTickets").attachMatched(function () {
+                        document.getElementById("__xmlview1--hourBadge").disabled = true;
+                    }, this);
+
                     var oModel = new JSONModel();
 
                     this.getView().setModel(oModel);
@@ -88,8 +93,13 @@ sap.ui.define(
                 handleSwipe: function (oEvent) {
                     var swipedItem = oEvent.getParameter("listItem");
                     var context = swipedItem.getBindingContext();
+                    var body = context.getObject();
+                    var id = context.getObject().IDRapportino;
+
                     var oModel = this.getView().getModel();
+
                     oModel.setProperty("/id", id);
+                    oModel.setProperty("/body", body);
                 },
 
                 Timer: function () {
@@ -108,119 +118,141 @@ sap.ui.define(
                             minutes + ":" + (seconds < 10 ? "0" : "") + seconds
                         );
                         check = true;
-                        
                     }
                 },
                 Timer1: function (oEvent) {
                     if (check) {
                         check = false;
-                        startTime =String( new Date().getHours())+" : "+String(new Date().getMinutes());
+                        startTime =
+                            String(new Date().getHours()) +
+                            " : " +
+                            String(new Date().getMinutes());
                         console.log(startTime);
                     } else {
-                        endTime = String( new Date().getHours())+" : "+String(new Date().getMinutes());
+                        endTime =
+                            String(new Date().getHours()) +
+                            " : " +
+                            String(new Date().getMinutes());
                         console.log(endTime);
-                        var [hourstart,minutestart]=String(startTime).split(" : ")
-                        var [hourend,minutend]=String(endTime).split(" : ")
-                        var timeDiffHour=Number(hourend)-Number(hourstart);
-                        var timeDiffMinute=Number(minutend)-Number(minutestart);
-                        timeDiff = timeDiffHour + timeDiffMinute/60;
+                        var [hourstart, minutestart] =
+                            String(startTime).split(" : ");
+                        var [hourend, minutend] = String(endTime).split(" : ");
+                        var timeDiffHour = Number(hourend) - Number(hourstart);
+                        var timeDiffMinute =
+                            Number(minutend) - Number(minutestart);
+                        timeDiff = timeDiffHour + timeDiffMinute / 60;
                         console.log(timeDiff);
-                        
+
                         check = true;
                         sessionStorage.setItem("timeDiff", timeDiff);
                         this.showPopup(oEvent);
-                        
                     }
                 },
 
                 showPopup: function (oEvent) {
-                    var date=new Date();
-                    var nuovoRapportino = this.getView()
-                    .getModel();
-                    var data=date.getDate()+"/"+Number(date.getMonth()+1)+"/"+date.getFullYear();
+                    var date = new Date();
+                    var nuovoRapportino = this.getView().getModel();
+                    var data =
+                        date.getDate() +
+                        "/" +
+                        Number(date.getMonth() + 1) +
+                        "/" +
+                        date.getFullYear();
                     var oModel = this.getView().getModel();
-          oModel.setProperty("/nuovoRapportino", defaultBody);
+                    oModel.setProperty("/nuovoRapportino", defaultBody);
 
-          var nuovoRapportino = this.getView()
-            .getModel()
-            .getProperty("/nuovoRapportino");
-          nuovoRapportino.Giorno = data;
-          nuovoRapportino.Utente = sessionStorage.getItem("username");
-          console.log(nuovoRapportino.Ore);
-          var input=oModel.getElementById("Ore").stepUp(1.1);
-          oModel.setProperty("/nuovoRapportino", nuovoRapportino);
-          
-          var source = oEvent.getSource();
-          var setContext = source.setBindingContext(new sap.ui.model.Context(oModel, "/nuovoRapportino"));
-          var getContext = setContext.getBindingContext();
-          console.log(setContext);
-          console.log(getContext);
-          console.log(nuovoRapportino);
+                    var nuovoRapportino = this.getView()
+                        .getModel()
+                        .getProperty("/nuovoRapportino");
+                    nuovoRapportino.Giorno = data;
+                    nuovoRapportino.Utente = sessionStorage.getItem("username");
+                    console.log(nuovoRapportino.Ore);
+                    oModel.setProperty("/nuovoRapportino", nuovoRapportino);
 
-          if (!this.pDialog) {
-            this.pDialog = this.loadFragment({
-              name: "regesta.regestarapportini.fragments.Popup",
-            });
-          }
-          this.pDialog.then(function (oDialog) {
-            oDialog.setBindingContext(getContext);
-            oDialog.open();
-          });
-        },
-                onCancel: function (oEvent) {
-                  this.byId("popup").close();
+                    var source = oEvent.getSource();
+                    var setContext = source.setBindingContext(
+                        new sap.ui.model.Context(oModel, "/nuovoRapportino")
+                    );
+                    var getContext = setContext.getBindingContext();
+                    console.log(setContext);
+                    console.log(getContext);
+                    console.log(nuovoRapportino);
+
+                    if (!this.pDialog) {
+                        this.pDialog = this.loadFragment({
+                            name: "regesta.regestarapportini.fragments.Popup",
+                        });
+                    }
+                    this.pDialog.then(function (oDialog) {
+                        oDialog.setBindingContext(getContext);
+                        oDialog.open();
+                    });
                 },
-                APIclienti: function(){
-                  var request = {
-                    method : "POST",
-                    redirect : "follow",
-                  };
+                onCancel: function (oEvent) {
+                    this.byId("popup").close();
+                },
+                APIclienti: function () {
+                    var request = {
+                        method: "POST",
+                        redirect: "follow",
+                    };
                     var token = sessionStorage.getItem("token");
                     token = token.replace(/"/g, "");
                     token = encodeURIComponent(token);
 
-                  fetch("https://asstest.regestaitalia.it/api_v2/clienti?token="  + token + "&idCommessa=0&idCliente=0", request)
-                    .then((response) => response.text())
-                    .then((result) => this.handleClienti(result))
-                    .catch((error) => console.log("error", error));
+                    fetch(
+                        "https://asstest.regestaitalia.it/api_v2/clienti?token=" +
+                            token +
+                            "&idCommessa=0&idCliente=0",
+                        request
+                    )
+                        .then((response) => response.text())
+                        .then((result) => this.handleClienti(result))
+                        .catch((error) => console.log("error", error));
                 },
-                handleClienti: function(result){
-                  var oModel = this.getView().getModel();
-                  var clienti = JSON.parse(result);
-                  oModel.setProperty("/clienti", clienti);
+                handleClienti: function (result) {
+                    var oModel = this.getView().getModel();
+                    var clienti = JSON.parse(result);
+                    oModel.setProperty("/clienti", clienti);
                 },
-                APIcommesse: function(){
-                  var request = {
-                    method : "POST",
-                    redirect : "follow",
-                  };
-                  fetch("https://asstest.regestaitalia.it/api_v2/commesse?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idCommessa=0&idCliente=0", request)
-                    .then((response) => response.text())
-                    .then((result) => this.handleCommesse(result))
-                    .catch((error) => console.log("error", error));
+                APIcommesse: function () {
+                    var request = {
+                        method: "POST",
+                        redirect: "follow",
+                    };
+                    fetch(
+                        "https://asstest.regestaitalia.it/api_v2/commesse?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idCommessa=0&idCliente=0",
+                        request
+                    )
+                        .then((response) => response.text())
+                        .then((result) => this.handleCommesse(result))
+                        .catch((error) => console.log("error", error));
                 },
-                handleCommesse: function(result){
-                  var oModel = this.getView().getModel();
-                  var clienti = JSON.parse(result);
-                  oModel.setProperty("/clienti", clienti);
-                  console.log(clienti);
+                handleCommesse: function (result) {
+                    var oModel = this.getView().getModel();
+                    var clienti = JSON.parse(result);
+                    oModel.setProperty("/clienti", clienti);
+                    console.log(clienti);
                 },
-                APIticket: function(){
-                  var request = {
-                    method : "POST",
-                    redirect : "follow",
-                  };
-                  fetch("https://asstest.regestaitalia.it/api_v2/ticket?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idTicket=0", request)
-                    .then((response) => response.text())
-                    .then((result) => this.handleTicket(result))
-                    .catch((error) => console.log("error", error));
+                APIticket: function () {
+                    var request = {
+                        method: "POST",
+                        redirect: "follow",
+                    };
+                    fetch(
+                        "https://asstest.regestaitalia.it/api_v2/ticket?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idTicket=0",
+                        request
+                    )
+                        .then((response) => response.text())
+                        .then((result) => this.handleTicket(result))
+                        .catch((error) => console.log("error", error));
                 },
-                handleTicket: function(result){
-                  var oModel = this.getView().getModel();
-                  var clienti = JSON.parse(result);
-                  oModel.setProperty("/clienti", clienti);
-                  console.log(oModel.getProperty("/ticket"));
-                }
+                handleTicket: function (result) {
+                    var oModel = this.getView().getModel();
+                    var clienti = JSON.parse(result);
+                    oModel.setProperty("/clienti", clienti);
+                    console.log(oModel.getProperty("/ticket"));
+                },
             }
         );
     }

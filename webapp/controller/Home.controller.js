@@ -45,6 +45,12 @@ sap.ui.define(
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
             onInit: function () {
+                var oRouter = this.getOwnerComponent().getRouter();
+
+                oRouter.getRoute("RouteHome").attachMatched(function () {
+                    this.sumHours();
+                }, this);
+
                 var oModel = new JSONModel();
                 var i18nModel = new ResourceModel({
                     bundleName: "regesta.regestarapportini.i18n.i18n",
@@ -95,6 +101,8 @@ sap.ui.define(
                     .then((response) => response.text())
                     .then((result) => this.handleData(result))
                     .catch((error) => console.log("error", error));
+
+                
             },
 
             handleData: function (result) {
@@ -192,7 +200,6 @@ sap.ui.define(
                 //     "Cookie",
                 //     "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
                 // );
-                
 
                 // var raw = JSON.stringify({
                 //     body
@@ -269,11 +276,12 @@ sap.ui.define(
                                 );
                                 oList.swipeOut();
                             }
-
-                            this.APICall();
                         },
                     }
                 );
+
+                this.APICall();
+                oList.getModel().updateBindings(true);
             },
 
             handleSelectToday: function (oEvent) {
