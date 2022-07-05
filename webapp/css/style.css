@@ -3,7 +3,7 @@ html {
     scrollbar-width: none;
 }
 
-#__xmlview1--hourBadge-inner{
+#__xmlview1--hourBadge-inner {
     border-radius: 20px;
 }
 
@@ -174,10 +174,20 @@ input:focus textarea {
 /* ! Footbar */
 .sapMPageFooter {
     position: fixed;
+    height: 4rem;
+}
+
+.sapUiSizeCompact .sapMPageHeader .sapMIBar, .sapUiSizeCompact .sapMPageFooter .sapMIBar{
+    height: inherit;
 }
 
 .hTitle {
     font-size: 20px;
     font-family: "Poppins", sans-serif;
     font-weight: bold;
+}
+
+/* ! Navbar */
+.sapUiSizeCompact .sapFShellBar{
+    height: 4rem !important;
 }
