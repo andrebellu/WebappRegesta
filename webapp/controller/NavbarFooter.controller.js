@@ -237,7 +237,7 @@ sap.ui.define(
           // sessionStorage.setItem("encodedToken", encodedToken);
 
           // fetch(
-          //   hostname + "/api_v2/nuovorapportino?token=" +
+          //   sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" +
           //     sessionStorage.getItem("encodedToken"),
           //   requestOptions
           // )
@@ -258,7 +258,7 @@ sap.ui.define(
           };
 
           fetch(
-            hostname + "/api_v2/nuovorapportino?token=" +
+            sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" +
               sessionStorage.getItem("encodedToken"),
             requestOptions
           )
