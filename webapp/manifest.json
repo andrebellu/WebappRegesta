@@ -65,6 +65,7 @@
         "models": {
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties",
                 "settings": {
                     "bundleName": "regesta.regestarapportini.i18n.i18n"
                 }

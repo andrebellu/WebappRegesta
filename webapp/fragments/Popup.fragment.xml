@@ -28,16 +28,20 @@
     }" id="date" class="roundedInput" change=".onGiornoChange" placeholder="dd/mm/yyyy" width="100%" showCurrentDateButton="true" enabled="true"/>
 
         <!--! Input work hours with step input -->
-        <Label text="Ore" class="labelMargin" required="true"/>
+        <Label text="Ore" class="labelMargin" required="true" />
         <StepInput value="{
         value : '0,0',
         path : 'Ore',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
+<<<<<<< HEAD
             maxLength: 2
+=======
+            maxLength: 5
+>>>>>>> dd53b0ac1e514121f9dcbb5659cb22232294f4c9
         }
-    }" class="roundedInput" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24" step="1" enabled="true"/>
+    }" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="0.1" enabled="true"/>
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
@@ -48,7 +52,7 @@
         constraints : {
             minLength: 1
         }
-    }" class="roundedInput" width="100%" enabled="true" id="ticket" placeholder="Ticket">
+    }" class="roundedInput"  width="100%" enabled="true" id="ticket" placeholder="Ticket">
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="1" text="Ticket 1"/>
                 <core:Item xmlns:core="sap.ui.core" key="2" text="Ticket 2"/>
@@ -198,7 +202,7 @@
         <!--! Save button -->
         <Button text="Salva"
         type="Emphasized"
-        press= ".onSave"
+        press= ".onSubmit"
         enabled="true"
         class="dialogButton"/>
     </FlexBox>
