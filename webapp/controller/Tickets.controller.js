@@ -29,9 +29,44 @@ sap.ui.define(
         StandardListItem,
         Text
     ) {
+        
         "use strict";
         var check = true;
         var startTime, endTime, timeDiff;
+
+        var defaultBody = {
+			"IDRapportino": null,
+			"IDUtente": null,
+			"Utente": null,
+			"IDCliente": null,
+			"IDCommessa": null,
+			"IDClienteSede": null,
+			"IDProgetto": null,
+			"IDProgettoAttivita": null,
+			"IDTodoList": null,
+			"Codice": null,
+			"Descrizione": null,
+			"Attivita": null,
+			"Sede": "UF",
+			"Destinazione": null,
+			"Giorno": null,
+			"Ore": null,
+			"OreLavorate": null,
+			"Km": null,
+			"KmEuro": null,
+			"Pedaggio": null,
+			"Forfait": null,
+			"Vitto": null,
+			"Alloggio": null,
+			"Noleggio": null,
+			"Trasporti": null,
+			"Varie": null,
+			"Plus": null,
+			"Fatturabile": null,
+			"Bloccato": null,
+			"SpeseVarie": null,
+			"Docente": null
+  };
         return Controller.extend(
             "regesta.regestarapportini.controller.Tickets",
             {
@@ -73,27 +108,65 @@ sap.ui.define(
                             minutes + ":" + (seconds < 10 ? "0" : "") + seconds
                         );
                         check = true;
+                        
+                    }
+                },
+                Timer1: function (oEvent) {
+                    if (check) {
+                        check = false;
+                        startTime =String( new Date().getHours())+" : "+String(new Date().getMinutes());
+                        console.log(startTime);
+                    } else {
+                        endTime = String( new Date().getHours())+" : "+String(new Date().getMinutes());
+                        console.log(endTime);
+                        var [hourstart,minutestart]=String(startTime).split(" : ")
+                        var [hourend,minutend]=String(endTime).split(" : ")
+                        var timeDiffHour=Number(hourend)-Number(hourstart);
+                        var timeDiffMinute=Number(minutend)-Number(minutestart);
+                        timeDiff = timeDiffHour + timeDiffMinute/60;
+                        console.log(timeDiff);
+                        
+                        check = true;
+                        sessionStorage.setItem("timeDiff", timeDiff);
+                        this.showPopup(oEvent);
+                        
                     }
                 },
 
                 showPopup: function (oEvent) {
-                    var source = oEvent.getSource();
-                    var context = source.getBindingContext();
-                    var index = source.getBindingContext().getPath();
-                    this.getView().getModel().setProperty("/index", index);
-                    var path = this.getView().getModel().getProperty("/index");
-                    this.getView().getModel().setProperty("/path", path);
-                    console.log(path);
-                    if (!this.pDialog) {
-                        this.pDialog = this.loadFragment({
-                            name: "regesta.regestarapportini.fragments.PopupTicket",
-                        });
-                    }
-                    this.pDialog.then(function (oDialog) {
-                        oDialog.setBindingContext(context);
-                        oDialog.open();
-                    });
-                },
+                    var date=new Date();
+                    var nuovoRapportino = this.getView()
+                    .getModel();
+                    var data=date.getDate()+"/"+Number(date.getMonth()+1)+"/"+date.getFullYear();
+                    var oModel = this.getView().getModel();
+          oModel.setProperty("/nuovoRapportino", defaultBody);
+
+          var nuovoRapportino = this.getView()
+            .getModel()
+            .getProperty("/nuovoRapportino");
+          nuovoRapportino.Giorno = data;
+          nuovoRapportino.Utente = sessionStorage.getItem("username");
+          console.log(nuovoRapportino.Ore);
+          var input=oModel.getElementById("Ore").stepUp(1.1);
+          oModel.setProperty("/nuovoRapportino", nuovoRapportino);
+          
+          var source = oEvent.getSource();
+          var setContext = source.setBindingContext(new sap.ui.model.Context(oModel, "/nuovoRapportino"));
+          var getContext = setContext.getBindingContext();
+          console.log(setContext);
+          console.log(getContext);
+          console.log(nuovoRapportino);
+
+          if (!this.pDialog) {
+            this.pDialog = this.loadFragment({
+              name: "regesta.regestarapportini.fragments.Popup",
+            });
+          }
+          this.pDialog.then(function (oDialog) {
+            oDialog.setBindingContext(getContext);
+            oDialog.open();
+          });
+        },
                 onCancel: function (oEvent) {
                   this.byId("popup").close();
                 },
