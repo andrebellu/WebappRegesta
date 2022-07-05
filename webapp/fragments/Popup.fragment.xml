@@ -31,14 +31,13 @@
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true" />
         <StepInput value="{
-        value : '0,0',
-        path : 'Ore',
+        value : '0.0',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
             maxLength: 3
         }
-    }" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="1" enabled="true"/>
+    }" change="getHours" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="1" enabled="true"/>
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
@@ -64,7 +63,7 @@
         value : '',
         path : '',
         type : 'sap.ui.model.type.String'
-    }" type="Text" valueLiveUpdate="true" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
+    }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
 
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
@@ -72,7 +71,7 @@
         value : '',
         path : '',
         type : 'sap.ui.model.type.String'
-    }" type="Text" valueLiveUpdate="true" change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
+    }" type="Text"  change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
 
         <!--! Input site with combo box -->
         <Label text="Sede" class="labelMargin"/>
@@ -97,7 +96,7 @@
         <Input value="{
         path : 'Destinazione',
         type : 'sap.ui.model.type.String'
-    }" type="Text" valueLiveUpdate="true" change= ".onDestinationChange" width= "100%" enabled= "true" id="destination" class="roundedInput" placeholder="Destinazione"/>
+    }" type="Text" change= ".onDestinationChange" width= "100%" enabled= "true" id="destination" class="roundedInput" placeholder="Destinazione"/>
 
         <!--! Input description -->
         <Label text="Descrizione" class="labelMargin" required="true"/>
@@ -107,12 +106,12 @@
         constraints : {
             minLength: 1
         }
-    }" type="Text" valueLiveUpdate="true" change= ".onDescriptionChange" width= "100%" enabled= "true" id="description" class="roundedInput" placeholder="Descrizione"/>
+    }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "true" id="description" class="roundedInput" placeholder="Descrizione"/>
 
         <!-- Checkboxes in flexbox -->
         <FlexBox direction="Row" class="checkStyle">
             <!--! Checkbox plus -->
-            <CheckBox text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="true" selected="false"/>
+            <CheckBox  text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="true" selected="false"/>
 
             <!--! Checkbox fatturabile -->
             <CheckBox text="Fatturabile" id="fatturabile" class="checkboxMargin" width="100%" enabled="true" selected="true"/>
