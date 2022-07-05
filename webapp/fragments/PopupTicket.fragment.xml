@@ -1,13 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core">
     <Dialog  xmlns="sap.m" title="Ticket" type="Message" id="popup" class="dialogStyle">
-
-        <Label text="Utente" class="labelMargin" />
-        <Input value="{
-                value : 'studente@notanemail.com',
-                type : 'sap.ui.model.type.String' }" 
-                type="Text" width= "100%" enabled= "false" id="user" class="roundedInput"/>
-
         <Label text=" Data di inserimento" class="labelMargin"/>
         <DatePicker value="{
                 value : '20/07/2022',   
@@ -16,7 +9,7 @@
 
         <Label text="Titolo" class="labelMargin"/>
         <Input value="{
-                value : 'Test titolo',
+                value : 'titolo',
                 type : 'sap.ui.model.type.String' }" 
                 class="roundedInput" textAlign="Left" width="100%" enabled="false" id="title"/>
 
@@ -24,17 +17,25 @@
         <Input value="{
                 value: '123456',    
                 type : 'sap.ui.model.type.String' }" 
-                class="roundedInput" width="100%" enabled="false" id="IDTicket"/>
-    
+                class="roundedInput" width="100%"    enabled="false" id="IDTicket"/>
+        <Label text="IDCliente" class="labelMargin"/>
+        <Input value="{
+                path : 'IDCliente',
+                type : 'sap.ui.model.type.String' }" 
+                type="Text" width= "100%" enabled= "false" id="IDclient" class="roundedInput"/>
         <Label text="Cliente" class="labelMargin"/>
         <Input value="{
-                value : 'ClienteTicket',
+                path : 'Codice',
                 type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" id="client" class="roundedInput"/>
-
+        <Label text="Commessa" class="labelMargin"/>
+        <Input value="{
+                path : 'Descrizione',
+                type : 'sap.ui.model.type.String' }" 
+                type="Text" width= "100%" enabled= "false" class="roundedInput" id="order"/>
         <Label text="ID Commessa" class="labelMargin"/>
         <Input value="{
-                value : '17680 - la commessa',
+                path : 'IDCommessa',
                 type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" class="roundedInput" id="IDOrder"/>
 

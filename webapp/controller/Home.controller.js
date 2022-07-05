@@ -139,6 +139,24 @@ sap.ui.define(
                     sum += parseFloat(item.Ore);
                 });
 
+                if (sum >= 8) {
+                    document
+                        .getElementById("__xmlview1--hourBadge-inner")
+                        .style.setProperty(
+                            "background-color",
+                            "rgba(194, 249, 112, .2)",
+                            "important"
+                        );
+                } else {
+                    document
+                        .getElementById("__xmlview1--hourBadge-inner")
+                        .style.setProperty(
+                            "background-color",
+                            "rgba(254, 121, 104, .2)",
+                            "important"
+                        );
+                }
+
                 oModel.setProperty("/sum", sum);
             },
 
@@ -174,6 +192,7 @@ sap.ui.define(
                 //     "Cookie",
                 //     "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
                 // );
+                
 
                 // var raw = JSON.stringify({
                 //     body
@@ -181,7 +200,7 @@ sap.ui.define(
 
                 // var requestOptions = {
                 //     method: "POST",
-                //     headers: myHeaders
+                //     headers: myHeaders,
                 //     body: raw,
                 //     redirect: "follow",
                 // };
@@ -250,6 +269,8 @@ sap.ui.define(
                                 );
                                 oList.swipeOut();
                             }
+
+                            this.APICall();
                         },
                     }
                 );

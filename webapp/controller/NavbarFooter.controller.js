@@ -23,45 +23,11 @@ sap.ui.define(
     "use strict";
 
     var token = sessionStorage.getItem("token");
-    var defaultBody = {
-			"IDRapportino": null,
-			"IDUtente": null,
-			"Utente": null,
-			"IDCliente": null,
-			"IDCommessa": null,
-			"IDClienteSede": null,
-			"IDProgetto": null,
-			"IDProgettoAttivita": null,
-			"IDTodoList": null,
-			"Codice": null,
-			"Descrizione": null,
-			"Attivita": null,
-			"Sede": "UF",
-			"Destinazione": null,
-			"Giorno": null,
-			"Ore": null,
-			"OreLavorate": null,
-			"Km": null,
-			"KmEuro": null,
-			"Pedaggio": null,
-			"Forfait": null,
-			"Vitto": null,
-			"Alloggio": null,
-			"Noleggio": null,
-			"Trasporti": null,
-			"Varie": null,
-			"Plus": null,
-			"Fatturabile": null,
-			"Bloccato": null,
-			"SpeseVarie": null,
-			"Docente": null
-  };
 
     return Controller.extend(
       "regesta.regestarapportini.controller.NavbarFooter",
       {
         onInit: function () {
-
           var i18nModel = new ResourceModel({
             bundleName: "regesta.regestarapportini.i18n.i18n",
           });
@@ -70,29 +36,26 @@ sap.ui.define(
         },
 
         fnChange: function (oEvent) {
-            var itemPressed = oEvent
-                .getParameter("itemPressed")
-                .getId();
+          var itemPressed = oEvent.getParameter("itemPressed").getId();
 
-            console.log(itemPressed);
-            if (
-                itemPressed === "__item0-__switch0-0" ||
-                itemPressed === "__item1-__switch1-0"
-            ) {
-                var oRouter =
-                    sap.ui.core.UIComponent.getRouterFor(this);
-                oRouter.navTo("RouteLogin");
-            } else if (
-                itemPressed === "__item0-__switch0-1" ||
-                itemPressed === "__item1-__switch1-1"
-            ) {
-                window.open("https://www.regestaitalia.eu/", "_blank");
-            } else {
-                window.open(
-                    "https://github.com/andrebellu/WebappRegesta",
-                    "_blank"
-                );
-            }
+          console.log(itemPressed);
+          if (
+            itemPressed === "__item0-__switch0-0" ||
+            itemPressed === "__item1-__switch1-0"
+          ) {
+            var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("RouteLogin");
+          } else if (
+            itemPressed === "__item0-__switch0-1" ||
+            itemPressed === "__item1-__switch1-1"
+          ) {
+            window.open("https://www.regestaitalia.eu/", "_blank");
+          } else {
+            window.open(
+              "https://github.com/andrebellu/WebappRegesta",
+              "_blank"
+            );
+          }
         },
 
         fnOpen: function (oEvent) {
@@ -179,24 +142,55 @@ sap.ui.define(
         },
 
         showPopup: function (oEvent) {
-          
+          const defaultBody = {
+            IDRapportino: null,
+            IDUtente: null,
+            Utente: sessionStorage.getItem("username"),
+            IDCliente: null,
+            IDCommessa: 1969,
+            IDClienteSede: null,
+            IDProgetto: null,
+            IDProgettoAttivita: null,
+            IDTodoList: 25329,
+            Codice: null,
+            Descrizione: null,
+            Attivita: null,
+            Sede: "UF",
+            Destinazione: null,
+            Giorno: "2022-07-04T00:00:00",
+            Ore: null,
+            OreLavorate: null,
+            Km: null,
+            KmEuro: null,
+            Pedaggio: null,
+            Forfait: null,
+            Vitto: null,
+            Alloggio: null,
+            Noleggio: null,
+            Trasporti: null,
+            Varie: null,
+            Plus: false,
+            Fatturabile: true,
+            Bloccato: null,
+            SpeseVarie: null,
+            Docente: null,
+          };
+
           var oModel = this.getView().getModel();
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
           var nuovoRapportino = this.getView()
             .getModel()
             .getProperty("/nuovoRapportino");
+
           nuovoRapportino.Giorno = this.getCurrentDate();
           nuovoRapportino.Utente = sessionStorage.getItem("username");
 
-          oModel.setProperty("/nuovoRapportino", nuovoRapportino);
-          
           var source = oEvent.getSource();
-          var setContext = source.setBindingContext(new sap.ui.model.Context(oModel, "/nuovoRapportino"));
+          var setContext = source.setBindingContext(
+            new sap.ui.model.Context(oModel, "/nuovoRapportino")
+          );
           var getContext = setContext.getBindingContext();
-          console.log(setContext);
-          console.log(getContext);
-          console.log(nuovoRapportino);
 
           if (!this.pDialog) {
             this.pDialog = this.loadFragment({
@@ -204,12 +198,73 @@ sap.ui.define(
             });
           }
           this.pDialog.then(function (oDialog) {
+            oModel.setProperty("/nuovoRapportino", defaultBody);
             oDialog.setBindingContext(getContext);
             oDialog.open();
           });
         },
 
-        onSave: function (oEvent) {
+        onSave: function () {
+          const defaultBody = {
+            IDRapportino: null,
+            IDUtente: null,
+            Utente: "studente.itis",
+            IDCliente: 5,
+            IDCommessa: 1969,
+            IDClienteSede: null,
+            IDProgetto: null,
+            IDProgettoAttivita: null,
+            IDTodoList: 25329,
+            Codice: null,
+            Descrizione: "Pizda mati",
+            Attivita: null,
+            Sede: "UF",
+            Destinazione: null,
+            Giorno: "2022-07-04T00:00:00",
+            Ore: 22.0,
+            OreLavorate: null,
+            Km: null,
+            KmEuro: null,
+            Pedaggio: null,
+            Forfait: null,
+            Vitto: null,
+            Alloggio: null,
+            Noleggio: null,
+            Trasporti: null,
+            Varie: null,
+            Plus: false,
+            Fatturabile: false,
+            Bloccato: null,
+            SpeseVarie: null,
+            Docente: null,
+          };
+          var nuovoRapportino = this.getView()
+            .getModel()
+            .getProperty("/nuovoRapportino");
+          console.log(nuovoRapportino);
+          console.log(JSON.stringify(defaultBody));
+
+          var requestOptions = {
+            method: "POST",
+            body: JSON.stringify(defaultBody),
+            redirect: "follow",
+          };
+
+          var token = sessionStorage.getItem("token");
+
+          token = token.replace(/"/g, "");
+          var encodedToken = encodeURIComponent(token);
+
+          sessionStorage.setItem("encodedToken", encodedToken);
+
+          fetch(
+            "https://asstest.regestaitalia.it/api_v2/nuovorapportino?token=" +
+              sessionStorage.getItem("encodedToken"),
+            requestOptions
+          )
+            .then((response) => response.text())
+            .then((result) => console.log(result))
+            .catch((error) => console.log("error", error));
           this.byId("popup").close();
         },
 

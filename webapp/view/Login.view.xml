@@ -10,9 +10,9 @@
             class="flexCenter">
 
             <l:VerticalLayout class="sapUiContentPadding" width="100%">
-            <Label text="{i18n>loginTitle}" class="regestaLogo" />
-            <Label text="{i18n>loginSubtitle}" class="loginHeader" />
-            <Label text="{i18n>inputLabel_1}" labelFor="nameInput" />
+            <Label text="Regesta" class="regestaLogo" />
+            <Label text="Login" class="loginHeader" />
+            <Label text="Utente" labelFor="nameInput" />
             <Input
                 id="nameInput"
                 class="roundedInput"
@@ -28,7 +28,7 @@
                 }"
                 change= ".onNameChange" />
 
-            <Label text="{i18n>inputLabel_2}" labelFor="passwordInput" />
+            <Label text="Password" labelFor="passwordInput" />
             <Input
                 id="passwordInput"
                 class="roundedInput"
