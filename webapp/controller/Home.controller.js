@@ -275,12 +275,11 @@ sap.ui.define(
                                     oList.getSwipedItem()
                                 );
                                 oList.swipeOut();
+                                window.location.reload();
                             }
                         },
                     }
                 );
-
-                this.APICall();
             },
 
             handleSelectToday: function (oEvent) {
