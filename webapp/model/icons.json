@@ -4,12 +4,14 @@
 		{
 			"src": "sap-icon://visits",
 			"title": "Cambia account",
-			"subTitle": "Clicca per tornare alla schermata di accesso"
+			"subTitle": "Clicca per tornare alla schermata di accesso",
+			"target": "TargetLogin"
 		},
 		{
 			"src": "sap-icon://internet-browser",
 			"title": "Sito web",
-			"subTitle": "Visita il sito Regesta"
+			"subTitle": "Visita il sito Regesta",
+			"target": "www.regestaitalia.com"
 		},
 		{
 			"src": "sap-icon://contacts",
