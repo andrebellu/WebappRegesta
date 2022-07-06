@@ -286,6 +286,11 @@ sap.ui.define(
             
             return date >= startOfThisWeek && date < startOfNextWeek;
         },
+        isFutureDate: function(value) {
+            const d_now = new Date();
+            const d_inp = new Date(value);
+            return d_now.getTime() <= d_inp.getTime();
+        },
         //! Check date input
         _validateGiornoInput: function(oInput) 
         {
@@ -294,11 +299,13 @@ sap.ui.define(
             var oBinding = oInput.getBinding("value");
 
             var [gg, month, year] = oInput.getValue().split("/");
-            console.log(gg, month, year);
-            console.log(this.isDateInThisWeek(new Date(year, month - 1, gg)))
+            const giorno = new Date(year, month - 1, gg);
 
-            var week = new Date(year, month - 1, gg).getDay();
-            console.log(week);
+            //console.log(gg, month, year);
+            //console.log(this.isDateInThisWeek(giorno));
+
+            var week = giorno.getDay();
+            //console.log(week);
 
             if(week == 0 || week == 6) 
             {
@@ -310,7 +317,7 @@ sap.ui.define(
                 return bValidationError;
             }
 
-            if(!this.isDateInThisWeek(new Date(year, month - 1, gg)))
+            if(!this.isDateInThisWeek(giorno) || this.isFutureDate(giorno))
             {
                 try 
                 {
