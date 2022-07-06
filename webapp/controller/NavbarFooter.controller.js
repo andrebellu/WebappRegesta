@@ -23,6 +23,7 @@ sap.ui.define(
     "use strict";
 
     var token = sessionStorage.getItem("token");
+    var ore;
 
     return Controller.extend(
       "regesta.regestarapportini.controller.NavbarFooter",
@@ -120,8 +121,17 @@ sap.ui.define(
           return today;
         },
 
+        getHours: function (oEvent) {
+          ore = oEvent.getParameter("value");
+          var nuovoRapportino = this.getView()
+            .getModel()
+            .getProperty("/nuovoRapportino");
+
+          nuovoRapportino.Ore = ore;
+        },
+
         showPopup: function (oEvent) {
-          const defaultBody = {
+          var defaultBody = {
             IDRapportino: null,
             IDUtente: null,
             Utente: sessionStorage.getItem("username"),
@@ -132,12 +142,12 @@ sap.ui.define(
             IDProgettoAttivita: null,
             IDTodoList: null,
             Codice: null,
-            Descrizione: "dute mata an cur",
+            Descrizione: null,
             Attivita: null,
             Sede: "UF",
             Destinazione: null,
             Giorno: this.getCurrentDate(),
-            Ore: 22,
+            Ore: null,
             OreLavorate: null,
             Km: null,
             KmEuro: null,
@@ -174,46 +184,17 @@ sap.ui.define(
             oDialog.setBindingContext(getContext);
             oDialog.open();
           });
+
+          // oList.getModel().updateBindings(true);
         },
 
         onSave: function () {
-          const defaultBody = {
-            IDRapportino: null,
-            IDUtente: null,
-            Utente: sessionStorage.getItem("username"),
-            IDCliente: 5,
-            IDCommessa: 1969,
-            IDClienteSede: null,
-            IDProgetto: null,
-            IDProgettoAttivita: null,
-            IDTodoList: null,
-            Codice: null,
-            Descrizione: "dute mata an cur",
-            Attivita: null,
-            Sede: "UF",
-            Destinazione: null,
-            Giorno: this.getCurrentDate(),
-            Ore: 22,
-            OreLavorate: null,
-            Km: null,
-            KmEuro: null,
-            Pedaggio: null,
-            Forfait: null,
-            Vitto: null,
-            Alloggio: null,
-            Noleggio: null,
-            Trasporti: null,
-            Varie: null,
-            Plus: false,
-            Fatturabile: true,
-            Bloccato: null,
-            SpeseVarie: null,
-            Docente: null,
-          };
           var nuovoRapportino = this.getView()
             .getModel()
             .getProperty("/nuovoRapportino");
           console.log(nuovoRapportino);
+
+          
 
           // ? Chech date
           // collect input controls
@@ -227,31 +208,6 @@ sap.ui.define(
             MessageToast.show("Rapportino aggiunto");
 
             //! API call for newRepo
-            // var raw = JSON.stringify(defaultBody);
-
-            // var requestOptions = {
-            //   method: "POST",
-            //   body: raw,
-            //   redirect: "follow",
-            // };
-
-            // var token = sessionStorage.getItem("token");
-
-            // token = token.replace(/"/g, "");
-            // var encodedToken = encodeURIComponent(token);
-
-            // sessionStorage.setItem("encodedToken", encodedToken);
-
-            // fetch(
-            //   sessionStorage.getItem("hostname") +
-            //     "/api_v2/nuovorapportino?token=" +
-            //     sessionStorage.getItem("encodedToken"),
-            //   requestOptions
-            // )
-            //   .then((response) => response.text())
-            //   .then((result) => console.log(result))
-            //   .catch((error) => console.log("error", error));
-
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             myHeaders.append(
@@ -259,7 +215,7 @@ sap.ui.define(
               "ASP.NET_SessionId=h44eqjrap4hk2tsla2tjsbwv"
             );
 
-            var raw = JSON.stringify(defaultBody);
+            var raw = JSON.stringify(nuovoRapportino);
 
             var requestOptions = {
               method: "POST",
@@ -278,6 +234,7 @@ sap.ui.define(
               .catch((error) => console.log("error", error));
 
             this.byId("popup").close();
+            // window.location.reload();
           } else {
             MessageToast.show("Inserisci i dati correttamemte");
           }
