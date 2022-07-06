@@ -37,7 +37,7 @@
             minLength: 1,
             maxLength: 3
         }
-    }" change="getHours" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="1" enabled="true"/>
+    }" change="getHours" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="1.0" enabled="true"/>
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>

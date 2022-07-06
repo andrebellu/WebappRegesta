@@ -190,6 +190,7 @@ sap.ui.define(
 
             handleDuplicate: function (oEvent) {
                 var body = this.getView().getModel().getProperty("/body");
+
                 console.log(body);
 
                 // ? API CALL NUOVO RAPPORTIN

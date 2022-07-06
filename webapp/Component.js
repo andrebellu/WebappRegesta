@@ -1,13 +1,11 @@
-sap.ui.define([
-        "sap/ui/core/UIComponent",
-        "regesta/regestarapportini/model/models"
-    ],
+sap.ui.define(
+    ["sap/ui/core/UIComponent", "regesta/regestarapportini/model/models"],
     function (UIComponent, models) {
         "use strict";
 
         return UIComponent.extend("regesta.regestarapportini.Component", {
             metadata: {
-                manifest: "json"
+                manifest: "json",
             },
 
             /**
@@ -25,7 +23,7 @@ sap.ui.define([
 
                 // set the device model
                 this.setModel(models.createDeviceModel(), "device");
-            }
+            },
         });
     }
 );
