@@ -1,8 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc">
-    <Dialog 
-        xmlns="sap.m" title="Inserisci i dati del rapportino" type="Message" id="popup" class="dialogStyle">
+    <Dialog xmlns="sap.m" title="Inserisci i dati del rapportino" type="Message" id="popup" class="dialogStyle">
 
         <!--! Input user -->
         <Label text="Utente" class="labelMargin" />
@@ -17,10 +16,7 @@
 
         <!--! Input date with datepicker -->
         <Label text="Giorno" class="labelMargin" required="true"/>
-        <DatePicker 
-        displayFormat="dd/MM/yyyy"
-        valueFormat="dd/MM/yyyy"
-        value="{
+        <DatePicker displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy" value="{
         path : 'Giorno',
         constraints : {
             minLength: 1,
@@ -42,14 +38,7 @@
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
-        <ComboBox value="{
-        path : '',
-        value : '',
-        type : 'sap.ui.model.type.String',
-        constraints : {
-            minLength: 1
-        }
-    }" class="roundedInput" change="onTicketChange" width="100%" enabled="true" id="ticket" placeholder="Ticket">
+        <ComboBox class="roundedInput" change="handleChange" width="100%" enabled="true" id="ticket" placeholder="Ticket" items="{/ticket}">
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="{IDTodoList}" text="{IDTodoList} - {Titolo}" id="ticketz"/>
             </items>
@@ -67,7 +56,7 @@
         <Input value="{
         path : '/nuovoRapportino/Attivita',
         type : 'sap.ui.model.type.String'
-    }" type="Text"  change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
+    }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
 
         <!--! Input site with combo box -->
         <Label text="Sede" class="labelMargin"/>
@@ -96,13 +85,13 @@
                 minLength: 0
             }
         }" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
-                <items>
-                    <core:Item xmlns:core="sap.ui.core" key="1" text="UF"/>
-                    <core:Item xmlns:core="sap.ui.core" key="2" text="CL"/>
-                    <core:Item xmlns:core="sap.ui.core" key="3" text="CA"/>
-                    <core:Item xmlns:core="sap.ui.core" key="4" text="SW"/>
-                </items>
-            </ComboBox>
+            <items>
+                <core:Item xmlns:core="sap.ui.core" key="1" text="UF"/>
+                <core:Item xmlns:core="sap.ui.core" key="2" text="CL"/>
+                <core:Item xmlns:core="sap.ui.core" key="3" text="CA"/>
+                <core:Item xmlns:core="sap.ui.core" key="4" text="SW"/>
+            </items>
+        </ComboBox>
 
 
         <!--! Input description -->
@@ -118,7 +107,7 @@
         <!-- Checkboxes in flexbox -->
         <FlexBox direction="Row" class="checkStyle">
             <!--! Checkbox plus -->
-            <CheckBox  text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="true" selected="false"/>
+            <CheckBox text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="true" selected="false"/>
 
             <!--! Checkbox fatturabile -->
             <CheckBox text="Fatturabile" id="fatturabile" class="checkboxMargin" width="100%" enabled="true" selected="true"/>
@@ -132,7 +121,7 @@
             <Input value="{
             path : 'Km',
             type : 'sap.ui.model.type.Integer'
-        }"  type="Number" width= "100%" enabled= "true" class="roundedInput" placeholder="Km"/>
+        }" type="Number" width= "100%" enabled= "true" class="roundedInput" placeholder="Km"/>
 
             <!--! Input km/€ formatted in currency -->
             <Label text="Km/€" class="labelMargin"/>
@@ -216,7 +205,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }"  change= ".onTransportChange" width= "100%" enabled= "true" id="transport" class="roundedInput" placeholder="Trasporti"/>
+        }" change= ".onTransportChange" width= "100%" enabled= "true" id="transport" class="roundedInput" placeholder="Trasporti"/>
 
             <!--! Input various formatted in currency -->
             <Label text="Varie" class="labelMargin"/>
@@ -248,11 +237,7 @@
             <Button text="Annulla" press= ".onCancel" enabled="true" class="dialogButton"/>
 
             <!--! Save button -->
-            <Button text="Salva"
-            type="Emphasized"
-            press= ".onSave"
-            enabled="true"
-            class="dialogButton"/>
-    </FlexBox>
-</Dialog>
+            <Button text="Salva" type="Emphasized" press= ".onSave" enabled="true" class="dialogButton"/>
+        </FlexBox>
+    </Dialog>
 </core:FragmentDefinition>
