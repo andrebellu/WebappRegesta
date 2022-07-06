@@ -42,25 +42,23 @@
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
-        <ComboBox  class="roundedInput"  width="100%" enabled="true" id="ticket" placeholder="Ticket" items="{/ticket}">
+        <ComboBox  class="roundedInput"  width="100%" enabled="true" id="ticket" placeholder="Ticket" items="{/ticket}" change="handleChange">
             <items>
-                <core:Item xmlns:core="sap.ui.core" text="{IDTodoList} - {Titolo}"/>
+                <core:Item xmlns:core="sap.ui.core" key="{IDTodoList}" text="{IDTodoList} - {Titolo}" id="ticketz"/>
             </items>
         </ComboBox>
 
         <!--! Input client -->
         <Label text="Cliente" class="labelMargin"/>
         <Input value="{
-        value : '',
-        path : '',
+        path : '/nuovoRapportino/Codice',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
 
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
-        value : '',
-        path : '',
+        path : '/nuovoRapportino/Attivita',
         type : 'sap.ui.model.type.String'
     }" type="Text"  change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
 

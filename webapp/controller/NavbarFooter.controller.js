@@ -131,7 +131,11 @@ sap.ui.define(
         },
 
         showPopup: function (oEvent) {
+          var oModel = this.getView().getModel();
           this.APIticket();
+          this.APIclienti();
+          this.APIcommesse();
+
           var defaultBody = {
             IDRapportino: null,
             IDUtente: null,
@@ -166,7 +170,6 @@ sap.ui.define(
             Docente: null,
           };
 
-          var oModel = this.getView().getModel();
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
           var source = oEvent.getSource();
@@ -192,7 +195,7 @@ sap.ui.define(
         onSave: function () {
           var nuovoRapportino = this.getView()
             .getModel()
-            .getProperty("/nuovoRapportino");
+            .getProperty("/nuovoRapportino");  
           console.log(nuovoRapportino);
 
           
@@ -375,6 +378,63 @@ sap.ui.define(
           oInput.setValueState(sValueState);
           return bValidationError;
         },
+        APIclienti: function () {
+          var request = {
+              method: "POST",
+              redirect: "follow",
+          };
+
+        fetch(sessionStorage.getItem("hostname") + "/api_v2/clienti?token=" + sessionStorage.getItem("encodedToken") + "&idCliente=0", request)
+          .then((response) => response.text())
+          .then((result) => this.handleClienti(result))
+          .catch((error) => console.log("error", error));
+        },
+        handleClienti: function (result) {
+          var oModel = this.getView().getModel();
+          var clienti = JSON.parse(result);
+          oModel.setProperty("/clienti", clienti);
+        },
+        handleChange: function(oEvent){
+          var i;
+          var oModel = this.getView().getModel();
+          var IDCliente = sap.ui.getCore().byId(oEvent.getSource().getSelectedItemId()).getBindingContext().getObject().IDCliente;
+          oModel.setProperty("/nuovoRapportino/IDTodoList", sap.ui.getCore().byId(oEvent.getSource().getSelectedItemId()).getBindingContext().getObject().IDTodoList);
+          oModel.setProperty("/nuovoRapportino/IDCliente", IDCliente);
+          var clientLength = oModel.getProperty("/clienti").length;
+          var IDOrder = sap.ui.getCore().byId(oEvent.getSource().getSelectedItemId()).getBindingContext().getObject().IDCommessa;
+          var orderLength = oModel.getProperty("/commesse").length;
+          for (i = 0; i <= clientLength; i++) {
+              if (IDCliente == oModel.getProperty("/clienti/" + i + "/IDCliente")) {
+                      var code = oModel.getProperty("/clienti/" + i + "/Codice");
+                      var clientDescription = oModel.getProperty("/clienti/" + i + "/Descrizione");
+                            break;
+              }
+          }
+          for (i = 0; i <= orderLength; i++) {
+            if (IDOrder == oModel.getProperty("/commesse/" + i + "/IDCommessa")) {
+                  var orderDescription = oModel.getProperty("/commesse/" + i + "/Descrizione");
+                            break;
+                }
+          }
+          var clientName = code + " - " + clientDescription;
+          oModel.setProperty("/nuovoRapportino/Codice", clientName);
+          oModel.setProperty("/nuovoRapportino/Attivita", IDOrder + " - "+ orderDescription);
+        },
+        APIcommesse: function(){
+          var request = {
+            method : "POST",
+            redirect : "follow",
+          };
+          fetch(sessionStorage.getItem("hostname") + "/api_v2/commesse?token=" + sessionStorage.getItem("encodedToken") + "&idCommessa=0&idCliente=0", request)
+            .then((response) => response.text())
+            .then((result) => this.handleCommesse(result))
+            .catch((error) => console.log("error", error));
+        },
+        handleCommesse: function(result){
+          var oModel = this.getView().getModel();
+          var commesse = JSON.parse(result);
+          oModel.setProperty("/commesse", commesse);
+        }, 
       }
     );
   }
