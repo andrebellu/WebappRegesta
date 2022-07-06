@@ -128,6 +128,7 @@ sap.ui.define(
             .getProperty("/nuovoRapportino");
 
           nuovoRapportino.Ore = ore;
+          console.log(ore);
         },
 
         onTicketChange: function (oEvent) {
