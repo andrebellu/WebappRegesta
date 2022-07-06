@@ -190,6 +190,7 @@ sap.ui.define(
 
             handleDuplicate: function (oEvent) {
                 var body = this.getView().getModel().getProperty("/body");
+
                 console.log(body);
 
                 // ? API CALL NUOVO RAPPORTIN
@@ -328,8 +329,11 @@ sap.ui.define(
                     this.getView().getModel().setProperty("/index", index);
                     var path = this.getView().getModel().getProperty("/index");
                     this.getView().getModel().setProperty("/path", path);
+
                     // Get date from list item and convert it to string from timestamp
                     var date = context.getProperty("Giorno");
+                    // check if date starts with /
+                    if (date.charAt(0) == "/") { 
                     // Get numbers from input
                     var timeStamp = date.replace(/\D/g, "");
                     // Convert timestamp to date and format it to put it into the model
@@ -338,6 +342,7 @@ sap.ui.define(
                     this.getView()
                         .getModel()
                         .setProperty(path + "/Giorno", date);
+                    }
                 }
 
                 if (!this.pDialog) {
