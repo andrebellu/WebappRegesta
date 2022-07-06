@@ -100,12 +100,12 @@
             constraints : {
                 minLength: 0
             }
+        }" 
+        items="{
+            path : '',
         }" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
                 <items>
-                    <core:Item xmlns:core="sap.ui.core" key="1" text="UF"/>
-                    <core:Item xmlns:core="sap.ui.core" key="2" text="CL"/>
-                    <core:Item xmlns:core="sap.ui.core" key="3" text="CA"/>
-                    <core:Item xmlns:core="sap.ui.core" key="4" text="SW"/>
+                <core:Item xmlns:core="sap.ui.core" key="{Utente}" text="{Ore}"/>
                 </items>
             </ComboBox>
 

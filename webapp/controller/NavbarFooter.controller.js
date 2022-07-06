@@ -159,7 +159,7 @@ sap.ui.define(
         },
 
         handleDestination: function (result) {
-          var oModel = this.getView().getModel();
+          var oModel = new JSONModel("model/data.json");
 
           oModel.setProperty("/destinazioni", JSON.parse(result))
         },
