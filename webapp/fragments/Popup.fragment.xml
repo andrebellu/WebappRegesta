@@ -42,6 +42,9 @@
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
+<<<<<<< HEAD
+        <ComboBox  class="roundedInput"  width="100%" enabled="true" id="ticket" placeholder="Ticket" items="{/ticket}" change="handleChange">
+=======
         <ComboBox value="{
         path : '',
         value : '',
@@ -50,27 +53,23 @@
             minLength: 1
         }
     }" class="roundedInput" change="onTicketChange" width="100%" enabled="true" id="ticket" placeholder="Ticket">
+>>>>>>> fdbb7c1a4c92bfa32350080fcd10b4f4a3f6b267
             <items>
-                <core:Item xmlns:core="sap.ui.core" key="1" text="Ticket 1"/>
-                <core:Item xmlns:core="sap.ui.core" key="2" text="Ticket 2"/>
-                <core:Item xmlns:core="sap.ui.core" key="3" text="Ticket 3"/>
-                <core:Item xmlns:core="sap.ui.core" key="4" text="Ticket 4"/>
+                <core:Item xmlns:core="sap.ui.core" key="{IDTodoList}" text="{IDTodoList} - {Titolo}" id="ticketz"/>
             </items>
         </ComboBox>
 
         <!--! Input client -->
         <Label text="Cliente" class="labelMargin"/>
         <Input value="{
-        value : '',
-        path : '',
+        path : '/nuovoRapportino/Codice',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
 
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
-        value : '',
-        path : '',
+        path : '/nuovoRapportino/Attivita',
         type : 'sap.ui.model.type.String'
     }" type="Text"  change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
 
