@@ -188,39 +188,52 @@ sap.ui.define(
                 console.log(oEvent.getSource().data("id"));
             },
 
-            handleDuplicate: function (oEvent) {
+            handleDuplicate: function () {
                 var body = this.getView().getModel().getProperty("/body");
 
                 console.log(body);
 
-                // ? API CALL NUOVO RAPPORTIN
+                // var oView = sap.ui.getCore().byId("Footer");
+                // var oController = oView.getController();
 
-                // var myHeaders = new Headers();
-                // myHeaders.append("Content-Type", "application/json");
-                // myHeaders.append(
-                //     "Cookie",
-                //     "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
-                // );
+                sap.ui.controller("regesta.regestarapportini.controller.NavbarFooter").showPopup();
 
-                // var raw = JSON.stringify({
-                //     body
+                // this.pDialog = this.loadFragment({
+                //     name: "regesta.regestarapportini.fragments.Popup",
                 // });
 
-                // var requestOptions = {
-                //     method: "POST",
-                //     headers: myHeaders,
-                //     body: raw,
-                //     redirect: "follow",
-                // };
-
-                // fetch(
-                //     sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
-                //     requestOptions
-                // )
-                //     .then((response) => response.text())
-                //     .then((result) => console.log(result))
-                //     .catch((error) => console.log("error", error));
+                // this.pDialog.then(function (oDialog) {
+                //     oDialog.open();
+                // });
             },
+
+            // ? API CALL NUOVO RAPPORTIN
+
+            // var myHeaders = new Headers();
+            // myHeaders.append("Content-Type", "application/json");
+            // myHeaders.append(
+            //     "Cookie",
+            //     "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
+            // );
+
+            // var raw = JSON.stringify({
+            //     body
+            // });
+
+            // var requestOptions = {
+            //     method: "POST",
+            //     headers: myHeaders,
+            //     body: raw,
+            //     redirect: "follow",
+            // };
+
+            // fetch(
+            //     sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
+            //     requestOptions
+            // )
+            //     .then((response) => response.text())
+            //     .then((result) => console.log(result))
+            //     .catch((error) => console.log("error", error));
 
             handleEdit: function (oEvent) {
                 msgT.show("Edit");
@@ -333,15 +346,15 @@ sap.ui.define(
                     // Get date from list item and convert it to string from timestamp
                     var date = context.getProperty("Giorno");
                     // check if date starts with /
-                    if (date.charAt(0) == "/") { 
-                    // Get numbers from input
-                    var timeStamp = date.replace(/\D/g, "");
-                    // Convert timestamp to date and format it to put it into the model
-                    var date = new Date(parseInt(timeStamp));
-                    date = date.toLocaleDateString("it-IT");
-                    this.getView()
-                        .getModel()
-                        .setProperty(path + "/Giorno", date);
+                    if (date.charAt(0) == "/") {
+                        // Get numbers from input
+                        var timeStamp = date.replace(/\D/g, "");
+                        // Convert timestamp to date and format it to put it into the model
+                        var date = new Date(parseInt(timeStamp));
+                        date = date.toLocaleDateString("it-IT");
+                        this.getView()
+                            .getModel()
+                            .setProperty(path + "/Giorno", date);
                     }
                 }
 
