@@ -138,7 +138,7 @@
             <!--! Input toll formatted in currency -->
             <Label text="Pedaggio" class="labelMargin"/>
             <Input value="{
-            parts : [{path : '`Pedaggio'}, {value : '€'}],
+            parts : [{path : 'Pedaggio'}, {value : '€'}],
             formatOptions : {
                 style : 'currency',
                 currencyCode : '€',

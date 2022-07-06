@@ -222,6 +222,7 @@ sap.ui.define(
             oModel.setProperty("/nuovoRapportino", defaultBody);
             oDialog.setBindingContext(getContext);
             oDialog.open();
+            this.handleChange();
           });
 
           // oList.getModel().updateBindings(true);
@@ -425,12 +426,13 @@ sap.ui.define(
           for (i = 0; i <= orderLength; i++) {
             if (IDOrder == oModel.getProperty("/commesse/" + i + "/IDCommessa")) {
                   var orderDescription = oModel.getProperty("/commesse/" + i + "/Descrizione");
-                            break;
+                  // ! oModel.setProperty("/orderDescription", orderDescription);
+                  break;
                 }
           }
           var clientName = code + " - " + clientDescription;
           oModel.setProperty("/nuovoRapportino/Codice", clientName);
-          oModel.setProperty("/nuovoRapportino/IDCommessa", IDOrder + " - "+ orderDescription);
+          oModel.setProperty("/nuovoRapportino/IDCommessa", IDOrder ); // ! + " - "+ orderDescription);
         },
         APIcommesse: function(){
           var request = {

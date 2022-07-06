@@ -107,6 +107,7 @@ sap.ui.define(
             handleData: function (result) {
                 var oModel = this.getView().getModel();
                 var items = JSON.parse(result);
+                console.log(items);
                 oModel.setProperty("/items", items);
 
                 this.filterItems();
