@@ -204,13 +204,10 @@ sap.ui.define(
             Docente: null,
           };
 
-<<<<<<< HEAD
-=======
           // Get binding context
           var oModel = this.getView().getModel();
           var nuovoRapportino = oModel.getProperty("/nuovoRapportino");
 
->>>>>>> fdbb7c1a4c92bfa32350080fcd10b4f4a3f6b267
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
           var source = oEvent.getSource();
