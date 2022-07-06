@@ -430,7 +430,7 @@ sap.ui.define(
           }
           var clientName = code + " - " + clientDescription;
           oModel.setProperty("/nuovoRapportino/Codice", clientName);
-          oModel.setProperty("/nuovoRapportino/Attivita", IDOrder + " - "+ orderDescription);
+          oModel.setProperty("/nuovoRapportino/IDCommessa", IDOrder + " - "+ orderDescription);
         },
         APIcommesse: function(){
           var request = {
