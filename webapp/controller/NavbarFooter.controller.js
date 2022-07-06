@@ -180,6 +180,8 @@ sap.ui.define(
             });
           }
           this.pDialog.then(function (oDialog) {
+            oModel.setProperty("/nuovoRapportino", defaultBody);
+            oDialog.setBindingContext(getContext);
             oDialog.open();
           });
 
@@ -266,63 +268,92 @@ sap.ui.define(
           var oInput = oEvent.getSource();
           this._validateGiornoInput(oInput);
         },
-        
-        isDateInThisWeek: function(date)
-        {
-            const now = new Date();
-            
-            const weekDay = (now.getDay() + 6) % 7; // Make sure Sunday is 6, not 0
-            const monthDay = now.getDate();
-            const mondayThisWeek = monthDay - weekDay;
-            
-            const startOfThisWeek = new Date(+now);
-            startOfThisWeek.setDate(mondayThisWeek);
-            startOfThisWeek.setHours(0, 0, 0, 0);
-            
-            const startOfNextWeek = new Date(+startOfThisWeek);
-            startOfNextWeek.setDate(mondayThisWeek + 5);
-            
-            return date >= startOfThisWeek && date < startOfNextWeek;
-        },
+
         //! Check date input
-        _validateGiornoInput: function(oInput) 
-        {
-            var sValueState = "None";
-            var bValidationError = false;
-            var oBinding = oInput.getBinding("value");
+        _validateGiornoInput: function (oInput) {
+          var sValueState = "None";
+          var bValidationError = false;
+          var oBinding = oInput.getBinding("value");
 
-            var [gg, month, year] = oInput.getValue().split("/");
-            console.log(gg, month, year);
-            console.log(this.isDateInThisWeek(new Date(year, month - 1, gg)))
+          var [gg, month, year] = oInput.getValue().split("/");
+          //per costruttore
+          var gg1 = Number(gg) + 1,
+            month1 = Number(month) - 1,
+            year1 = Number(year);
 
-            var week = new Date(year, month - 1, gg).getDay();
-            console.log(week);
+          var date = new Date();
+          if (year1<100){
+            var l=year1+(date.getFullYear-year1);
+          }else{
+            var l=year1;
+          }
+          if (
+            new Date(l, month1, gg1).getDay() == 0 ||
+            new Date(l, month1, gg1).getDay() == 1
+          ) {
+            MessageBox.information(
+              "Hai avuto il premesso di creare il rapportino durante il weekend?"
+            );
+          }
 
-            if(week == 0 || week == 6) 
-            {
-                MessageBox.information("Hai avuto il premesso di creare il rapportino durante il weekend?");
+          if (
+            new Date(l, month1, gg1).getDay() == 1 ||
+            new Date(l, month1, gg1).getDay() == 0
+          ) {
+            var h = Number(new Date(l, month1, gg1).getDay()) + 6;
+          } else {
+            var h = Number(new Date(l, month1, gg1).getDay()) - 1;
+          }
+          if (date.getDay() == 0) {
+            var c = date.getDay() + 7;
+          } else {
+            var c = date.getDay();
+          }
 
+          if (
+            (date.getDate() <= 7 && gg <= 7) ||
+            (date.getDate() <= 7 && gg >= 24)
+          ) {
+            var t = date.getDate() + 30;
+            if (gg >= 24) {
+              var f = Number(gg);
+            } else {
+              var f = Number(gg) + 30;
+            }
+          } else {
+            var f = gg;
+            var t = date.getDate();
+          }
+
+          if (
+            t - 7 == gg ||
+            c < h ||
+            t - f < 0 ||
+            t - f > 7 ||
+            date.getMonth() + 1 - month > 1 ||
+            date.getMonth() + 1 - month < 0 ||
+            date.getFullYear() != l ||
+            oInput == ""
+          ) {
+            try {
+              oBinding.getType().validateValue(oInput.getValue());
+            } catch (oException) {
+              sValueState = "Error";
+              bValidationError = true;
+            }
+          } else {
+            if (date.getMonth() + 1 - month == 1 && date.getDate() > 7) {
+              try {
+                oBinding.getType().validateValue(oInput.getValue());
+              } catch (oException) {
                 sValueState = "Error";
                 bValidationError = true;
-                oInput.setValueState(sValueState);
-                return bValidationError;
+              }
             }
+          }
 
-            if(!this.isDateInThisWeek(new Date(year, month - 1, gg)))
-            {
-                try 
-                {
-                    oBinding.getType().validateValue(oInput.getValue());
-                } 
-                catch(oException) 
-                {
-                    sValueState = "Error";
-                    bValidationError = true;
-                }
-            }
-
-            oInput.setValueState(sValueState);
-            return bValidationError;
+          oInput.setValueState(sValueState);
+          return bValidationError;
         },
       }
     );

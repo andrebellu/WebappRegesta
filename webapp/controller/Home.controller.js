@@ -52,7 +52,6 @@ sap.ui.define(
                 }, this);
 
                 var oModel = new JSONModel();
-                
                 var i18nModel = new ResourceModel({
                     bundleName: "regesta.regestarapportini.i18n.i18n",
                 });
@@ -189,7 +188,7 @@ sap.ui.define(
                 console.log(oEvent.getSource().data("id"));
             },
 
-            handleDuplicate: function (oEvent) {
+            handleDuplicate: function () {
                 var body = this.getView().getModel().getProperty("/body");
 
                 console.log(body);
@@ -197,7 +196,7 @@ sap.ui.define(
                 // var oView = sap.ui.getCore().byId("Footer");
                 // var oController = oView.getController();
 
-                sap.ui.controller("regesta.regestarapportini.controller.NavbarFooter").showPopup(oEvent, body);
+                sap.ui.controller("regesta.regestarapportini.controller.NavbarFooter").showPopup();
 
                 // this.pDialog = this.loadFragment({
                 //     name: "regesta.regestarapportini.fragments.Popup",
