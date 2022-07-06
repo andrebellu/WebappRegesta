@@ -311,6 +311,7 @@ sap.ui.define(
           var oInput = oEvent.getSource();
           this._validateGiornoInput(oInput);
         },
+        
         isDateInThisWeek: function(date)
         {
             const now = new Date();
