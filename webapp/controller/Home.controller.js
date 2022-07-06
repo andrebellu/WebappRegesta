@@ -276,7 +276,6 @@ sap.ui.define(
                                     oList.getSwipedItem()
                                 );
                                 oList.swipeOut();
-                                oList.getModel().updateBindings(true);
                             }
                         },
                     }
