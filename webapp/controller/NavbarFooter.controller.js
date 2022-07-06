@@ -180,8 +180,6 @@ sap.ui.define(
             });
           }
           this.pDialog.then(function (oDialog) {
-            oModel.setProperty("/nuovoRapportino", defaultBody);
-            oDialog.setBindingContext(getContext);
             oDialog.open();
           });
 
