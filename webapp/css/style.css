@@ -14,7 +14,7 @@ html {
 }
 
 html ul {
-    padding: 0.5rem 0.5rem 8rem 0.5rem !important;
+    padding: 0.5rem 0.5rem 11rem 0.5rem !important;
 }
 
 .dialogButton {
@@ -28,7 +28,7 @@ html ul {
     box-sizing: border-box;
 }
 .tabBar {
-    position: sticky;
+    position: fixed;
 }
 
 #__container1 {

@@ -5,7 +5,7 @@
 				path: '/items'
 			}">
 			<f:items>
-				<f:ProductSwitchItem src="{src}" title="{title}" subTitle="{subTitle}" />
+				<f:ProductSwitchItem src="{src}" title="{title}" subTitle="{subTitle}" targetSrc="{target}" />
 			</f:items>
 		</f:ProductSwitch>
 	</ResponsivePopover>

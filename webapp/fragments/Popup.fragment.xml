@@ -19,6 +19,7 @@
         <Label text="Giorno" class="labelMargin" required="true"/>
         <DatePicker 
         displayFormat="dd/MM/yyyy"
+        valueFormat="dd/MM/yyyy"
         value="{
         path : 'Giorno',
         constraints : {
@@ -30,14 +31,13 @@
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true" />
         <StepInput value="{
-        value : '0,0',
-        path : 'Ore',
-        type : 'sap.ui.model.type.String',
+        value : '0.0',
+        type : 'sap.ui.model.type.Float',
         constraints : {
             minLength: 1,
-            maxLength: 2
+            maxLength: 3
         }
-    }" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="0.1" enabled="true"/>
+    }" change="getHours" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="1" enabled="true"/>
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
@@ -63,7 +63,7 @@
         value : '',
         path : '',
         type : 'sap.ui.model.type.String'
-    }" type="Text" valueLiveUpdate="true" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
+    }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
 
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
@@ -71,7 +71,7 @@
         value : '',
         path : '',
         type : 'sap.ui.model.type.String'
-    }" type="Text" valueLiveUpdate="true" change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
+    }" type="Text"  change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
 
         <!--! Input site with combo box -->
         <Label text="Sede" class="labelMargin"/>
@@ -96,7 +96,7 @@
         <Input value="{
         path : 'Destinazione',
         type : 'sap.ui.model.type.String'
-    }" type="Text" valueLiveUpdate="true" change= ".onDestinationChange" width= "100%" enabled= "true" id="destination" class="roundedInput" placeholder="Destinazione"/>
+    }" type="Text" change= ".onDestinationChange" width= "100%" enabled= "true" id="destination" class="roundedInput" placeholder="Destinazione"/>
 
         <!--! Input description -->
         <Label text="Descrizione" class="labelMargin" required="true"/>
@@ -106,12 +106,12 @@
         constraints : {
             minLength: 1
         }
-    }" type="Text" valueLiveUpdate="true" change= ".onDescriptionChange" width= "100%" enabled= "true" id="description" class="roundedInput" placeholder="Descrizione"/>
+    }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "true" id="description" class="roundedInput" placeholder="Descrizione"/>
 
         <!-- Checkboxes in flexbox -->
         <FlexBox direction="Row" class="checkStyle">
             <!--! Checkbox plus -->
-            <CheckBox text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="true" selected="false"/>
+            <CheckBox  text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="true" selected="false"/>
 
             <!--! Checkbox fatturabile -->
             <CheckBox text="Fatturabile" id="fatturabile" class="checkboxMargin" width="100%" enabled="true" selected="true"/>
@@ -124,71 +124,116 @@
             <Label text="Km" class="labelMargin"/>
             <Input value="{
             path : 'Km',
-            type : 'sap.ui.model.type.String'
-        }"  type="Number" valueLiveUpdate="true" width= "100%" enabled= "true" class="roundedInput" placeholder="Km"/>
+            type : 'sap.ui.model.type.Integer'
+        }"  type="Number" width= "100%" enabled= "true" class="roundedInput" placeholder="Km"/>
 
             <!--! Input km/€ formatted in currency -->
             <Label text="Km/€" class="labelMargin"/>
             <Input value="{
-            path : 'KmEuro',
-            type : 'sap.ui.model.type.String'
-        }" type="Number" valueLiveUpdate="true" change= ".onKmPriceChange" width= "100%" enabled= "true" id="kmPrice" class="roundedInput" placeholder="Km/€"/>
+            parts : [{path : 'KmEuro'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }" change= ".onKmPriceChange" width= "100%" enabled= "true" id="kmPrice" class="roundedInput" placeholder="Km/€"/>
 
             <!--! Input toll formatted in currency -->
             <Label text="Pedaggio" class="labelMargin"/>
             <Input value="{
-            path : 'Pedaggio',
-            type : 'sap.ui.model.type.String'
-        }" type="Number" valueLiveUpdate="true" change= ".onTollChange" width= "100%" enabled= "true" id="toll" class="roundedInput" placeholder="Pedaggio"/>
+            parts : [{path : '`Pedaggio'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }" change= ".onTollChange" width= "100%" enabled= "true" id="toll" class="roundedInput" placeholder="Pedaggio"/>
 
             <!--! Input forfait formatted in currency -->
             <Label text="Forfait" class="labelMargin"/>
             <Input value="{
-            path : 'Forfait',
-            type : 'sap.ui.model.type.String'
-        }" type="Number" valueLiveUpdate="true" change= ".onForfaitChange" width= "100%" enabled= "true" id="forfait" class="roundedInput" placeholder="Forfait"/>
+            parts : [{path : 'Forfait'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }" change= ".onForfaitChange" width= "100%" enabled= "true" id="forfait" class="roundedInput" placeholder="Forfait"/>
 
             <!--! Input food formatted in currency -->
             <Label text="Vitto" class="labelMargin"/>
             <Input value="{
-            path : 'Vitto',
-            type : 'sap.ui.model.type.String'
-        }" type="Number" valueLiveUpdate="true" change= ".onFoodChange" width= "100%" enabled= "true" id="food" class="roundedInput" placeholder="Vitto"/>
+            parts : [{path : 'Vitto'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }" change= ".onFoodChange" width= "100%" enabled= "true" id="food" class="roundedInput" placeholder="Vitto"/>
 
             <!--! Input accomodation formatted in currency -->
             <Label text="Alloggio" class="labelMargin"/>
             <Input value="{
-            path : 'Alloggio',
-            type : 'sap.ui.model.type.String'
-        }" type="Number" valueLiveUpdate="true" change= ".onAccomodationChange" width= "100%" enabled= "true" id="accomodation" class="roundedInput" placeholder="Alloggio"/>
+            parts : [{path : 'Alloggio'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }" change= ".onAccomodationChange" width= "100%" enabled= "true" id="accomodation" class="roundedInput" placeholder="Alloggio"/>
 
             <!--! Input rental formatted in currency -->
             <Label text="Noleggio" class="labelMargin"/>
             <Input value="{
-            path : 'Noleggio',
-            type : 'sap.ui.model.type.String'
-        }" type="Number" valueLiveUpdate="true" change= ".onRentalChange" width= "100%" enabled= "true" id="rental" class="roundedInput" placeholder="Noleggio"/>
+            parts : [{path : 'Noleggio'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }" change= ".onRentalChange" width= "100%" enabled= "true" id="rental" class="roundedInput" placeholder="Noleggio"/>
 
             <!--! Input transport formatted in currency -->
             <Label text="Trasporti" class="labelMargin"/>
             <Input value="{
-            path : 'Trasporti',
-            type : 'sap.ui.model.type.String'
-        }" type="Number" valueLiveUpdate="true" change= ".onTransportChange" width= "100%" enabled= "true" id="transport" class="roundedInput" placeholder="Trasporti"/>
+            parts : [{path : 'Trasporti'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }"  change= ".onTransportChange" width= "100%" enabled= "true" id="transport" class="roundedInput" placeholder="Trasporti"/>
 
             <!--! Input various formatted in currency -->
             <Label text="Varie" class="labelMargin"/>
             <Input value="{
-            path : 'Varie',
-            type : 'sap.ui.model.type.String'
-        }" type="Number" valueLiveUpdate="true" change= ".onVariousChange" width= "100%" enabled= "true" id="various" class="roundedInput" placeholder="Varie"/>
+            parts : [{path : 'Varie'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }" change= ".onVariousChange" width= "100%" enabled= "true" id="various" class="roundedInput" placeholder="Varie"/>
 
             <!--! Input reserved formatted in currency -->
             <Label text="Riservato" class="labelMargin"/>
             <Input value="{
-            path : 'SpeseVarie',
-            type : 'sap.ui.model.type.String'
-        }" type="Number" valueLiveUpdate="true" change= ".onReservedChange" width= "100%" enabled= "true" id="reserved" class="roundedInput" placeholder="Riservato"/>
+            parts : [{path : 'SpeseVarie'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }" change= ".onReservedChange" width= "100%" enabled= "true" id="reserved" class="roundedInput" placeholder="Riservato"/>
 
         </Panel>
         <FlexBox class="closeDialog">
@@ -198,7 +243,7 @@
         <!--! Save button -->
         <Button text="Salva"
         type="Emphasized"
-        press= ".onSubmit"
+        press= ".onSave"
         enabled="true"
         class="dialogButton"/>
     </FlexBox>

@@ -35,37 +35,37 @@ sap.ui.define(
         var oList;
         var token;
         var defaultBody = {
-          IDRapportino: null,
-          IDUtente: null,
-          Utente: null,
-          IDCliente: null,
-          IDCommessa: null,
-          IDClienteSede: null,
-          IDProgetto: null,
-          IDProgettoAttivita: null,
-          IDTodoList: null,
-          Codice: null,
-          Descrizione: null,
-          Attivita: null,
-          Sede: "UF",
-          Destinazione: null,
-          Giorno: null,
-          Ore: null,
-          OreLavorate: null,
-          Km: null,
-          KmEuro: null,
-          Pedaggio: null,
-          Forfait: null,
-          Vitto: null,
-          Alloggio: null,
-          Noleggio: null,
-          Trasporti: null,
-          Varie: null,
-          Plus: null,
-          Fatturabile: null,
-          Bloccato: null,
-          SpeseVarie: null,
-          Docente: null,
+            IDRapportino: null,
+            IDUtente: null,
+            Utente: null,
+            IDCliente: null,
+            IDCommessa: null,
+            IDClienteSede: null,
+            IDProgetto: null,
+            IDProgettoAttivita: null,
+            IDTodoList: null,
+            Codice: null,
+            Descrizione: null,
+            Attivita: null,
+            Sede: "UF",
+            Destinazione: null,
+            Giorno: null,
+            Ore: null,
+            OreLavorate: null,
+            Km: null,
+            KmEuro: null,
+            Pedaggio: null,
+            Forfait: null,
+            Vitto: null,
+            Alloggio: null,
+            Noleggio: null,
+            Trasporti: null,
+            Varie: null,
+            Plus: null,
+            Fatturabile: null,
+            Bloccato: null,
+            SpeseVarie: null,
+            Docente: null,
         };
         return Controller.extend(
             "regesta.regestarapportini.controller.Tickets",
@@ -118,20 +118,30 @@ sap.ui.define(
 
                     var IDOrder = oModel.getProperty(path + "/IDCommessa");
                     var orderLength = oModel.getProperty("/commesse").length;
-                    for(i = 0; i <= clientLength; i++)
-                    {
-                      if(IDClient == oModel.getProperty("/clienti/" + i + "/IDCliente")){
-                        code =  oModel.getProperty("/clienti/" + i + "/Codice");
-                        clientDescription = oModel.getProperty("/clienti/" + i + "/Descrizione");
-                        break;
-                      }
+                    for (i = 0; i <= clientLength; i++) {
+                        if (
+                            IDClient ==
+                            oModel.getProperty("/clienti/" + i + "/IDCliente")
+                        ) {
+                            code = oModel.getProperty(
+                                "/clienti/" + i + "/Codice"
+                            );
+                            clientDescription = oModel.getProperty(
+                                "/clienti/" + i + "/Descrizione"
+                            );
+                            break;
+                        }
                     }
-                    for(i = 0; i <= orderLength; i++)
-                    {
-                      if(IDOrder == oModel.getProperty("/commesse/" + i + "/IDCommessa")){
-                        orderDescription =  oModel.getProperty("/commesse/" + i + "/Descrizione");
-                        break;
-                      }
+                    for (i = 0; i <= orderLength; i++) {
+                        if (
+                            IDOrder ==
+                            oModel.getProperty("/commesse/" + i + "/IDCommessa")
+                        ) {
+                            orderDescription = oModel.getProperty(
+                                "/commesse/" + i + "/Descrizione"
+                            );
+                            break;
+                        }
                     }
                     var clientName = code + " - " + clientDescription;
                     oModel.setProperty(path + "/ClientName", clientName);
@@ -161,23 +171,23 @@ sap.ui.define(
                     });
                 },
                 onCancel: function (oEvent) {
-                  this.byId("popup").close();
+                    this.byId("popup").close();
                 },
-                APIclienti: function(){
-                  var request = {
-                    method : "POST",
-                    redirect : "follow",
-                  };
+                APIclienti: function () {
+                    var request = {
+                        method: "POST",
+                        redirect: "follow",
+                    };
 
                   fetch("https://asstest.regestaitalia.it/api_v2/clienti?token="  + token + "&idCliente=0", request)
                     .then((response) => response.text())
                     .then((result) => this.handleClienti(result))
                     .catch((error) => console.log("error", error));
                 },
-                handleClienti: function(result){
-                  var oModel = this.getView().getModel();
-                  var clienti = JSON.parse(result);
-                  oModel.setProperty("/clienti", clienti);
+                handleClienti: function (result) {
+                    var oModel = this.getView().getModel();
+                    var clienti = JSON.parse(result);
+                    oModel.setProperty("/clienti", clienti);
                 },
                 APIcommesse: function(){
                   var request = {
@@ -194,21 +204,45 @@ sap.ui.define(
                   var commesse = JSON.parse(result);
                   oModel.setProperty("/commesse", commesse);
                 },
-                APIticket: function(){
-                  var request = {
-                    method : "POST",
-                    redirect : "follow",
-                  };
-                  fetch("https://asstest.regestaitalia.it/api_v2/ticket?token="+ token + "&idTicket=0", request)
-                    .then((response) => response.text())
-                    .then((result) => this.handleTicket(result))
-                    .catch((error) => console.log("error", error));
+                APIticket: function () {
+                    var request = {
+                        method: "POST",
+                        redirect: "follow",
+                    };
+                    fetch(
+                        "https://asstest.regestaitalia.it/api_v2/ticket?token=" +
+                            token +
+                            "&idTicket=0",
+                        request
+                    )
+                        .then((response) => response.text())
+                        .then((result) => this.handleTicket(result))
+                        .catch((error) => console.log("error", error));
                 },
-                handleTicket: function(result){
-                  var oModel = this.getView().getModel();
-                  var ticket = JSON.parse(result);
-                  oModel.setProperty("/ticket", ticket);
-                }
+                handleTicket: function (result) {
+                    var oModel = this.getView().getModel();
+                    var ticket = JSON.parse(result);
+                    oModel.setProperty("/ticket", ticket);
+                },
+
+                Timer: function (oEvent) {
+                    if (check) {
+                        check = false;
+                        startTime = new Date().getTime();
+                        console.log(startTime);
+                    } else {
+                        endTime = new Date().getTime();
+                        console.log(endTime);
+                        timeDiff = endTime - startTime;
+                        console.log(timeDiff);
+                        var minutes = Math.floor(timeDiff / 60000);
+                        var seconds = ((timeDiff % 60000) / 1000).toFixed(0);
+                        console.log(
+                            minutes + ":" + (seconds < 10 ? "0" : "") + seconds
+                        );
+                        check = true;
+                    }
+                },
             }
         );
     }
