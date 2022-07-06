@@ -184,6 +184,8 @@ sap.ui.define(
             oDialog.setBindingContext(getContext);
             oDialog.open();
           });
+
+          // oList.getModel().updateBindings(true);
         },
 
         onSave: function () {
