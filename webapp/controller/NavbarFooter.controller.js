@@ -131,10 +131,37 @@ sap.ui.define(
           console.log(nuovoRapportino);
         },
 
-        onTicketChange: function (oEvent) {
+        handleChange: function(oEvent){
+          var i;
+          var oModel = this.getView().getModel();
+          var IDCliente = sap.ui.getCore().byId(oEvent.getSource().getSelectedItemId()).getBindingContext().getObject().IDCliente;
+          oModel.setProperty("/nuovoRapportino/IDTodoList", sap.ui.getCore().byId(oEvent.getSource().getSelectedItemId()).getBindingContext().getObject().IDTodoList);
+          oModel.setProperty("/nuovoRapportino/IDCliente", IDCliente);
+          var clientLength = oModel.getProperty("/clienti").length;
+          var IDOrder = sap.ui.getCore().byId(oEvent.getSource().getSelectedItemId()).getBindingContext().getObject().IDCommessa;
+          var orderLength = oModel.getProperty("/commesse").length;
+          for (i = 0; i <= clientLength; i++) {
+              if (IDCliente == oModel.getProperty("/clienti/" + i + "/IDCliente")) {
+                      var code = oModel.getProperty("/clienti/" + i + "/Codice");
+                      var clientDescription = oModel.getProperty("/clienti/" + i + "/Descrizione");
+                            break;
+              }
+          }
+          for (i = 0; i <= orderLength; i++) {
+            if (IDOrder == oModel.getProperty("/commesse/" + i + "/IDCommessa")) {
+                  var orderDescription = oModel.getProperty("/commesse/" + i + "/Descrizione");
+                            break;
+                }
+          }
+          var clientName = code + " - " + clientDescription;
+          oModel.setProperty("/nuovoRapportino/Codice", clientName);
+          oModel.setProperty("/nuovoRapportino/IDCommessa", IDOrder + " - "+ orderDescription);
+          this.destinationAPI();
+        },
+
+        destinationAPI: function () {
           var oModel = this.getView().getModel();
           var nuovoRapportino = oModel.getProperty("/nuovoRapportino");
-
           //! API call to get destinations
           var myHeaders = new Headers();
           myHeaders.append(
@@ -167,12 +194,17 @@ sap.ui.define(
         },
 
         showPopup: function (oEvent) {
+          var oModel = this.getView().getModel();
+          this.APIticket();
+          this.APIclienti();
+          this.APIcommesse();
+
           var defaultBody = {
             IDRapportino: null,
             IDUtente: null,
             Utente: sessionStorage.getItem("username"),
-            IDCliente: 5,
-            IDCommessa: 1969,
+            IDCliente: null,
+            IDCommessa: null,
             IDClienteSede: null,
             IDProgetto: null,
             IDProgettoAttivita: null,
@@ -201,10 +233,6 @@ sap.ui.define(
             Docente: null,
           };
 
-          // Get binding context
-          var oModel = this.getView().getModel();
-          var nuovoRapportino = oModel.getProperty("/nuovoRapportino");
-
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
           var source = oEvent.getSource();
@@ -231,7 +259,7 @@ sap.ui.define(
         onSave: function () {
           var nuovoRapportino = this.getView()
             .getModel()
-            .getProperty("/nuovoRapportino");
+            .getProperty("/nuovoRapportino");  
           console.log(nuovoRapportino);
 
           // ? Chech date
@@ -278,6 +306,25 @@ sap.ui.define(
             MessageToast.show("Inserisci i dati correttamemte");
           }
         },
+        APIticket: function () {
+          var request = {
+              method: "POST",
+              redirect: "follow",
+          };
+          fetch(
+            sessionStorage.getItem("hostname") +"/api_v2/ticket?token=" +
+            sessionStorage.getItem("encodedToken") +"&idTicket=0",
+              request
+          )
+              .then((response) => response.text())
+              .then((result) => this.handleTicket(result))
+              .catch((error) => console.log("error", error));
+      },
+      handleTicket: function (result) {
+          var oModel = this.getView().getModel();
+          var ticket = JSON.parse(result);
+          oModel.setProperty("/ticket", ticket);
+      },
 
         onCancel: function (oEvent) {
           this.byId("popup").close();
@@ -307,93 +354,103 @@ sap.ui.define(
           var oInput = oEvent.getSource();
           this._validateGiornoInput(oInput);
         },
-
+        
+        isDateInThisWeek: function(date)
+        {
+            const now = new Date();
+            
+            const weekDay = (now.getDay() + 6) % 7; // Make sure Sunday is 6, not 0
+            const monthDay = now.getDate();
+            const mondayThisWeek = monthDay - weekDay;
+            
+            const startOfThisWeek = new Date(+now);
+            startOfThisWeek.setDate(mondayThisWeek);
+            startOfThisWeek.setHours(0, 0, 0, 0);
+            
+            const startOfNextWeek = new Date(+startOfThisWeek);
+            startOfNextWeek.setDate(mondayThisWeek + 5);
+            
+            return date >= startOfThisWeek && date < startOfNextWeek;
+        },
+        isFutureDate: function(value) {
+            const d_now = new Date();
+            const d_inp = new Date(value);
+            return d_now.getTime() <= d_inp.getTime();
+        },
         //! Check date input
-        _validateGiornoInput: function (oInput) {
-          var sValueState = "None";
-          var bValidationError = false;
-          var oBinding = oInput.getBinding("value");
+        _validateGiornoInput: function(oInput) 
+        {
+            var sValueState = "None";
+            var bValidationError = false;
+            var oBinding = oInput.getBinding("value");
 
-          var [gg, month, year] = oInput.getValue().split("/");
-          //per costruttore
-          var gg1 = Number(gg) + 1,
-            month1 = Number(month) - 1,
-            year1 = Number(year);
+            var [gg, month, year] = oInput.getValue().split("/");
+            const giorno = new Date(year, month - 1, gg);
 
-          var date = new Date();
-          if (year1 < 100) {
-            var l = year1 + (date.getFullYear - year1);
-          } else {
-            var l = year1;
-          }
-          if (
-            new Date(l, month1, gg1).getDay() == 0 ||
-            new Date(l, month1, gg1).getDay() == 1
-          ) {
-            MessageBox.information(
-              "Hai avuto il premesso di creare il rapportino durante il weekend?"
-            );
-          }
+            //console.log(gg, month, year);
+            //console.log(this.isDateInThisWeek(giorno));
 
-          if (
-            new Date(l, month1, gg1).getDay() == 1 ||
-            new Date(l, month1, gg1).getDay() == 0
-          ) {
-            var h = Number(new Date(l, month1, gg1).getDay()) + 6;
-          } else {
-            var h = Number(new Date(l, month1, gg1).getDay()) - 1;
-          }
-          if (date.getDay() == 0) {
-            var c = date.getDay() + 7;
-          } else {
-            var c = date.getDay();
-          }
+            var week = giorno.getDay();
+            //console.log(week);
 
-          if (
-            (date.getDate() <= 7 && gg <= 7) ||
-            (date.getDate() <= 7 && gg >= 24)
-          ) {
-            var t = date.getDate() + 30;
-            if (gg >= 24) {
-              var f = Number(gg);
-            } else {
-              var f = Number(gg) + 30;
-            }
-          } else {
-            var f = gg;
-            var t = date.getDate();
-          }
+            if(week == 0 || week == 6) 
+            {
+                MessageBox.information("Hai avuto il premesso di creare il rapportino durante il weekend?");
 
-          if (
-            t - 7 == gg ||
-            c < h ||
-            t - f < 0 ||
-            t - f > 7 ||
-            date.getMonth() + 1 - month > 1 ||
-            date.getMonth() + 1 - month < 0 ||
-            date.getFullYear() != l ||
-            oInput == ""
-          ) {
-            try {
-              oBinding.getType().validateValue(oInput.getValue());
-            } catch (oException) {
-              sValueState = "Error";
-              bValidationError = true;
-            }
-          } else {
-            if (date.getMonth() + 1 - month == 1 && date.getDate() > 7) {
-              try {
-                oBinding.getType().validateValue(oInput.getValue());
-              } catch (oException) {
                 sValueState = "Error";
                 bValidationError = true;
-              }
+                oInput.setValueState(sValueState);
+                return bValidationError;
             }
-          }
 
-          oInput.setValueState(sValueState);
-          return bValidationError;
+            if(!this.isDateInThisWeek(giorno) || this.isFutureDate(giorno))
+            {
+                try 
+                {
+                    oBinding.getType().validateValue(oInput.getValue());
+                } 
+                catch(oException) 
+                {
+                    sValueState = "Error";
+                    bValidationError = true;
+                }
+            }
+
+            oInput.setValueState(sValueState);
+            return bValidationError;
         },
+        APIclienti: function () {
+          var request = {
+              method: "POST",
+              redirect: "follow",
+          };
+
+        fetch(sessionStorage.getItem("hostname") + "/api_v2/clienti?token=" + sessionStorage.getItem("encodedToken") + "&idCliente=0", request)
+          .then((response) => response.text())
+          .then((result) => this.handleClienti(result))
+          .catch((error) => console.log("error", error));
+        },
+        handleClienti: function (result) {
+          var oModel = this.getView().getModel();
+          var clienti = JSON.parse(result);
+          oModel.setProperty("/clienti", clienti);
+        },
+        
+        APIcommesse: function(){
+          var request = {
+            method : "POST",
+            redirect : "follow",
+          };
+          fetch(sessionStorage.getItem("hostname") + "/api_v2/commesse?token=" + sessionStorage.getItem("encodedToken") + "&idCommessa=0&idCliente=0", request)
+            .then((response) => response.text())
+            .then((result) => this.handleCommesse(result))
+            .catch((error) => console.log("error", error));
+        },
+        handleCommesse: function(result){
+          var oModel = this.getView().getModel();
+          var commesse = JSON.parse(result);
+          oModel.setProperty("/commesse", commesse);
+        }, 
       }
     );
   }

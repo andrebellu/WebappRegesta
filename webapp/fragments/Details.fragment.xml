@@ -40,7 +40,7 @@
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
         <ComboBox value="{
-        path : '/ticket',
+        path : 'Ticket',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1
