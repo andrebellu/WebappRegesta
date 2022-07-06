@@ -128,6 +128,7 @@ sap.ui.define(
             .getProperty("/nuovoRapportino");
 
           nuovoRapportino.Ore = ore;
+          return ore;
         },
 
         showPopup: function (oEvent) {
@@ -142,7 +143,7 @@ sap.ui.define(
             IDProgettoAttivita: null,
             IDTodoList: null,
             Codice: null,
-            Descrizione: " ",
+            Descrizione: null,
             Attivita: null,
             Sede: "UF",
             Destinazione: null,
