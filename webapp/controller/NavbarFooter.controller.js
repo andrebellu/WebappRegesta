@@ -187,7 +187,7 @@ sap.ui.define(
                     oModel.setProperty("/nuovoRapportino/Codice", clientName);
                     oModel.setProperty(
                         "/nuovoRapportino/IDCommessa",
-                        IDOrder + " - " + orderDescription
+                        IDOrder // !+ " - " + orderDescription
                     );
                     this.destinationAPI();
                 },
