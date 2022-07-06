@@ -188,38 +188,12 @@ sap.ui.define(
                 console.log(oEvent.getSource().data("id"));
             },
 
-            handleDuplicate: function (oEvent) {
+            handleDuplicate: function () {
                 var body = this.getView().getModel().getProperty("/body");
 
                 console.log(body);
 
-                // ? API CALL NUOVO RAPPORTIN
-
-                // var myHeaders = new Headers();
-                // myHeaders.append("Content-Type", "application/json");
-                // myHeaders.append(
-                //     "Cookie",
-                //     "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
-                // );
-
-                // var raw = JSON.stringify({
-                //     body
-                // });
-
-                // var requestOptions = {
-                //     method: "POST",
-                //     headers: myHeaders,
-                //     body: raw,
-                //     redirect: "follow",
-                // };
-
-                // fetch(
-                //     sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
-                //     requestOptions
-                // )
-                //     .then((response) => response.text())
-                //     .then((result) => console.log(result))
-                //     .catch((error) => console.log("error", error));
+                // sap.ui.controller("regesta.regestarapportini.controller.NavbarFooter").showPopup();
             },
 
             handleEdit: function (oEvent) {
@@ -326,22 +300,22 @@ sap.ui.define(
                 var context = source.getBindingContext();
                 if (context != undefined) {
                     var index = source.getBindingContext().getPath();
+                    console.log(index);
                     this.getView().getModel().setProperty("/index", index);
                     var path = this.getView().getModel().getProperty("/index");
-                    this.getView().getModel().setProperty("/path", path);
 
                     // Get date from list item and convert it to string from timestamp
                     var date = context.getProperty("Giorno");
                     // check if date starts with /
-                    if (date.charAt(0) == "/") { 
-                    // Get numbers from input
-                    var timeStamp = date.replace(/\D/g, "");
-                    // Convert timestamp to date and format it to put it into the model
-                    var date = new Date(parseInt(timeStamp));
-                    date = date.toLocaleDateString("it-IT");
-                    this.getView()
-                        .getModel()
-                        .setProperty(path + "/Giorno", date);
+                    if (date.charAt(0) == "/") {
+                        // Get numbers from input
+                        var timeStamp = date.replace(/\D/g, "");
+                        // Convert timestamp to date and format it to put it into the model
+                        var date = new Date(parseInt(timeStamp));
+                        date = date.toLocaleDateString("it-IT");
+                        this.getView()
+                            .getModel()
+                            .setProperty(path + "/Giorno", date);
                     }
                 }
 
