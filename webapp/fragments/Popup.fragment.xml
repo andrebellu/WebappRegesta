@@ -84,14 +84,12 @@
             constraints : {
                 minLength: 0
             }
-        }" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
-            <items>
-                <core:Item xmlns:core="sap.ui.core" key="1" text="UF"/>
-                <core:Item xmlns:core="sap.ui.core" key="2" text="CL"/>
-                <core:Item xmlns:core="sap.ui.core" key="3" text="CA"/>
-                <core:Item xmlns:core="sap.ui.core" key="4" text="SW"/>
-            </items>
-        </ComboBox>
+        }" 
+        items="{/destinazioni}" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
+                <items>
+                <core:Item xmlns:core="sap.ui.core" key="{IDClienteSede}" text="{IDClienteSede} - {Sede}"/>
+                </items>
+            </ComboBox>
 
 
         <!--! Input description -->
