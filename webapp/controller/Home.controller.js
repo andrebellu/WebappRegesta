@@ -190,6 +190,7 @@ sap.ui.define(
 
             handleDuplicate: function (oEvent) {
                 var body = this.getView().getModel().getProperty("/body");
+                console.log(body);
 
                 // ? API CALL NUOVO RAPPORTIN
 
@@ -275,12 +276,11 @@ sap.ui.define(
                                     oList.getSwipedItem()
                                 );
                                 oList.swipeOut();
+                                window.location.reload();
                             }
                         },
                     }
                 );
-
-                this.APICall();
             },
 
             handleSelectToday: function (oEvent) {
