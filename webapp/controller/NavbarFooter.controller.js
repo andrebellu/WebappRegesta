@@ -128,11 +128,10 @@ sap.ui.define(
             .getProperty("/nuovoRapportino");
 
           nuovoRapportino.Ore = ore;
-          return ore;
         },
 
         showPopup: function (oEvent) {
-          const defaultBody = {
+          var defaultBody = {
             IDRapportino: null,
             IDUtente: null,
             Utente: sessionStorage.getItem("username"),
@@ -148,7 +147,7 @@ sap.ui.define(
             Sede: "UF",
             Destinazione: null,
             Giorno: this.getCurrentDate(),
-            Ore: ore,
+            Ore: null,
             OreLavorate: null,
             Km: null,
             KmEuro: null,
@@ -235,7 +234,7 @@ sap.ui.define(
               .catch((error) => console.log("error", error));
 
             this.byId("popup").close();
-            window.location.reload();
+            // window.location.reload();
           } else {
             MessageToast.show("Inserisci i dati correttamemte");
           }
