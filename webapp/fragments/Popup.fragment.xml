@@ -35,7 +35,8 @@
         type : 'sap.ui.model.type.Float',
         constraints : {
             minLength: 1,
-            maxLength: 3
+            maxLength: 3,
+            minDecimalDigits: 1
         }
     }" change="getHours" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="1.0" enabled="true"/>
 
@@ -240,12 +241,12 @@
             <!--! Cancel button -->
             <Button text="Annulla" press= ".onCancel" enabled="true" class="dialogButton"/>
 
-        <!--! Save button -->
-        <Button text="Salva"
-        type="Emphasized"
-        press= ".onSave"
-        enabled="true"
-        class="dialogButton"/>
+            <!--! Save button -->
+            <Button text="Salva"
+            type="Emphasized"
+            press= ".onSave"
+            enabled="true"
+            class="dialogButton"/>
     </FlexBox>
 </Dialog>
 </core:FragmentDefinition>
