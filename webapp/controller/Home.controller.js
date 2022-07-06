@@ -193,47 +193,8 @@ sap.ui.define(
 
                 console.log(body);
 
-                // var oView = sap.ui.getCore().byId("Footer");
-                // var oController = oView.getController();
-
-                sap.ui.controller("regesta.regestarapportini.controller.NavbarFooter").showPopup();
-
-                // this.pDialog = this.loadFragment({
-                //     name: "regesta.regestarapportini.fragments.Popup",
-                // });
-
-                // this.pDialog.then(function (oDialog) {
-                //     oDialog.open();
-                // });
+                // sap.ui.controller("regesta.regestarapportini.controller.NavbarFooter").showPopup();
             },
-
-            // ? API CALL NUOVO RAPPORTIN
-
-            // var myHeaders = new Headers();
-            // myHeaders.append("Content-Type", "application/json");
-            // myHeaders.append(
-            //     "Cookie",
-            //     "ASP.NET_SessionId=2e1qkoj1jlpiglg1zeub1nox"
-            // );
-
-            // var raw = JSON.stringify({
-            //     body
-            // });
-
-            // var requestOptions = {
-            //     method: "POST",
-            //     headers: myHeaders,
-            //     body: raw,
-            //     redirect: "follow",
-            // };
-
-            // fetch(
-            //     sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" + sessionStorage.getItem("encodedToken"),
-            //     requestOptions
-            // )
-            //     .then((response) => response.text())
-            //     .then((result) => console.log(result))
-            //     .catch((error) => console.log("error", error));
 
             handleEdit: function (oEvent) {
                 msgT.show("Edit");
@@ -339,9 +300,9 @@ sap.ui.define(
                 var context = source.getBindingContext();
                 if (context != undefined) {
                     var index = source.getBindingContext().getPath();
+                    console.log(index);
                     this.getView().getModel().setProperty("/index", index);
                     var path = this.getView().getModel().getProperty("/index");
-                    this.getView().getModel().setProperty("/path", path);
 
                     // Get date from list item and convert it to string from timestamp
                     var date = context.getProperty("Giorno");
