@@ -237,8 +237,6 @@ sap.ui.define(
                                     "&idRapportino=" +
                                     id;
 
-                                console.log(url);
-
                                 fetch(url, requestOptions)
                                     .then((response) => response.text())
                                     .then((result) => console.log(result))
@@ -300,7 +298,6 @@ sap.ui.define(
                 var context = source.getBindingContext();
                 if (context != undefined) {
                     var index = source.getBindingContext().getPath();
-                    console.log(index);
                     this.getView().getModel().setProperty("/index", index);
                     var path = this.getView().getModel().getProperty("/index");
 

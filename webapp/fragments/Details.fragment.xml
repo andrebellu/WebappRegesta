@@ -107,8 +107,7 @@
             <CheckBox text="Plus" id="plus" class="checkboxMargin" width="100%" enabled="false"/>
 
             <!--! Checkbox fatturabile -->
-            <CheckBox getBindingPath="Fatturabile"
-            text="Fatturabile" id="fatturabile" class="checkboxMargin" width="100%" enabled="false"/>
+            <CheckBox text="Fatturabile" id="fatturabile" class="checkboxMargin" width="100%" enabled="false"/>
         </FlexBox>
 
         <!--! Expandable panel with inputs -->
