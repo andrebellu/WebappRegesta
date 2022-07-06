@@ -131,6 +131,7 @@ sap.ui.define(
         },
 
         showPopup: function (oEvent) {
+          this.APIticket();
           var defaultBody = {
             IDRapportino: null,
             IDUtente: null,
@@ -239,6 +240,25 @@ sap.ui.define(
             MessageToast.show("Inserisci i dati correttamemte");
           }
         },
+        APIticket: function () {
+          var request = {
+              method: "POST",
+              redirect: "follow",
+          };
+          fetch(
+            sessionStorage.getItem("hostname") +"/api_v2/ticket?token=" +
+            sessionStorage.getItem("encodedToken") +"&idTicket=0",
+              request
+          )
+              .then((response) => response.text())
+              .then((result) => this.handleTicket(result))
+              .catch((error) => console.log("error", error));
+      },
+      handleTicket: function (result) {
+          var oModel = this.getView().getModel();
+          var ticket = JSON.parse(result);
+          oModel.setProperty("/ticket", ticket);
+      },
 
         onCancel: function (oEvent) {
           this.byId("popup").close();
