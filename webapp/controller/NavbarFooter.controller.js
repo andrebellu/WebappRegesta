@@ -478,60 +478,7 @@ sap.ui.define(
                     var clienti = JSON.parse(result);
                     oModel.setProperty("/clienti", clienti);
                 },
-                handleChange: function (oEvent) {
-                    var i;
-                    var oModel = this.getView().getModel();
-                    var IDCliente = sap.ui
-                        .getCore()
-                        .byId(oEvent.getSource().getSelectedItemId())
-                        .getBindingContext()
-                        .getObject().IDCliente;
-                    oModel.setProperty(
-                        "/nuovoRapportino/IDTodoList",
-                        sap.ui
-                            .getCore()
-                            .byId(oEvent.getSource().getSelectedItemId())
-                            .getBindingContext()
-                            .getObject().IDTodoList
-                    );
-                    oModel.setProperty("/nuovoRapportino/IDCliente", IDCliente);
-                    var clientLength = oModel.getProperty("/clienti").length;
-                    var IDOrder = sap.ui
-                        .getCore()
-                        .byId(oEvent.getSource().getSelectedItemId())
-                        .getBindingContext()
-                        .getObject().IDCommessa;
-                    var orderLength = oModel.getProperty("/commesse").length;
-                    for (i = 0; i <= clientLength; i++) {
-                        if (
-                            IDCliente ==
-                            oModel.getProperty("/clienti/" + i + "/IDCliente")
-                        ) {
-                            var code = oModel.getProperty(
-                                "/clienti/" + i + "/Codice"
-                            );
-                            var clientDescription = oModel.getProperty(
-                                "/clienti/" + i + "/Descrizione"
-                            );
-                            break;
-                        }
-                    }
-                    for (i = 0; i <= orderLength; i++) {
-                        if (
-                            IDOrder ==
-                            oModel.getProperty("/commesse/" + i + "/IDCommessa")
-                        ) {
-                            var orderDescription = oModel.getProperty(
-                                "/commesse/" + i + "/Descrizione"
-                            );
-                            // ! oModel.setProperty("/orderDescription", orderDescription);
-                            break;
-                        }
-                    }
-                    var clientName = code + " - " + clientDescription;
-                    oModel.setProperty("/nuovoRapportino/Codice", clientName);
-                    oModel.setProperty("/nuovoRapportino/IDCommessa", IDOrder); // ! + " - "+ orderDescription);
-                },
+
                 APIcommesse: function () {
                     var request = {
                         method: "POST",
