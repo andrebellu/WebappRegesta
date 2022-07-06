@@ -159,9 +159,11 @@ sap.ui.define(
         },
 
         handleDestination: function (result) {
-          var oModel = new JSONModel("model/data.json");
+          var oModel = this.getView().getModel();
 
           oModel.setProperty("/destinazioni", JSON.parse(result))
+          var destinazioni = oModel.getProperty("/destinazioni");
+          console.log(destinazioni);
         },
 
         showPopup: function (oEvent) {

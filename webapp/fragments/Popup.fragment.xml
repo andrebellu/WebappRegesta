@@ -101,11 +101,9 @@
                 minLength: 0
             }
         }" 
-        items="{
-            path : '',
-        }" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
+        items="{/destinazioni}" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
                 <items>
-                <core:Item xmlns:core="sap.ui.core" key="{Utente}" text="{Ore}"/>
+                <core:Item xmlns:core="sap.ui.core" key="{IDClienteSede}" text="{IDClienteSede} - {Sede}"/>
                 </items>
             </ComboBox>
 
