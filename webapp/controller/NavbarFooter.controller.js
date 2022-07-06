@@ -128,6 +128,40 @@ sap.ui.define(
             .getProperty("/nuovoRapportino");
 
           nuovoRapportino.Ore = ore;
+          console.log(nuovoRapportino);
+        },
+
+        onTicketChange: function (oEvent) {
+          var oModel = this.getView().getModel();
+          var nuovoRapportino = oModel.getProperty("/nuovoRapportino");
+
+          //! API call to get destinations
+          var myHeaders = new Headers();
+          myHeaders.append(
+            "Cookie",
+            "ASP.NET_SessionId=h44eqjrap4hk2tsla2tjsbwv"
+          );
+
+          var requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            redirect: "follow",
+          };
+
+          fetch(
+            sessionStorage.getItem("hostname") + "/api_v2/sedi?token=" + sessionStorage.getItem("encodedToken") + "&idCliente=" + nuovoRapportino.IDCliente,
+            requestOptions
+          )
+            .then((response) => response.text())
+            .then((result) => this.handleDestination(result))
+            .catch((error) => console.log("error", error));
+            
+        },
+
+        handleDestination: function (result) {
+          var oModel = this.getView().getModel();
+
+          oModel.setProperty("/destinazioni", JSON.parse(result))
         },
 
         showPopup: function (oEvent) {
@@ -165,7 +199,10 @@ sap.ui.define(
             Docente: null,
           };
 
+          // Get binding context
           var oModel = this.getView().getModel();
+          var nuovoRapportino = oModel.getProperty("/nuovoRapportino");
+
           oModel.setProperty("/nuovoRapportino", defaultBody);
 
           var source = oEvent.getSource();
@@ -173,6 +210,7 @@ sap.ui.define(
             new sap.ui.model.Context(oModel, "/nuovoRapportino")
           );
           var getContext = setContext.getBindingContext();
+
 
           if (!this.pDialog) {
             this.pDialog = this.loadFragment({
@@ -193,8 +231,6 @@ sap.ui.define(
             .getModel()
             .getProperty("/nuovoRapportino");
           console.log(nuovoRapportino);
-
-          
 
           // ? Chech date
           // collect input controls
@@ -225,8 +261,9 @@ sap.ui.define(
             };
 
             fetch(
-              sessionStorage.getItem("hostname") + "/api_v2/nuovorapportino?token=" +
-              sessionStorage.getItem("encodedToken"),
+              sessionStorage.getItem("hostname") +
+                "/api_v2/nuovorapportino?token=" +
+                sessionStorage.getItem("encodedToken"),
               requestOptions
             )
               .then((response) => response.text())
