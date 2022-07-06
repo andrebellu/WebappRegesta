@@ -93,21 +93,29 @@ sap.ui.define(
                     var context = swipedItem.getBindingContext();
                     var oModel = this.getView().getModel();
                 },
+                HandleDate: function(date){
+                  var timeStamp = date.replace(/\D/g, "");
+                  var FormattedDate = new Date(parseInt(timeStamp));
+                  FormattedDate = FormattedDate.toLocaleDateString("it-IT");
+                  return FormattedDate;
+              },
                 showPopup: function (oEvent) {
                     var i;
                     var code;
                     var clientDescription;
-                    var j;
                     var orderDescription;
+                    var FormattedDate;
                     var oModel = this.getView().getModel();
                     var source = oEvent.getSource();
                     var context = source.getBindingContext();
                     var index = source.getBindingContext().getPath();
-                    this.getView().getModel().setProperty("/index", index);
-                    var path = this.getView().getModel().getProperty("/index");
-                    this.getView().getModel().setProperty("/path", path);
+                    oModel.setProperty("/index", index);
+                    var path = oModel.getProperty("/index");
+                    oModel.setProperty("/path", path);
+
                     var IDClient = oModel.getProperty(path + "/IDCliente");
                     var clientLength = oModel.getProperty("/clienti").length;
+
                     var IDOrder = oModel.getProperty(path + "/IDCommessa");
                     var orderLength = oModel.getProperty("/commesse").length;
                     for(i = 0; i <= clientLength; i++)
@@ -131,24 +139,17 @@ sap.ui.define(
                     oModel.setProperty(path + "/Order", orderDescription);
 
                     var insertDate = context.getProperty("InsertDate");
-                    var timeStamp = insertDate.replace(/\D/g, "");
-                    var insertDate = new Date(parseInt(timeStamp));
-                    insertDate = insertDate.toLocaleDateString("it-IT");
-                    oModel.setProperty(path + "/DataInserimento", insertDate);
+                    FormattedDate = this.HandleDate(insertDate);
+                    oModel.setProperty(path + "/DataInserimento", FormattedDate);
 
                     var DataConsegnaRichiesta = context.getProperty("DataConsegnaRichiesta");
-                    var timeStamp = DataConsegnaRichiesta.replace(/\D/g, "");
-                    var DataConsegnaRichiesta = new Date(parseInt(timeStamp));
-                    DataConsegnaRichiesta = DataConsegnaRichiesta.toLocaleDateString("it-IT");
-                    oModel.setProperty(path + "/DataConsegna", DataConsegnaRichiesta);
+                    FormattedDate = this.HandleDate(DataConsegnaRichiesta);
+                    oModel.setProperty(path + "/DataConsegna", FormattedDate);
 
                     var UltimaModifica = context.getProperty("UltimaModifica");
-                    var timeStamp = UltimaModifica.replace(/\D/g, "");
-                    var UltimaModifica = new Date(parseInt(timeStamp));
-                    UltimaModifica = UltimaModifica.toLocaleDateString("it-IT");
-                    var Edited = oModel.getProperty(path + "/UltimaModificaUtente")+ " - " + UltimaModifica
+                    FormattedDate = this.HandleDate(UltimaModifica);
+                    var Edited = oModel.getProperty(path + "/UltimaModificaUtente")+ " - " + FormattedDate;
                     oModel.setProperty(path + "/Modifica", Edited);
-                    UltimaModifica
                     if (!this.pDialog) {
                         this.pDialog = this.loadFragment({
                             name: "regesta.regestarapportini.fragments.PopupTicket",
@@ -168,7 +169,7 @@ sap.ui.define(
                     redirect : "follow",
                   };
 
-                  fetch("https://asstest.regestaitalia.it/api_v2/clienti?token="  + token + "&idCommessa=0&idCliente=0", request)
+                  fetch("https://asstest.regestaitalia.it/api_v2/clienti?token="  + token + "&idCliente=0", request)
                     .then((response) => response.text())
                     .then((result) => this.handleClienti(result))
                     .catch((error) => console.log("error", error));
@@ -183,7 +184,7 @@ sap.ui.define(
                     method : "POST",
                     redirect : "follow",
                   };
-                  fetch("https://asstest.regestaitalia.it/api_v2/commesse?token=mF2rK0g%252bNh1xJnGB72RasA%253d%253d&idCommessa=0&idCliente=0", request)
+                  fetch("https://asstest.regestaitalia.it/api_v2/commesse?token=" + token + "&idCommessa=0&idCliente=0", request)
                     .then((response) => response.text())
                     .then((result) => this.handleCommesse(result))
                     .catch((error) => console.log("error", error));
@@ -192,7 +193,6 @@ sap.ui.define(
                   var oModel = this.getView().getModel();
                   var commesse = JSON.parse(result);
                   oModel.setProperty("/commesse", commesse);
-                  console.log(clienti);
                 },
                 APIticket: function(){
                   var request = {
