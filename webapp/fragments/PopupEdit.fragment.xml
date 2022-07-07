@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m"
     xmlns:core="sap.ui.core"
     xmlns:mvc="sap.ui.core.mvc">
-    <Dialog xmlns="sap.m" title="Inserisci i dati del rapportino" type="Message" id="popupEdit" class="dialogStyle">
+    <Dialog xmlns="sap.m" title="Inserisci i dati del rapportino" type="Message" class="dialogStyle" id="popupEdit">
 
         <!--! Input user -->
         <Label text="Utente" class="labelMargin" />
@@ -12,7 +12,7 @@
             minLength: 1,
             maxLength: 50
         }
-    }" type="Text" change= ".onNameChange" width= "100%" enabled= "false" id="user" class="roundedInput" placeholder="Utente" valueStateText="La casella non deve essere vuota. Massimo 50 caratteri." />
+    }" type="Text" change= ".onNameChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Utente" valueStateText="La casella non deve essere vuota. Massimo 50 caratteri." />
 
         <!--! Input date with datepicker -->
         <Label text="Giorno" class="labelMargin" required="true"/>
@@ -22,7 +22,7 @@
             minLength: 1,
             maxLength: 10
         }
-    }" id="date" class="roundedInput" change=".onGiornoChange" placeholder="dd/mm/yyyy" width="100%" showCurrentDateButton="true" enabled="true"/>
+    }" class="roundedInput" change=".onGiornoChange" placeholder="dd/mm/yyyy" width="100%" showCurrentDateButton="true" enabled="true"/>
 
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true" />
@@ -34,13 +34,13 @@
             maxLength: 3,
             minDecimalDigits: 1
         }
-    }" change="getHours" class="roundedInput" id="ore" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="1.001" enabled="true"/>
+    }" change="getHours" class="roundedInput" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="1.001" enabled="true"/>
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
-        <ComboBox selectedKey="{IDTodoList}" class="roundedInput" change="handleChange" width="100%" enabled="true" id="ticket" placeholder="Ticket" items="{/ticket}">
+        <ComboBox selectedKey="{IDTodoList}" class="roundedInput" change="handleChange" width="100%" enabled="true" placeholder="Ticket" items="{/ticket}">
             <items>
-                <core:Item xmlns:core="sap.ui.core" key="{IDTodoList}" text="{IDTodoList} - {Titolo}" id="ticketz"/>
+                <core:Item xmlns:core="sap.ui.core" key="{IDTodoList}" text="{IDTodoList} - {Titolo}"/>
             </items>
         </ComboBox>
 
@@ -49,14 +49,14 @@
         <Input value="{
         path : '/body/Codice',
         type : 'sap.ui.model.type.String'
-    }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
+    }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Cliente"/>
 
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
         path : '/body/IDCommessa',
         type : 'sap.ui.model.type.String'
-    }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
+    }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Commessa"/>
 
         <!--! Input site with combo box -->
         <Label text="Sede" class="labelMargin"/>
@@ -67,7 +67,7 @@
             minLength: 1,
             maxLength: 2
         }
-    }" class="roundedInput" width="100%" enabled="true" id="site" placeholder="Sede">
+    }" class="roundedInput" width="100%" enabled="true" placeholder="Sede">
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="1" text="UF"/>
                 <core:Item xmlns:core="sap.ui.core" key="2" text="CL"/>
@@ -84,7 +84,7 @@
             constraints : {
                 minLength: 0
             }
-        }" items="{/destinazioni}" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
+        }" items="{/destinazioni}" class="roundedInput" width="100%" enabled="true" placeholder="Destinazione">
                 <items>
                 <core:Item xmlns:core="sap.ui.core" key="{IDClienteSede}" text="{IDClienteSede} - {Sede}"/>
                 </items>
@@ -99,7 +99,7 @@
         constraints : {
             minLength: 1
         }
-    }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "true" id="description" class="roundedInput" placeholder="Descrizione"/>
+    }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Descrizione"/>
 
         <!-- Checkboxes in flexbox -->
         <FlexBox direction="Row" class="checkStyle">
@@ -130,7 +130,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onKmPriceChange" width= "100%" enabled= "true" id="kmPrice" class="roundedInput" placeholder="Km/€"/>
+        }" change= ".onKmPriceChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Km/€"/>
 
             <!--! Input toll formatted in currency -->
             <Label text="Pedaggio" class="labelMargin"/>
@@ -142,7 +142,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onTollChange" width= "100%" enabled= "true" id="toll" class="roundedInput" placeholder="Pedaggio"/>
+        }" change= ".onTollChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Pedaggio"/>
 
             <!--! Input forfait formatted in currency -->
             <Label text="Forfait" class="labelMargin"/>
@@ -154,7 +154,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onForfaitChange" width= "100%" enabled= "true" id="forfait" class="roundedInput" placeholder="Forfait"/>
+        }" change= ".onForfaitChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Forfait"/>
 
             <!--! Input food formatted in currency -->
             <Label text="Vitto" class="labelMargin"/>
@@ -166,7 +166,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onFoodChange" width= "100%" enabled= "true" id="food" class="roundedInput" placeholder="Vitto"/>
+        }" change= ".onFoodChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Vitto"/>
 
             <!--! Input accomodation formatted in currency -->
             <Label text="Alloggio" class="labelMargin"/>
@@ -178,7 +178,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onAccomodationChange" width= "100%" enabled= "true" id="accomodation" class="roundedInput" placeholder="Alloggio"/>
+        }" change= ".onAccomodationChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Alloggio"/>
 
             <!--! Input rental formatted in currency -->
             <Label text="Noleggio" class="labelMargin"/>
@@ -190,7 +190,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onRentalChange" width= "100%" enabled= "true" id="rental" class="roundedInput" placeholder="Noleggio"/>
+        }" change= ".onRentalChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Noleggio"/>
 
             <!--! Input transport formatted in currency -->
             <Label text="Trasporti" class="labelMargin"/>
@@ -202,7 +202,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onTransportChange" width= "100%" enabled= "true" id="transport" class="roundedInput" placeholder="Trasporti"/>
+        }" change= ".onTransportChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Trasporti"/>
 
             <!--! Input various formatted in currency -->
             <Label text="Varie" class="labelMargin"/>
@@ -214,7 +214,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onVariousChange" width= "100%" enabled= "true" id="various" class="roundedInput" placeholder="Varie"/>
+        }" change= ".onVariousChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Varie"/>
 
             <!--! Input reserved formatted in currency -->
             <Label text="Riservato" class="labelMargin"/>
@@ -226,7 +226,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onReservedChange" width= "100%" enabled= "true" id="reserved" class="roundedInput" placeholder="Riservato"/>
+        }" change= ".onReservedChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Riservato"/>
 
         </Panel>
         <FlexBox class="closeDialog">
