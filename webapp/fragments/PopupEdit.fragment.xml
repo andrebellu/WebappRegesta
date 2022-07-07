@@ -22,7 +22,7 @@
             minLength: 1,
             maxLength: 10
         }
-    }" class="roundedInput" change=".onGiornoChange" placeholder="dd/mm/yyyy" width="100%" showCurrentDateButton="true" enabled="true"/>
+    }" id="dateEdit" class="roundedInput" change=".onGiornoChange" placeholder="dd/mm/yyyy" width="100%" showCurrentDateButton="true" enabled="true"/>
 
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true" />

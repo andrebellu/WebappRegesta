@@ -542,7 +542,7 @@ sap.ui.define(
                 // ? Chech date
                 // collect input controls
                 var oView = this.getView();
-                var getDate = oView.byId("date");
+                var getDate = oView.byId("dateEdit");
                 console.log(getDate);
                 var bValidationError = false;
 
@@ -663,6 +663,8 @@ sap.ui.define(
                 var sValueState = "None";
                 var bValidationError = false;
                 var oBinding = oInput.getBinding("value");
+
+                
 
                 var [gg, month, year] = oInput.getValue().split("/");
                 const giorno = new Date(year, month - 1, gg);
