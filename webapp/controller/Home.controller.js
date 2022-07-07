@@ -236,69 +236,6 @@ sap.ui.define(
                 console.log(oEvent.getSource().data("id"));
             },
 
-            handleDuplicate: function (oEvent) {
-                var oModel = this.getView().getModel();
-                var body = oModel.getProperty("/body");
-
-                this.APIticket();
-                this.APIclienti();
-                this.APIcommesse();
-
-                var defaultBody = {
-                    IDRapportino: null,
-                    IDUtente: null,
-                    Utente: sessionStorage.getItem("username"),
-                    IDCliente: null,
-                    IDCommessa: null,
-                    IDClienteSede: null,
-                    IDProgetto: null,
-                    IDProgettoAttivita: null,
-                    IDTodoList: null,
-                    Codice: null,
-                    Descrizione: null,
-                    Attivita: null,
-                    Sede: "UF",
-                    Destinazione: null,
-                    Giorno: this.getCurrentDate(),
-                    Ore: null,
-                    OreLavorate: null,
-                    Km: null,
-                    KmEuro: null,
-                    Pedaggio: null,
-                    Forfait: null,
-                    Vitto: null,
-                    Alloggio: null,
-                    Noleggio: null,
-                    Trasporti: null,
-                    Varie: null,
-                    Plus: false,
-                    Fatturabile: true,
-                    Bloccato: null,
-                    SpeseVarie: null,
-                    Docente: null,
-                };
-
-                var source = oEvent.getSource();
-                var setContext = source.setBindingContext(
-                    new sap.ui.model.Context(oModel, "/body")
-                );
-                var getContext = setContext.getBindingContext();
-
-                if (!this.pDialog) {
-                    this.pDialog = this.loadFragment({
-                        name: "regesta.regestarapportini.fragments.PopupEdit",
-                    });
-                }
-                this.pDialog.then(function (oDialog) {
-                    oModel.setProperty("/nuovoRapportino", body);
-                    oDialog.setBindingContext(getContext);
-                    oDialog.open();
-                    this.handleChange();
-                });
-
-                // oList.getModel().updateBindings(true);
-            },
-
             handleChange: function (oEvent) {
                 var i;
                 var oModel = this.getView().getModel();
@@ -366,60 +303,7 @@ sap.ui.define(
                 nuovoRapportino.Ore = ore;
             },
 
-            onSaveDuplicate: function () {
-
-                var nuovoRapportino = this.getView()
-                    .getModel()
-                    .getProperty("/nuovoRapportino");
-
-                // ? Chech date
-                // collect input controls
-                var oView = this.getView();
-                var getDate = oView.byId("date");
-                console.log(getDate);
-                var bValidationError = false;
-
-                bValidationError = this._validateGiornoInput(getDate);
-
-                if (!bValidationError) {
-                    var oModel = this.getView().getModel();
-                    msgT.show("Rapportino aggiunto");
-
-                    //! API call for newRepo
-                    var myHeaders = new Headers();
-                    myHeaders.append("Content-Type", "application/json");
-                    myHeaders.append(
-                        "Cookie",
-                        "ASP.NET_SessionId=h44eqjrap4hk2tsla2tjsbwv"
-                    );
-
-                    oModel.setProperty("/nuovoRapportino/Giorno", formattedDate);
-                    var raw = JSON.stringify(nuovoRapportino);
-                    console.log(nuovoRapportino);
-
-                    var requestOptions = {
-                        method: "POST",
-                        headers: myHeaders,
-                        body: raw,
-                        redirect: "follow",
-                    };
-
-                    fetch(
-                        sessionStorage.getItem("hostname") +
-                            "/api_v2/nuovorapportino?token=" +
-                            sessionStorage.getItem("encodedToken"),
-                        requestOptions
-                    )
-                        .then((response) => response.text())
-                        .then((result) => console.log(result))
-                        .catch((error) => console.log("error", error));
-
-                    this.byId("popup").close();
-                    window.location.reload();
-                } else {
-                    msgT.show("Inserisci i dati correttamente");
-                }
-            },
+            
             APIticket: function () {
                 var request = {
                     method: "POST",
@@ -486,9 +370,7 @@ sap.ui.define(
                 oModel.setProperty("/commesse", commesse);
             },
 
-            onCancelDuplicate: function (oEvent) {
-                this.byId("popup").close();
-            },
+            
 
             handleEdit: function () {
                 msgT.show("Edit");
@@ -585,17 +467,143 @@ sap.ui.define(
                 this.filterItems();
             },
 
+            handleDuplicate: function (oEvent) {
+                var oModel = this.getView().getModel();
+                var body = oModel.getProperty("/body");
+
+                this.APIticket();
+                this.APIclienti();
+                this.APIcommesse();
+
+                var defaultBody = {
+                    IDRapportino: null,
+                    IDUtente: null,
+                    Utente: sessionStorage.getItem("username"),
+                    IDCliente: null,
+                    IDCommessa: null,
+                    IDClienteSede: null,
+                    IDProgetto: null,
+                    IDProgettoAttivita: null,
+                    IDTodoList: null,
+                    Codice: null,
+                    Descrizione: null,
+                    Attivita: null,
+                    Sede: "UF",
+                    Destinazione: null,
+                    Giorno: this.getCurrentDate(),
+                    Ore: null,
+                    OreLavorate: null,
+                    Km: null,
+                    KmEuro: null,
+                    Pedaggio: null,
+                    Forfait: null,
+                    Vitto: null,
+                    Alloggio: null,
+                    Noleggio: null,
+                    Trasporti: null,
+                    Varie: null,
+                    Plus: false,
+                    Fatturabile: true,
+                    Bloccato: null,
+                    SpeseVarie: null,
+                    Docente: null,
+                };
+
+                var source = oEvent.getSource();
+                var setContext = source.setBindingContext(
+                    new sap.ui.model.Context(oModel, "/body")
+                );
+                var getContext = setContext.getBindingContext();
+
+                if (!this.pDialog) {
+                    this.pDialog = this.loadFragment({
+                        name: "regesta.regestarapportini.fragments.PopupEdit",
+                    });
+                }
+                this.pDialog.then(function (oDialog) {
+                    oModel.setProperty("/nuovoRapportino", body);
+                    oDialog.setBindingContext(getContext);
+                    oDialog.open();
+                });
+
+                // oList.getModel().updateBindings(true);
+            },
+
+            onCancelDuplicate: function (oEvent) {
+                this.byId("popupEdit").close();
+            },
+
+            onSaveDuplicate: function () {
+
+                var nuovoRapportino = this.getView()
+                    .getModel()
+                    .getProperty("/nuovoRapportino");
+
+                // ? Chech date
+                // collect input controls
+                var oView = this.getView();
+                var getDate = oView.byId("date");
+                console.log(getDate);
+                var bValidationError = false;
+
+                bValidationError = this._validateGiornoInput(getDate);
+
+                if (!bValidationError) {
+                    var oModel = this.getView().getModel();
+                    msgT.show("Rapportino aggiunto");
+
+                    //! API call for newRepo
+                    var myHeaders = new Headers();
+                    myHeaders.append("Content-Type", "application/json");
+                    myHeaders.append(
+                        "Cookie",
+                        "ASP.NET_SessionId=h44eqjrap4hk2tsla2tjsbwv"
+                    );
+
+                    oModel.setProperty("/nuovoRapportino/Giorno", formattedDate);
+                    var raw = JSON.stringify(nuovoRapportino);
+                    console.log(nuovoRapportino);
+
+                    var requestOptions = {
+                        method: "POST",
+                        headers: myHeaders,
+                        body: raw,
+                        redirect: "follow",
+                    };
+
+                    fetch(
+                        sessionStorage.getItem("hostname") +
+                            "/api_v2/nuovorapportino?token=" +
+                            sessionStorage.getItem("encodedToken"),
+                        requestOptions
+                    )
+                        .then((response) => response.text())
+                        .then((result) => console.log(result))
+                        .catch((error) => console.log("error", error));
+
+                    this.byId("popupEdit").close();
+                    window.location.reload();
+                } else {
+                    msgT.show("Inserisci i dati correttamente");
+                }
+            },
+
             //! Dialog box
             showPopup: function (oEvent) {
+                var oModel = this.getView().getModel();
                 var source = oEvent.getSource();
-                var context = source.getBindingContext();
-                if (context != undefined) {
-                    var index = source.getBindingContext().getPath();
-                    this.getView().getModel().setProperty("/index", index);
-                    var path = this.getView().getModel().getProperty("/index");
+                
+                
+                var setContext = source.setBindingContext(
+                    new sap.ui.model.Context(oModel, source.getBindingContext().sPath)
+                );
+                var getContext = setContext.getBindingContext();
+                var index = source.getBindingContext().getPath();
+                if (getContext != undefined) {
+                    
 
                     // Get date from list item and convert it to string from timestamp
-                    var date = context.getProperty("Giorno");
+                    var date = getContext.getProperty("Giorno");
                     // check if date starts with /
                     if (date.charAt(0) == "/") {
                         // Get numbers from input
@@ -605,7 +613,7 @@ sap.ui.define(
                         date = date.toLocaleDateString("it-IT");
                         this.getView()
                             .getModel()
-                            .setProperty(path + "/Giorno", date);
+                            .setProperty(index + "/Giorno", date);
                     }
                 }
 
@@ -615,13 +623,9 @@ sap.ui.define(
                     });
                 }
                 this.pDialog.then(function (oDialog) {
-                    oDialog.setBindingContext(context);
+                    oDialog.setBindingContext(getContext);
                     oDialog.open();
                 });
-            },
-
-            onSave: function (oEvent) {
-                this.byId("detailsDialog").close();
             },
 
             onCancel: function (oEvent) {
