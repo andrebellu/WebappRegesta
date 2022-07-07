@@ -338,7 +338,7 @@ sap.ui.define(
                             .catch((error) => console.log("error", error));
 
                         this.byId("popup").close();
-                        // window.location.reload();
+                        window.location.reload();
                     } else {
                         MessageToast.show("Inserisci i dati correttamemte");
                     }
