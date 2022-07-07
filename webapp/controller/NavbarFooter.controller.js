@@ -189,6 +189,10 @@ sap.ui.define(
                         "/nuovoRapportino/IDCommessa",
                         IDOrder // !+ " - " + orderDescription
                     );
+                    oModel.setProperty(
+                      "/nuovoRapportino/Attivita",
+                      IDOrder + " - " + orderDescription
+                  );
                     this.destinationAPI();
                 },
 
@@ -286,7 +290,6 @@ sap.ui.define(
                         oModel.setProperty("/nuovoRapportino", defaultBody);
                         oDialog.setBindingContext(getContext);
                         oDialog.open();
-                        this.handleChange();
                     });
 
                     // oList.getModel().updateBindings(true);

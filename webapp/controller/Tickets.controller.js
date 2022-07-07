@@ -179,7 +179,7 @@ sap.ui.define(
                         redirect: "follow",
                     };
 
-                  fetch("https://asstest.regestaitalia.it/api_v2/clienti?token="  + token + "&idCliente=0", request)
+                  fetch( sessionStorage.getItem("hostname") + "/api_v2/clienti?token="  + token + "&idCliente=0", request)
                     .then((response) => response.text())
                     .then((result) => this.handleClienti(result))
                     .catch((error) => console.log("error", error));
@@ -194,7 +194,7 @@ sap.ui.define(
                     method : "POST",
                     redirect : "follow",
                   };
-                  fetch("https://asstest.regestaitalia.it/api_v2/commesse?token=" + token + "&idCommessa=0&idCliente=0", request)
+                  fetch(sessionStorage.getItem("hostname") +"/api_v2/commesse?token=" + token + "&idCommessa=0&idCliente=0", request)
                     .then((response) => response.text())
                     .then((result) => this.handleCommesse(result))
                     .catch((error) => console.log("error", error));
@@ -210,7 +210,7 @@ sap.ui.define(
                         redirect: "follow",
                     };
                     fetch(
-                        "https://asstest.regestaitalia.it/api_v2/ticket?token=" +
+                        sessionStorage.getItem("hostname") + "/api_v2/ticket?token=" +
                             token +
                             "&idTicket=0",
                         request
