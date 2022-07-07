@@ -132,7 +132,6 @@ sap.ui.define(
                         .getProperty("/nuovoRapportino");
 
                     nuovoRapportino.Ore = ore;
-                    console.log(nuovoRapportino);
                 },
 
                 handleChange: function (oEvent) {
@@ -191,20 +190,32 @@ sap.ui.define(
                         IDOrder // !+ " - " + orderDescription
                     );
                     oModel.setProperty(
-                      "/nuovoRapportino/Attivita",
-                      IDOrder + " - " + orderDescription
-                  );
+                        "/nuovoRapportino/Attivita",
+                        IDOrder + " - " + orderDescription
+                    );
                     ticket = true;
                     this.destinationAPI();
                 },
-                handleDistance: function(oEvent){
-                  this.getView().getModel().setProperty("/nuovoRapportino/Km", sap.ui
-                  .getCore()
-                  .byId(oEvent.getSource().getSelectedItemId())
-                  .getBindingContext()
-                  .getObject().Km);
-                  var cost = sap.ui.getCore().byId(oEvent.getSource().getSelectedItemId()).getBindingContext().getObject().Km * 0.42;
-                  this.getView().getModel().setProperty("/nuovoRapportino/KmEuro", cost);
+                handleDistance: function (oEvent) {
+                    this.getView()
+                        .getModel()
+                        .setProperty(
+                            "/nuovoRapportino/Km",
+                            sap.ui
+                                .getCore()
+                                .byId(oEvent.getSource().getSelectedItemId())
+                                .getBindingContext()
+                                .getObject().Km
+                        );
+                    var cost =
+                        sap.ui
+                            .getCore()
+                            .byId(oEvent.getSource().getSelectedItemId())
+                            .getBindingContext()
+                            .getObject().Km * 0.42;
+                    this.getView()
+                        .getModel()
+                        .setProperty("/nuovoRapportino/KmEuro", cost);
                 },
 
                 destinationAPI: function () {
@@ -223,11 +234,12 @@ sap.ui.define(
                         headers: myHeaders,
                         redirect: "follow",
                     };
-                      fetch(
+                    fetch(
                         sessionStorage.getItem("hostname") +
                             "/api_v2/sedi?token=" +
                             sessionStorage.getItem("encodedToken") +
-                            "&idCliente=" + nuovoRapportino.IDCliente,
+                            "&idCliente=" +
+                            nuovoRapportino.IDCliente,
                         requestOptions
                     )
                         .then((response) => response.text())
@@ -245,10 +257,10 @@ sap.ui.define(
 
                 showPopup: function (oEvent) {
                     var oModel = this.getView().getModel();
-
                     this.APIticket();
                     this.APIclienti();
                     this.APIcommesse();
+
                     var defaultBody = {
                         IDRapportino: null,
                         IDUtente: null,
@@ -317,7 +329,13 @@ sap.ui.define(
 
                     bValidationError = this._validateGiornoInput(getDate);
 
-                    if (!bValidationError && ticket && this.getView().getModel().getProperty("/nuovoRapportino/Descrizione") != null) {
+                    if (
+                        !bValidationError &&
+                        ticket &&
+                        this.getView()
+                            .getModel()
+                            .getProperty("/nuovoRapportino/Descrizione") != null
+                    ) {
                         MessageToast.show("Rapportino aggiunto");
                         ticket = false;
 
@@ -376,7 +394,9 @@ sap.ui.define(
                     oModel.setProperty("/ticket", ticket);
                 },
 
-                onCancel: function (oEvent) {
+                onCancel: function () {
+                  var oModel = this.getView().getModel();
+
                     this.byId("popup").close();
                 },
 

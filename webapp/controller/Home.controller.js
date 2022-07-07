@@ -242,40 +242,6 @@ sap.ui.define(
                 this.APIclienti();
                 this.APIcommesse();
 
-                var defaultBody = {
-                    IDRapportino: null,
-                    IDUtente: null,
-                    Utente: sessionStorage.getItem("username"),
-                    IDCliente: null,
-                    IDCommessa: null,
-                    IDClienteSede: null,
-                    IDProgetto: null,
-                    IDProgettoAttivita: null,
-                    IDTodoList: null,
-                    Codice: null,
-                    Descrizione: null,
-                    Attivita: null,
-                    Sede: "UF",
-                    Destinazione: null,
-                    Giorno: this.getCurrentDate(),
-                    Ore: null,
-                    OreLavorate: null,
-                    Km: null,
-                    KmEuro: null,
-                    Pedaggio: null,
-                    Forfait: null,
-                    Vitto: null,
-                    Alloggio: null,
-                    Noleggio: null,
-                    Trasporti: null,
-                    Varie: null,
-                    Plus: false,
-                    Fatturabile: true,
-                    Bloccato: null,
-                    SpeseVarie: null,
-                    Docente: null,
-                };
-
                 var source = oEvent.getSource();
                 var setContext = source.setBindingContext(
                     new sap.ui.model.Context(oModel, "/body")
