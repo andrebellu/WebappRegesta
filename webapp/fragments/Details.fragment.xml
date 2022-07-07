@@ -121,15 +121,25 @@
             <!--! Input km/€ formatted in currency -->
             <Label text="Km/€" class="labelMargin"/>
             <Input value="{
-            path : 'KmEuro',
-            type : 'sap.ui.model.type.Float'
+            parts : [{path : 'KmEuro'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
         }" type="Number" change= ".onKmPriceChange" width= "100%" enabled= "false" id="kmPrice" class="roundedInput" placeholder="Km/€"/>
 
             <!--! Input toll formatted in currency -->
             <Label text="Pedaggio" class="labelMargin"/>
             <Input value="{
-            path : 'Pedaggio',
-            type : 'sap.ui.model.type.Float'
+            parts : [{path : 'Pedaggio'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
         }" type="Number" change= ".onTollChange" width= "100%" enabled= "false" id="toll" class="roundedInput" placeholder="Pedaggio"/>
 
             <!--! Input forfait formatted in currency -->
