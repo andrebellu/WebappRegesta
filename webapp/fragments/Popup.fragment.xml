@@ -78,14 +78,8 @@
 
         <!--! Input destination with combo box -->
         <Label text="Destinazione" class="labelMargin"/>
-        <ComboBox value="{
-            path : 'Destinazione',
-            type : 'sap.ui.model.type.String',
-            constraints : {
-                minLength: 0
-            }
-        }" 
-        items="{/destinazioni}" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
+        <ComboBox 
+        items="{/destinazioni}" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione" change="handleDistance">
                 <items>
                 <core:Item xmlns:core="sap.ui.core" key="{IDClienteSede}" text="{IDClienteSede} - {Sede}"/>
                 </items>
@@ -117,7 +111,7 @@
             <!--! Input km -->
             <Label text="Km" class="labelMargin"/>
             <Input value="{
-            path : 'Km',
+            path : '/nuovoRapportino/Km',
             type : 'sap.ui.model.type.Integer'
         }" type="Number" width= "100%" enabled= "true" class="roundedInput" placeholder="Km"/>
 

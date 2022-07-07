@@ -24,6 +24,7 @@ sap.ui.define(
 
         var token = sessionStorage.getItem("token");
         var ore;
+        var ticket;
 
         return Controller.extend(
             "regesta.regestarapportini.controller.NavbarFooter",
@@ -193,7 +194,17 @@ sap.ui.define(
                       "/nuovoRapportino/Attivita",
                       IDOrder + " - " + orderDescription
                   );
+                    ticket = true;
                     this.destinationAPI();
+                },
+                handleDistance: function(oEvent){
+                  this.getView().getModel().setProperty("/nuovoRapportino/Km", sap.ui
+                  .getCore()
+                  .byId(oEvent.getSource().getSelectedItemId())
+                  .getBindingContext()
+                  .getObject().Km);
+                  var cost = sap.ui.getCore().byId(oEvent.getSource().getSelectedItemId()).getBindingContext().getObject().Km * 0.42;
+                  this.getView().getModel().setProperty("/nuovoRapportino/KmEuro", cost);
                 },
 
                 destinationAPI: function () {
@@ -212,13 +223,11 @@ sap.ui.define(
                         headers: myHeaders,
                         redirect: "follow",
                     };
-
-                    fetch(
+                      fetch(
                         sessionStorage.getItem("hostname") +
                             "/api_v2/sedi?token=" +
                             sessionStorage.getItem("encodedToken") +
-                            "&idCliente=" +
-                            nuovoRapportino.IDCliente,
+                            "&idCliente=" + nuovoRapportino.IDCliente,
                         requestOptions
                     )
                         .then((response) => response.text())
@@ -231,7 +240,7 @@ sap.ui.define(
 
                     oModel.setProperty("/destinazioni", JSON.parse(result));
                     var destinazioni = oModel.getProperty("/destinazioni");
-                    console.log(destinazioni);
+                    console.log(oModel.getProperty("/destinazioni"));
                 },
 
                 showPopup: function (oEvent) {
@@ -239,7 +248,6 @@ sap.ui.define(
                     this.APIticket();
                     this.APIclienti();
                     this.APIcommesse();
-
                     var defaultBody = {
                         IDRapportino: null,
                         IDUtente: null,
@@ -310,8 +318,9 @@ sap.ui.define(
 
                     bValidationError = this._validateGiornoInput(getDate);
 
-                    if (!bValidationError) {
+                    if (!bValidationError && ticket && this.getView().getModel().getProperty("/nuovoRapportino/Descrizione") != null) {
                         MessageToast.show("Rapportino aggiunto");
+                        ticket = false;
 
                         //! API call for newRepo
                         var myHeaders = new Headers();
