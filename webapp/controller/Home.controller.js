@@ -617,12 +617,12 @@ sap.ui.define(
                     }
                 }
 
-                if (!this.pDialog) {
-                    this.pDialog = this.loadFragment({
+                if (!this.pDialogDetails) {
+                    this.pDialogDetails = this.loadFragment({
                         name: "regesta.regestarapportini.fragments.Details",
                     });
                 }
-                this.pDialog.then(function (oDialog) {
+                this.pDialogDetails.then(function (oDialog) {
                     oDialog.setBindingContext(getContext);
                     oDialog.open();
                 });

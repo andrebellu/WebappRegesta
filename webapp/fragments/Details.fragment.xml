@@ -12,7 +12,7 @@
             minLength: 1,
             maxLength: 50
         }
-    }"  type="Text" change= ".onNameChange" width= "100%" enabled= "false" id="user" class="roundedInput" placeholder="Utente" valueStateText="La casella non deve essere vuota. Massimo 50 caratteri." />
+    }"  type="Text" change= ".onNameChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Utente" valueStateText="La casella non deve essere vuota. Massimo 50 caratteri." />
 
         <!--! Input date with datepicker -->
         <Label text="Giorno" class="labelMargin" required="true"/>
@@ -45,7 +45,7 @@
         constraints : {
             minLength: 1
         }
-    }" class="roundedInput" width="100%" enabled="false" id="ticket" placeholder="Ticket">
+    }" class="roundedInput" width="100%" enabled="false" placeholder="Ticket">
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="1" text="Ticket 1"/>
                 <core:Item xmlns:core="sap.ui.core" key="2" text="Ticket 2"/>
@@ -59,14 +59,14 @@
         <Input value="{
         path : 'Codice',
         type : 'sap.ui.model.type.String'
-    }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
+    }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Cliente"/>
 
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
         path : 'IDCommessa',
         type : 'sap.ui.model.type.String'
-    }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
+    }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Commessa"/>
 
         <!--! Input site with combo box -->
         <Label text="Sede" class="labelMargin"/>
@@ -76,7 +76,7 @@
         constraints : {
             minLength: 1
         }
-    }" class="roundedInput" width="100%" enabled="false" id="site" placeholder="Sede">
+    }" class="roundedInput" width="100%" enabled="false" placeholder="Sede">
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="1" text="UF"/>
                 <core:Item xmlns:core="sap.ui.core" key="2" text="CL"/>
@@ -90,14 +90,14 @@
         <Input value="{
         path : 'Destinazione',
         type : 'sap.ui.model.type.String'
-    }" type="Text" change= ".onDestinationChange" width= "100%" enabled= "false" id="destination" class="roundedInput" placeholder="Destinazione"/>
+    }" type="Text" change= ".onDestinationChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Destinazione"/>
 
         <!--! Input description -->
         <Label text="Descrizione" class="labelMargin" required="true"/>
         <Input value="{
         path : 'Descrizione',
         type : 'sap.ui.model.type.String'
-    }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "false" id="description" class="roundedInput" placeholder="Descrizione"/>
+    }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Descrizione"/>
 
         <!-- Checkboxes in flexbox -->
         <FlexBox direction="Row" class="checkStyle">
