@@ -394,9 +394,8 @@ sap.ui.define(
                     oModel.setProperty("/ticket", ticket);
                 },
 
-                onCancel: function () {
-                  var oModel = this.getView().getModel();
-
+                onCancel: function (oEvent) {
+                    
                     this.byId("popup").close();
                 },
 
