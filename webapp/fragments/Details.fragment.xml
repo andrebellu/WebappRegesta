@@ -145,50 +145,85 @@
             <!--! Input forfait formatted in currency -->
             <Label text="Forfait" class="labelMargin"/>
             <Input value="{
-            path : 'Forfait',
-            type : 'sap.ui.model.type.Float'
+            parts : [{path : 'Forfait'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
         }" type="Number" change= ".onForfaitChange" width= "100%" enabled= "false" id="forfait" class="roundedInput" placeholder="Forfait"/>
 
             <!--! Input food formatted in currency -->
             <Label text="Vitto" class="labelMargin"/>
             <Input value="{
-            path : 'Vitto',
-            type : 'sap.ui.model.type.Float'
+            parts : [{path : 'Vitto'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
         }" type="Number" change= ".onFoodChange" width= "100%" enabled= "false" id="food" class="roundedInput" placeholder="Vitto"/>
 
             <!--! Input accomodation formatted in currency -->
             <Label text="Alloggio" class="labelMargin"/>
             <Input value="{
-            path : 'Alloggio',
-            type : 'sap.ui.model.type.Float'
+            parts : [{path : 'Alloggio'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
         }" type="Number" change= ".onAccomodationChange" width= "100%" enabled= "false" id="accomodation" class="roundedInput" placeholder="Alloggio"/>
 
             <!--! Input rental formatted in currency -->
             <Label text="Noleggio" class="labelMargin"/>
             <Input value="{
-            path : 'Noleggio',
-            type : 'sap.ui.model.type.Float'
+            parts : [{path : 'Noleggio'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
         }" type="Number" change= ".onRentalChange" width= "100%" enabled= "false" id="rental" class="roundedInput" placeholder="Noleggio"/>
 
             <!--! Input transport formatted in currency -->
             <Label text="Trasporti" class="labelMargin"/>
             <Input value="{
-            path : 'Trasporti',
-            type : 'sap.ui.model.type.Float'
+            parts : [{path : 'Trasporti'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
         }" type="Number" change= ".onTransportChange" width= "100%" enabled= "false" id="transport" class="roundedInput" placeholder="Trasporti"/>
 
             <!--! Input various formatted in currency -->
             <Label text="Varie" class="labelMargin"/>
             <Input value="{
-            path : 'Varie',
-            type : 'sap.ui.model.type.Float'
+            parts : [{path : 'Varie'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
         }" type="Number" change= ".onVariousChange" width= "100%" enabled= "false" id="various" class="roundedInput" placeholder="Varie"/>
 
             <!--! Input reserved formatted in currency -->
             <Label text="Riservato" class="labelMargin"/>
             <Input value="{
-            path : 'SpeseVarie',
-            type : 'sap.ui.model.type.Float'
+                parts : [{path : 'SpeseVarie'}, {value : '€'}],
+                formatOptions : {
+                    style : 'currency',
+                    currencyCode : '€',
+                    currencyContext : 'EUR'
+                },
+                type : 'sap.ui.model.type.Currency'
         }" type="Number" change= ".onReservedChange" width= "100%" enabled= "false" id="reserved" class="roundedInput" placeholder="Riservato"/>
 
         </Panel>
