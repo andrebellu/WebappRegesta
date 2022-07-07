@@ -54,7 +54,7 @@
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
-        path : '/nuovoRapportino/IDCommessa',
+        path : '/nuovoRapportino/Attivita',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
 
