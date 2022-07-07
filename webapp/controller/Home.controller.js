@@ -145,9 +145,11 @@ sap.ui.define(
                 var sum = 0.0;
 
                 filteredItems.forEach(function (item) {
-                    sum += parseFloat(item.Ore.toFixed(1));
+                    sum += item.Ore;
                     console.log(sum);
                 });
+
+                sum = sum.toFixed(1);
 
                 if (sum >= 8) {
                     document
