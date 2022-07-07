@@ -377,6 +377,7 @@ sap.ui.define(
                 },
 
                 onCancel: function (oEvent) {
+                    
                     this.byId("popup").close();
                 },
 

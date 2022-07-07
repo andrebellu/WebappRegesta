@@ -84,8 +84,7 @@
             constraints : {
                 minLength: 0
             }
-        }" 
-        items="{/destinazioni}" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
+        }" selectedKey="{IDClienteSede}" items="{/destinazioni}" class="roundedInput" width="100%" enabled="true" id="destinations" placeholder="Destinazione">
                 <items>
                 <core:Item xmlns:core="sap.ui.core" key="{IDClienteSede}" text="{IDClienteSede} - {Sede}"/>
                 </items>
