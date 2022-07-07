@@ -223,6 +223,7 @@
             parts : [{path : 'SpeseVarie'}, {value : '€'}],
             formatOptions : {
                 style : 'currency',
+                minFractionDigits : 2,
                 currencyCode : '€',
                 currencyContext : 'EUR'
             },
