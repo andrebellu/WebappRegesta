@@ -17,7 +17,7 @@
         <!--! Input date with datepicker -->
         <Label text="Giorno" class="labelMargin" required="true"/>
         <DatePicker displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy" value="{
-        path : 'Giorno',
+        path : '/formattedDate',
         constraints : {
             minLength: 1,
             maxLength: 10
@@ -38,7 +38,7 @@
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
-        <ComboBox class="roundedInput" change="handleChange" width="100%" enabled="true" id="ticket" placeholder="Ticket" items="{/ticket}">
+        <ComboBox selectedKey="{IDTodoList}" class="roundedInput" change="handleChange" width="100%" enabled="true" id="ticket" placeholder="Ticket" items="{/ticket}">
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="{IDTodoList}" text="{IDTodoList} - {Titolo}" id="ticketz"/>
             </items>
@@ -47,14 +47,14 @@
         <!--! Input client -->
         <Label text="Cliente" class="labelMargin"/>
         <Input value="{
-        path : '/nuovoRapportino/Codice',
+        path : '/body/Codice',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" id="client" class="roundedInput" placeholder="Cliente"/>
 
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
-        path : '/nuovoRapportino/Attivita',
+        path : '/body/IDCommessa',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" id="commessa" class="roundedInput" placeholder="Commessa"/>
 
@@ -232,10 +232,10 @@
         </Panel>
         <FlexBox class="closeDialog">
             <!--! Cancel button -->
-            <Button text="Annulla" press= ".onCancel" enabled="true" class="dialogButton"/>
+            <Button text="Annulla" press= ".onCancelDuplicate" enabled="true" class="dialogButton"/>
 
             <!--! Save button -->
-            <Button text="Salva" type="Emphasized" press= ".onSave" enabled="true" class="dialogButton"/>
+            <Button text="Salva" type="Emphasized" press= ".onSaveDuplicate" enabled="true" class="dialogButton"/>
         </FlexBox>
     </Dialog>
 </core:FragmentDefinition>

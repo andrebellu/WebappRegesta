@@ -232,6 +232,7 @@ sap.ui.define(
 
                 showPopup: function (oEvent) {
                     var oModel = this.getView().getModel();
+
                     this.APIticket();
                     this.APIclienti();
                     this.APIcommesse();
@@ -269,8 +270,6 @@ sap.ui.define(
                         SpeseVarie: null,
                         Docente: null,
                     };
-
-                    oModel.setProperty("/nuovoRapportino", defaultBody);
 
                     var source = oEvent.getSource();
                     var setContext = source.setBindingContext(
