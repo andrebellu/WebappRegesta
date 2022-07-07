@@ -50,6 +50,11 @@
                 path : 'Modifica',
                 type : 'sap.ui.model.type.String' }" 
                 type="Text" width= "100%" enabled= "false" class="roundedInput" id="lastChange"/>
+        <Label text="GG stima" class="labelMargin"/>
+        <Input value="{
+                path : 'GiorniStima',
+                type : 'sap.ui.model.type.Float' }" 
+                type="Text" width= "100%" enabled= "false" class="roundedInput" id="GGstima"/>
         <FlexBox class="closeDialog">
             <Button text="Chiudi" press= ".onCancel" enabled="true" class="dialogButton"/>
         </FlexBox>
