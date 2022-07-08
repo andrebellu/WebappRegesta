@@ -420,8 +420,6 @@ sap.ui.define(
         },
 
         onCancel: function (oEvent) {
-          this.getView().byId("ticket").setSelectedKey("");
-          this.getView().byId("destinations").setSelectedKey("");
           this.byId("popup").close();
         },
 

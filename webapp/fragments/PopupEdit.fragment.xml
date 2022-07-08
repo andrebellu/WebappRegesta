@@ -1,70 +1,60 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-    <Dialog 
-        xmlns="sap.m" title="Inserisci i dati del rapportino" type="Message" id="detailsDialog" class="dialogStyle">
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc">
+    <Dialog xmlns="sap.m" title="Inserisci i dati del rapportino" type="Message" class="dialogStyle" id="popupEdit">
 
         <!--! Input user -->
         <Label text="Utente" class="labelMargin" />
         <Input value="{
-        path: 'Utente',
+        path : 'Utente',
         type : 'sap.ui.model.type.String',
         constraints : {
             minLength: 1,
             maxLength: 50
         }
-    }"  type="Text" change= ".onNameChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Utente" valueStateText="La casella non deve essere vuota. Massimo 50 caratteri." />
+    }" type="Text" change= ".onNameChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Utente" valueStateText="La casella non deve essere vuota. Massimo 50 caratteri." />
 
         <!--! Input date with datepicker -->
         <Label text="Giorno" class="labelMargin" required="true"/>
-        <DatePicker 
-        displayFormat="dd/MM/yyyy"
-        value="{
-        path : 'Giorno',
+        <DatePicker displayFormat="dd/MM/yyyy" valueFormat="dd/MM/yyyy" value="{
+        path : '/formattedDate',
         constraints : {
             minLength: 1,
             maxLength: 10
         }
-    }" id="date" class="roundedInput" change=".onGiornoChange" placeholder="dd/mm/yyyy" width="100%" showCurrentDateButton="true" enabled="false"/>
+    }" id="dateEdit" class="roundedInput" change=".onGiornoChange" placeholder="dd/mm/yyyy" width="100%" showCurrentDateButton="true" enabled="true"/>
 
         <!--! Input work hours with step input -->
-        <Label text="Ore" class="labelMargin" required="true"/>
+        <Label text="Ore" class="labelMargin" required="true" />
         <StepInput value="{
-        path : 'Ore',
+        value : '0.0',
         type : 'sap.ui.model.type.Float',
         constraints : {
             minLength: 1,
-            maxLength: 3
+            maxLength: 3,
+            minDecimalDigits: 1
         }
-    }" class="roundedInput" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24" step="1" enabled="false"/>
+    }" change="getHours" class="roundedInput" textAlign="Center" displayValuePrecision="1" width="100%" min="0.0" max="24.0" step="1.001" enabled="true"/>
 
         <!--! Input ticket with combo box -->
         <Label text="Ticket" class="labelMargin" required="true"/>
-        <ComboBox value="{
-        path : 'IDTodoList',
-        type : 'sap.ui.model.type.String',
-        constraints : {
-            minLength: 1
-        }
-    }" class="roundedInput" width="100%" enabled="false" placeholder="Ticket">
+        <ComboBox selectedKey="{IDTodoList}" class="roundedInput" change="handleChange" width="100%" enabled="true" placeholder="Ticket" items="{/ticket}">
             <items>
-                <core:Item xmlns:core="sap.ui.core" key="1" text="Ticket 1"/>
-                <core:Item xmlns:core="sap.ui.core" key="2" text="Ticket 2"/>
-                <core:Item xmlns:core="sap.ui.core" key="3" text="Ticket 3"/>
-                <core:Item xmlns:core="sap.ui.core" key="4" text="Ticket 4"/>
+                <core:Item xmlns:core="sap.ui.core" key="{IDTodoList}" text="{IDTodoList} - {Titolo}"/>
             </items>
         </ComboBox>
 
         <!--! Input client -->
         <Label text="Cliente" class="labelMargin"/>
         <Input value="{
-        path : 'Codice',
+        path : '/body/Codice',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Cliente"/>
 
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
-        path : 'Attivita',
+        path : '/body/IDCommessa',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Commessa"/>
 
@@ -74,9 +64,10 @@
         path : 'Sede',
         type : 'sap.ui.model.type.String',
         constraints : {
-            minLength: 1
+            minLength: 1,
+            maxLength: 2
         }
-    }" class="roundedInput" width="100%" enabled="false" placeholder="Sede">
+    }" class="roundedInput" width="100%" enabled="true" placeholder="Sede">
             <items>
                 <core:Item xmlns:core="sap.ui.core" key="1" text="UF"/>
                 <core:Item xmlns:core="sap.ui.core" key="2" text="CL"/>
@@ -85,27 +76,38 @@
             </items>
         </ComboBox>
 
-        <!--! Input destination -->
+        <!--! Input destination with combo box -->
         <Label text="Destinazione" class="labelMargin"/>
-        <Input value="{
-        path : 'Destinazione',
-        type : 'sap.ui.model.type.String'
-    }" type="Text" change= ".onDestinationChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Destinazione"/>
+        <ComboBox value="{
+            path : 'Destinazione',
+            type : 'sap.ui.model.type.String',
+            constraints : {
+                minLength: 0
+            }
+        }" items="{/destinazioni}" class="roundedInput" width="100%" enabled="true" placeholder="Destinazione">
+                <items>
+                <core:Item xmlns:core="sap.ui.core" key="{IDClienteSede}" text="{IDClienteSede} - {Sede}"/>
+                </items>
+            </ComboBox>
+
 
         <!--! Input description -->
         <Label text="Descrizione" class="labelMargin" required="true"/>
         <Input value="{
         path : 'Descrizione',
-        type : 'sap.ui.model.type.String'
-    }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Descrizione"/>
+        type : 'sap.ui.model.type.String',
+        constraints : {
+            minLength: 1
+        }
+    }" type="Text" change= ".onDescriptionChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Descrizione"/>
 
         <!-- Checkboxes in flexbox -->
         <FlexBox direction="Row" class="checkStyle">
             <!--! Checkbox plus -->
-            <CheckBox text="Plus" class="checkboxMargin" width="100%" enabled="false" selected="{/nuovoRapportino/Plus}"/>
+            <CheckBox text="Plus" class="checkboxMargin" width="100%" enabled="true" selected="{/body/Plus}"/>
 
             <!--! Checkbox fatturabile -->
-            <CheckBox text="Fatturabile" class="checkboxMargin" width="100%" enabled="false" selected="{/nuovoRapportino/Fatturabile}"/>
+            <CheckBox text="Fatturabile" class="checkboxMargin" width="100%" enabled="true" selected="{/body/Fatturabile}"/>
         </FlexBox>
 
         <!--! Expandable panel with inputs -->
@@ -115,8 +117,8 @@
             <Label text="Km" class="labelMargin"/>
             <Input value="{
             path : 'Km',
-            type : 'sap.ui.model.type.Float'
-        }" type="Number" change= ".onKmChange" width= "100%" enabled= "false" id="km" class="roundedInput" placeholder="Km"/>
+            type : 'sap.ui.model.type.Integer'
+        }" type="Number" width= "100%" enabled= "true" class="roundedInput" placeholder="Km"/>
 
             <!--! Input km/€ formatted in currency -->
             <Label text="Km/€" class="labelMargin"/>
@@ -128,7 +130,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onKmPriceChange" width= "100%" enabled= "false" id="kmPrice" class="roundedInput" placeholder="Km/€"/>
+        }" change= ".onKmPriceChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Km/€"/>
 
             <!--! Input toll formatted in currency -->
             <Label text="Pedaggio" class="labelMargin"/>
@@ -140,7 +142,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onTollChange" width= "100%" enabled= "false" id="toll" class="roundedInput" placeholder="Pedaggio"/>
+        }" change= ".onTollChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Pedaggio"/>
 
             <!--! Input forfait formatted in currency -->
             <Label text="Forfait" class="labelMargin"/>
@@ -152,7 +154,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onForfaitChange" width= "100%" enabled= "false" id="forfait" class="roundedInput" placeholder="Forfait"/>
+        }" change= ".onForfaitChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Forfait"/>
 
             <!--! Input food formatted in currency -->
             <Label text="Vitto" class="labelMargin"/>
@@ -164,7 +166,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onFoodChange" width= "100%" enabled= "false" id="food" class="roundedInput" placeholder="Vitto"/>
+        }" change= ".onFoodChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Vitto"/>
 
             <!--! Input accomodation formatted in currency -->
             <Label text="Alloggio" class="labelMargin"/>
@@ -176,7 +178,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onAccomodationChange" width= "100%" enabled= "false" id="accomodation" class="roundedInput" placeholder="Alloggio"/>
+        }" change= ".onAccomodationChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Alloggio"/>
 
             <!--! Input rental formatted in currency -->
             <Label text="Noleggio" class="labelMargin"/>
@@ -188,7 +190,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }"  change= ".onRentalChange" width= "100%" enabled= "false" id="rental" class="roundedInput" placeholder="Noleggio"/>
+        }" change= ".onRentalChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Noleggio"/>
 
             <!--! Input transport formatted in currency -->
             <Label text="Trasporti" class="labelMargin"/>
@@ -200,7 +202,7 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onTransportChange" width= "100%" enabled= "false" id="transport" class="roundedInput" placeholder="Trasporti"/>
+        }" change= ".onTransportChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Trasporti"/>
 
             <!--! Input various formatted in currency -->
             <Label text="Varie" class="labelMargin"/>
@@ -212,25 +214,27 @@
                 currencyContext : 'EUR'
             },
             type : 'sap.ui.model.type.Currency'
-        }" change= ".onVariousChange" width= "100%" enabled= "false" id="various" class="roundedInput" placeholder="Varie"/>
+        }" change= ".onVariousChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Varie"/>
 
             <!--! Input reserved formatted in currency -->
             <Label text="Riservato" class="labelMargin"/>
             <Input value="{
-                parts : [{path : 'SpeseVarie'}, {value : '€'}],
-                formatOptions : {
-                    style : 'currency',
-                    currencyCode : '€',
-                    currencyContext : 'EUR'
-                },
-                type : 'sap.ui.model.type.Currency'
-        }" change= ".onReservedChange" width= "100%" enabled= "false" id="reserved" class="roundedInput" placeholder="Riservato"/>
+            parts : [{path : 'SpeseVarie'}, {value : '€'}],
+            formatOptions : {
+                style : 'currency',
+                currencyCode : '€',
+                currencyContext : 'EUR'
+            },
+            type : 'sap.ui.model.type.Currency'
+        }" change= ".onReservedChange" width= "100%" enabled= "true" class="roundedInput" placeholder="Riservato"/>
 
         </Panel>
         <FlexBox class="closeDialog">
             <!--! Cancel button -->
-            <Button text="Chiudi" press= ".onCancel" enabled="true" class="dialogButton"/>
+            <Button text="Annulla" press= ".onCancelDuplicate" enabled="true" class="dialogButton"/>
 
+            <!--! Save button -->
+            <Button text="Salva" type="Emphasized" press= ".onSaveDuplicate" enabled="true" class="dialogButton"/>
         </FlexBox>
     </Dialog>
 </core:FragmentDefinition>

@@ -44,7 +44,7 @@ sap.ui.define(
         var firstTime = true;
         var formattedDate;
         var checkDelete = false;
-        var bodyCopy;
+        var body;
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
             onInit: function () {
@@ -66,6 +66,7 @@ sap.ui.define(
                     pattern: "dd-MM-yyyy",
                     calendarType: CalendarType.Gregorian,
                 });
+
                 this.APICall();
                 this.getCurrentDate();
             },
@@ -376,75 +377,37 @@ sap.ui.define(
                 nuovoRapportino.Ore = ore;
             },
 
-            
-            APIticket: function () {
-                var request = {
-                    method: "POST",
-                    redirect: "follow",
-                };
-                fetch(
-                    sessionStorage.getItem("hostname") +
-                        "/api_v2/ticket?token=" +
-                        sessionStorage.getItem("encodedToken") +
-                        "&idTicket=0",
-                    request
-                )
-                    .then((response) => response.text())
-                    .then((result) => this.handleTicket(result))
-                    .catch((error) => console.log("error", error));
-            },
-            handleTicket: function (result) {
+
+
+
+            handleEdit: function (oEvent) {
+                checkDelete = true;
+                this.makeApiCalls();
+
                 var oModel = this.getView().getModel();
-                var ticket = JSON.parse(result);
-                oModel.setProperty("/ticket", ticket);
-            },
-            APIclienti: function () {
-                var request = {
-                    method: "POST",
-                    redirect: "follow",
-                };
+                var body = oModel.getProperty("/body");
 
-                fetch(
-                    sessionStorage.getItem("hostname") +
-                        "/api_v2/clienti?token=" +
-                        sessionStorage.getItem("encodedToken") +
-                        "&idCliente=0",
-                    request
-                )
-                    .then((response) => response.text())
-                    .then((result) => this.handleClienti(result))
-                    .catch((error) => console.log("error", error));
-            },
-            handleClienti: function (result) {
-                var oModel = this.getView().getModel();
-                var clienti = JSON.parse(result);
-                oModel.setProperty("/clienti", clienti);
+                var source = oEvent.getSource();
+                var setContext = source.setBindingContext(
+                    new sap.ui.model.Context(oModel, "/body")
+                );
+                var getContext = setContext.getBindingContext();
+
+                if (!this.pDialog) {
+                    this.pDialog = this.loadFragment({
+                        name: "regesta.regestarapportini.fragments.PopupDuplicate",
+                    });
+                }
+                this.pDialog.then(function (oDialog) {
+                    oModel.setProperty("/nuovoRapportino", body);
+                    oDialog.setBindingContext(getContext);
+                    oDialog.open();
+                });
+
+
             },
 
-            APIcommesse: function () {
-                var request = {
-                    method: "POST",
-                    redirect: "follow",
-                };
-                fetch(
-                    sessionStorage.getItem("hostname") +
-                        "/api_v2/commesse?token=" +
-                        sessionStorage.getItem("encodedToken") +
-                        "&idCommessa=0&idCliente=0",
-                    request
-                )
-                    .then((response) => response.text())
-                    .then((result) => this.handleCommesse(result))
-                    .catch((error) => console.log("error", error));
-            },
-
-            handleCommesse: function (result) {
-                var oModel = this.getView().getModel();
-                var commesse = JSON.parse(result);
-                oModel.setProperty("/commesse", commesse);
-            },
-
-            handleDelete: function () {
+            handleDelete: function (id) {
                 var id = this.getView().getModel().getProperty("/id");
 
                 sap.m.MessageBox.warning(
@@ -538,8 +501,7 @@ sap.ui.define(
 
             handleDuplicate: function (oEvent) {
                 var oModel = this.getView().getModel();
-                bodyCopy = oModel.getProperty("/body");
-                console.log(bodyCopy);
+                body = oModel.getProperty("/body");
 
                 this.makeApiCalls();
 
@@ -562,7 +524,8 @@ sap.ui.define(
             },
 
             onCancelDuplicate: function () {
-                oList.getModel().updateBindings(true);
+                var oModel = this.getView().getModel();
+                oModel.setProperty("/body", body);
                 this.byId("popupDuplicate").close();
             },
 
