@@ -1,8 +1,0 @@
-<core:FragmentDefinition xmlns="sap.m"
-    xmlns:core="sap.ui.core">
-
-    <Popover id="myPopover" title="" class="sapUiResponsivePadding--header sapUiResponsivePadding--footer" placement="Top" titleAlignment="Center" verticalScrolling="false" showHeader="true" showArrow="false">
-
-    </Popover>
-
-</core:FragmentDefinition>

@@ -148,7 +148,6 @@ sap.ui.define(
 
                 filteredItems.forEach(function (item) {
                     sum += item.Ore;
-                    console.log(sum);
                 });
 
                 sum = sum.toFixed(1);
@@ -377,9 +376,6 @@ sap.ui.define(
                 nuovoRapportino.Ore = ore;
             },
 
-
-
-
             handleEdit: function (oEvent) {
                 checkDelete = true;
                 this.makeApiCalls();
@@ -456,11 +452,11 @@ sap.ui.define(
                                     oList.getSwipedItem()
                                 );
                                 oList.swipeOut();
+                                window.location.reload();
                             }
                         },
                     }
                 );
-
             },
 
             handleSelectToday: function (oEvent) {
@@ -524,8 +520,7 @@ sap.ui.define(
             },
 
             onCancelDuplicate: function () {
-                var oModel = this.getView().getModel();
-                oModel.setProperty("/body", body);
+                window.location.reload();
                 this.byId("popupDuplicate").close();
             },
 

@@ -191,25 +191,6 @@ sap.ui.define(
                     var ticket = JSON.parse(result);
                     oModel.setProperty("/ticket", ticket);
                 },
-
-                Timer: function (oEvent) {
-                    if (check) {
-                        check = false;
-                        startTime = new Date().getTime();
-                        console.log(startTime);
-                    } else {
-                        endTime = new Date().getTime();
-                        console.log(endTime);
-                        timeDiff = endTime - startTime;
-                        console.log(timeDiff);
-                        var minutes = Math.floor(timeDiff / 60000);
-                        var seconds = ((timeDiff % 60000) / 1000).toFixed(0);
-                        console.log(
-                            minutes + ":" + (seconds < 10 ? "0" : "") + seconds
-                        );
-                        check = true;
-                    }
-                },
             }
         );
     }
