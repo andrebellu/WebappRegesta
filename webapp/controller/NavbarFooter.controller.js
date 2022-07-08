@@ -351,6 +351,7 @@ sap.ui.define(
           if (nuovoRapportino.SpeseVarie != null) {
             nuovoRapportino.SpeseVarie = nuovoRapportino.SpeseVarie + 0.0001;
           }
+          
           bValidationError = this._validateGiornoInput(getDate);
 
           if (

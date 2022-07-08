@@ -370,8 +370,6 @@ sap.ui.define(
                 oModel.setProperty("/commesse", commesse);
             },
 
-            
-
             handleEdit: function () {
                 msgT.show("Edit");
             },
@@ -517,7 +515,7 @@ sap.ui.define(
 
                 if (!this.pDialog) {
                     this.pDialog = this.loadFragment({
-                        name: "regesta.regestarapportini.fragments.PopupEdit",
+                        name: "regesta.regestarapportini.fragments.PopupDuplicate",
                     });
                 }
                 this.pDialog.then(function (oDialog) {
