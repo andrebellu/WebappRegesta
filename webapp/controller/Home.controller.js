@@ -44,6 +44,7 @@ sap.ui.define(
         var firstTime = true;
         var formattedDate;
         var checkDelete = false;
+        var body;
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
             onInit: function () {
@@ -97,8 +98,8 @@ sap.ui.define(
 
                 fetch(
                     sessionStorage.getItem("hostname") +
-                        "/api_v2/rapportini?token=" +
-                        sessionStorage.getItem("encodedToken"),
+                    "/api_v2/rapportini?token=" +
+                    sessionStorage.getItem("encodedToken"),
                     requestOptions
                 )
                     .then((response) => response.text())
@@ -191,10 +192,10 @@ sap.ui.define(
 
                 fetch(
                     sessionStorage.getItem("hostname") +
-                        "/api_v2/sedi?token=" +
-                        sessionStorage.getItem("encodedToken") +
-                        "&idCliente=" +
-                        nuovoRapportino.IDCliente,
+                    "/api_v2/sedi?token=" +
+                    sessionStorage.getItem("encodedToken") +
+                    "&idCliente=" +
+                    nuovoRapportino.IDCliente,
                     requestOptions
                 )
                     .then((response) => response.text())
@@ -217,9 +218,9 @@ sap.ui.define(
                 };
                 fetch(
                     sessionStorage.getItem("hostname") +
-                        "/api_v2/ticket?token=" +
-                        sessionStorage.getItem("encodedToken") +
-                        "&idTicket=0",
+                    "/api_v2/ticket?token=" +
+                    sessionStorage.getItem("encodedToken") +
+                    "&idTicket=0",
                     request
                 )
                     .then((response) => response.text())
@@ -239,9 +240,9 @@ sap.ui.define(
 
                 fetch(
                     sessionStorage.getItem("hostname") +
-                        "/api_v2/clienti?token=" +
-                        sessionStorage.getItem("encodedToken") +
-                        "&idCliente=0",
+                    "/api_v2/clienti?token=" +
+                    sessionStorage.getItem("encodedToken") +
+                    "&idCliente=0",
                     request
                 )
                     .then((response) => response.text())
@@ -261,9 +262,9 @@ sap.ui.define(
                 };
                 fetch(
                     sessionStorage.getItem("hostname") +
-                        "/api_v2/commesse?token=" +
-                        sessionStorage.getItem("encodedToken") +
-                        "&idCommessa=0&idCliente=0",
+                    "/api_v2/commesse?token=" +
+                    sessionStorage.getItem("encodedToken") +
+                    "&idCommessa=0&idCliente=0",
                     request
                 )
                     .then((response) => response.text())
@@ -376,8 +377,8 @@ sap.ui.define(
                 nuovoRapportino.Ore = ore;
             },
 
-            
-            
+
+
 
             handleEdit: function (oEvent) {
                 checkDelete = true;
@@ -385,7 +386,7 @@ sap.ui.define(
 
                 var oModel = this.getView().getModel();
                 var body = oModel.getProperty("/body");
-                
+
                 var source = oEvent.getSource();
                 var setContext = source.setBindingContext(
                     new sap.ui.model.Context(oModel, "/body")
@@ -402,9 +403,11 @@ sap.ui.define(
                     oDialog.setBindingContext(getContext);
                     oDialog.open();
                 });
+
+
             },
 
-            handleDelete: function (oEvent) {
+            handleDelete: function (id) {
                 var id = this.getView().getModel().getProperty("/id");
 
                 sap.m.MessageBox.warning(
@@ -457,6 +460,7 @@ sap.ui.define(
                         },
                     }
                 );
+
             },
 
             handleSelectToday: function (oEvent) {
@@ -497,15 +501,13 @@ sap.ui.define(
 
             handleDuplicate: function (oEvent) {
                 var oModel = this.getView().getModel();
-                var body = oModel.getProperty("/body");
+                body = oModel.getProperty("/body");
 
-                this.APIticket();
-                this.APIclienti();
-                this.APIcommesse();
+                this.makeApiCalls();
 
                 var source = oEvent.getSource();
                 var setContext = source.setBindingContext(
-                    new sap.ui.model.Context(oModel, "/body")
+                    new sap.ui.model.Context(oModel, "/nuovoRapportino")
                 );
                 var getContext = setContext.getBindingContext();
 
@@ -515,13 +517,15 @@ sap.ui.define(
                     });
                 }
                 this.pDialog.then(function (oDialog) {
-                    oModel.setProperty("/nuovoRapportino", body);
+                    oModel.setProperty("/nuovoRapportino", oModel.getProperty("/body"));
                     oDialog.setBindingContext(getContext);
                     oDialog.open();
                 });
             },
 
             onCancelDuplicate: function () {
+                var oModel = this.getView().getModel();
+                oModel.setProperty("/body", body);
                 this.byId("popupDuplicate").close();
             },
 
@@ -531,8 +535,6 @@ sap.ui.define(
                     .getModel()
                     .getProperty("/nuovoRapportino");
 
-                // ? Chech date
-                // collect input controls
                 var oView = this.getView();
                 var getDate = oView.byId("dateEdit");
                 console.log(getDate);
@@ -565,16 +567,50 @@ sap.ui.define(
 
                     fetch(
                         sessionStorage.getItem("hostname") +
-                            "/api_v2/nuovorapportino?token=" +
-                            sessionStorage.getItem("encodedToken"),
+                        "/api_v2/nuovorapportino?token=" +
+                        sessionStorage.getItem("encodedToken"),
                         requestOptions
                     )
                         .then((response) => response.text())
                         .then((result) => console.log(result))
                         .catch((error) => console.log("error", error));
 
-                    this.byId("popupEdit").close();
+                    if (checkDelete) {
+                        var token = sessionStorage.getItem("token");
+                        var id = this.getView().getModel().getProperty("/id");
+
+                        token = token.replace(/"/g, "");
+                        token = encodeURIComponent(token);
+
+                        var myHeaders = new Headers();
+                        myHeaders.append(
+                            "Cookie",
+                            "ASP.NET_SessionId=p42wuyurx1pcevyrkavscdxu"
+                        );
+
+                        var requestOptions = {
+                            method: "POST",
+                            headers: myHeaders,
+                            redirect: "follow",
+                        };
+
+                        var url =
+                            sessionStorage.getItem("hostname") +
+                            "/api_v2/eliminarapportino?token=" +
+                            token +
+                            "&idRapportino=" +
+                            id;
+
+                        fetch(url, requestOptions)
+                            .then((response) => response.text())
+                            .then((result) => console.log(result))
+                            .catch((error) =>
+                                console.log("error", error)
+                            );
+                    }
+                    this.byId("popupDuplicate").close();
                     window.location.reload();
+
                 } else {
                     msgT.show("Inserisci i dati correttamente");
                 }
@@ -584,15 +620,15 @@ sap.ui.define(
             showPopup: function (oEvent) {
                 var oModel = this.getView().getModel();
                 var source = oEvent.getSource();
-                
-                
+
+
                 var setContext = source.setBindingContext(
                     new sap.ui.model.Context(oModel, source.getBindingContext().sPath)
                 );
                 var getContext = setContext.getBindingContext();
                 var index = source.getBindingContext().getPath();
                 if (getContext != undefined) {
-                    
+
 
                     // Get date from list item and convert it to string from timestamp
                     var date = getContext.getProperty("Giorno");
@@ -656,7 +692,7 @@ sap.ui.define(
                 var bValidationError = false;
                 var oBinding = oInput.getBinding("value");
 
-                
+
 
                 var [gg, month, year] = oInput.getValue().split("/");
                 const giorno = new Date(year, month - 1, gg);

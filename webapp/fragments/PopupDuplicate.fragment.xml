@@ -27,8 +27,8 @@
         <!--! Input work hours with step input -->
         <Label text="Ore" class="labelMargin" required="true" />
         <StepInput value="{
-        value : '0.0',
         type : 'sap.ui.model.type.Float',
+        path : 'Ore',
         constraints : {
             minLength: 1,
             maxLength: 3,
