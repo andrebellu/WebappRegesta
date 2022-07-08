@@ -40,7 +40,7 @@
         <Label text="Ticket" class="labelMargin" required="true"/>
         <ComboBox class="roundedInput" change="handleChange" width="100%" enabled="true" id="ticket" placeholder="Ticket" items="{/ticket}">
             <items>
-                <core:Item xmlns:core="sap.ui.core" key="{IDTodoList}" text="{IDTodoList} - {Titolo}" id="ticketz"/>
+                <core:Item xmlns:core="sap.ui.core" key="{IDTodoList}" text="{IDTodoList} - {Titolo}"/>
             </items>
         </ComboBox>
 
