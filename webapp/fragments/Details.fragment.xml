@@ -57,14 +57,14 @@
         <!--! Input client -->
         <Label text="Cliente" class="labelMargin"/>
         <Input value="{
-        path : 'Codice',
+        path : 'IDCliente',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onClientChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Cliente"/>
 
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
-        path : 'Attivita',
+        path : 'IDCommessa',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Commessa"/>
 

@@ -44,7 +44,7 @@ sap.ui.define(
         var firstTime = true;
         var formattedDate;
         var checkDelete = false;
-        var body;
+        var bodyCopy;
 
         return Controller.extend("regesta.regestarapportini.controller.Home", {
             onInit: function () {
@@ -437,31 +437,14 @@ sap.ui.define(
                     .then((result) => this.handleCommesse(result))
                     .catch((error) => console.log("error", error));
             },
+
             handleCommesse: function (result) {
                 var oModel = this.getView().getModel();
-                var body = oModel.getProperty("/body");
-
-                var source = oEvent.getSource();
-                var setContext = source.setBindingContext(
-                    new sap.ui.model.Context(oModel, "/body")
-                );
-                var getContext = setContext.getBindingContext();
-
-                if (!this.pDialog) {
-                    this.pDialog = this.loadFragment({
-                        name: "regesta.regestarapportini.fragments.PopupDuplicate",
-                    });
-                }
-                this.pDialog.then(function (oDialog) {
-                    oModel.setProperty("/nuovoRapportino", body);
-                    oDialog.setBindingContext(getContext);
-                    oDialog.open();
-                });
-
-
+                var commesse = JSON.parse(result);
+                oModel.setProperty("/commesse", commesse);
             },
 
-            handleDelete: function (id) {
+            handleDelete: function () {
                 var id = this.getView().getModel().getProperty("/id");
 
                 sap.m.MessageBox.warning(
@@ -555,43 +538,10 @@ sap.ui.define(
 
             handleDuplicate: function (oEvent) {
                 var oModel = this.getView().getModel();
-                body = oModel.getProperty("/body");
+                bodyCopy = oModel.getProperty("/body");
+                console.log(bodyCopy);
 
                 this.makeApiCalls();
-
-                var defaultBody = {
-                    IDRapportino: null,
-                    IDUtente: null,
-                    Utente: sessionStorage.getItem("username"),
-                    IDCliente: null,
-                    IDCommessa: null,
-                    IDClienteSede: null,
-                    IDProgetto: null,
-                    IDProgettoAttivita: null,
-                    IDTodoList: null,
-                    Codice: null,
-                    Descrizione: null,
-                    Attivita: null,
-                    Sede: "UF",
-                    Destinazione: null,
-                    Giorno: this.getCurrentDate(),
-                    Ore: null,
-                    OreLavorate: null,
-                    Km: null,
-                    KmEuro: null,
-                    Pedaggio: null,
-                    Forfait: null,
-                    Vitto: null,
-                    Alloggio: null,
-                    Noleggio: null,
-                    Trasporti: null,
-                    Varie: null,
-                    Plus: false,
-                    Fatturabile: true,
-                    Bloccato: null,
-                    SpeseVarie: null,
-                    Docente: null,
-                };
 
                 var source = oEvent.getSource();
                 var setContext = source.setBindingContext(
@@ -609,13 +559,10 @@ sap.ui.define(
                     oDialog.setBindingContext(getContext);
                     oDialog.open();
                 });
-
-                // oList.getModel().updateBindings(true);
             },
 
             onCancelDuplicate: function () {
-                var oModel = this.getView().getModel();
-                oModel.setProperty("/body", body);
+                oList.getModel().updateBindings(true);
                 this.byId("popupDuplicate").close();
             },
 
