@@ -64,7 +64,7 @@
         <!--! Input commessa -->
         <Label text="Commessa" class="labelMargin"/>
         <Input value="{
-        path : 'IDCommessa',
+        path : 'Attivita',
         type : 'sap.ui.model.type.String'
     }" type="Text" change= ".onCommessaChange" width= "100%" enabled= "false" class="roundedInput" placeholder="Commessa"/>
 
