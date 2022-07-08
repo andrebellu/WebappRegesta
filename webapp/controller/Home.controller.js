@@ -176,6 +176,7 @@ sap.ui.define(
             destinationAPI: function () {
                 var oModel = this.getView().getModel();
                 var nuovoRapportino = oModel.getProperty("/body");
+                var id= oModel.getProperty("/body/IDCliente")
                 //! API call to get destinations
                 var myHeaders = new Headers();
                 myHeaders.append(
@@ -194,7 +195,7 @@ sap.ui.define(
                     "/api_v2/sedi?token=" +
                     sessionStorage.getItem("encodedToken") +
                     "&idCliente=" +
-                    nuovoRapportino.IDCliente,
+                    id,
                     requestOptions
                 )
                     .then((response) => response.text())
@@ -559,39 +560,6 @@ sap.ui.define(
 
                 this.makeApiCalls();
 
-                var defaultBody = {
-                    IDRapportino: null,
-                    IDUtente: null,
-                    Utente: sessionStorage.getItem("username"),
-                    IDCliente: null,
-                    IDCommessa: null,
-                    IDClienteSede: null,
-                    IDProgetto: null,
-                    IDProgettoAttivita: null,
-                    IDTodoList: null,
-                    Codice: null,
-                    Descrizione: null,
-                    Attivita: null,
-                    Sede: "UF",
-                    Destinazione: null,
-                    Giorno: this.getCurrentDate(),
-                    Ore: null,
-                    OreLavorate: null,
-                    Km: null,
-                    KmEuro: null,
-                    Pedaggio: null,
-                    Forfait: null,
-                    Vitto: null,
-                    Alloggio: null,
-                    Noleggio: null,
-                    Trasporti: null,
-                    Varie: null,
-                    Plus: false,
-                    Fatturabile: true,
-                    Bloccato: null,
-                    SpeseVarie: null,
-                    Docente: null,
-                };
 
                 var source = oEvent.getSource();
                 var setContext = source.setBindingContext(

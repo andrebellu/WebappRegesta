@@ -12,13 +12,6 @@
                 <items>
                     <StandardListItem type="Navigation" title="ID Ticket: {IDTodoList} - {Titolo}" description="{Testo}" icon="sap-icon://receipt" class="item" id="element" press="showPopup"/>
                 </items>
-                <swipeContent>
-                    <Button press="Timer" icon="sap-icon://lateness">
-                        <dependents>
-                            <core:Fragment fragmentName="regesta.regestarapportini.fragments.ActionSheet" type="XML" />
-                        </dependents>
-                    </Button>
-                </swipeContent>
             </List>
         </ScrollContainer>
         <mvc:XMLView viewName="regesta.regestarapportini.view.Footer" />
