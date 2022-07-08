@@ -34,39 +34,6 @@ sap.ui.define(
         var startTime, endTime, timeDiff;
         var oList;
         var token;
-        var defaultBody = {
-            IDRapportino: null,
-            IDUtente: null,
-            Utente: null,
-            IDCliente: null,
-            IDCommessa: null,
-            IDClienteSede: null,
-            IDProgetto: null,
-            IDProgettoAttivita: null,
-            IDTodoList: null,
-            Codice: null,
-            Descrizione: null,
-            Attivita: null,
-            Sede: "UF",
-            Destinazione: null,
-            Giorno: null,
-            Ore: null,
-            OreLavorate: null,
-            Km: null,
-            KmEuro: null,
-            Pedaggio: null,
-            Forfait: null,
-            Vitto: null,
-            Alloggio: null,
-            Noleggio: null,
-            Trasporti: null,
-            Varie: null,
-            Plus: null,
-            Fatturabile: null,
-            Bloccato: null,
-            SpeseVarie: null,
-            Docente: null,
-        };
         return Controller.extend(
             "regesta.regestarapportini.controller.Tickets",
             {
